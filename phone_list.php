@@ -20,9 +20,9 @@
   |               | layout-top-nav                          |
   |               | sidebar-collapse                        |
   |               | sidebar-mini                            |
-  |---------------------------------------------------------|    onload="window.print();"
+  |---------------------------------------------------------|    
   -->
-    <body >
+    <body onload="window.print();">
         <div class="wrapper">
           <!-- Main content -->
           <section class="invoice">
@@ -51,6 +51,8 @@
                   <tbody>
                   <?php
                     $count = 1;
+                    if (!empty($_POST['active'])) {
+                      
                     $sql = "SELECT * FROM tdepartments WHERE id IN (" . implode(',', $_POST['active']) . ") ORDER BY fullname";
                     foreach ($dbconn->query($sql) as $row) {
                         echo '<tr><td colspan="4" class="success">' . getDepartmentsById($row['id'])['fullname'] . '</td></tr>';
@@ -80,6 +82,7 @@
                   <?php
                         }
                     }
+                  }
                   ?>
 
                   </tbody>

@@ -52,6 +52,7 @@
                   <tbody>
                   <?php
                     $count = 1;
+                    if (!empty($_POST['active'])) {
                     foreach ($_POST['active'] as $key => $val) {
                         $arPerson = getPersonById($val);
                         $arDepartment = getDepartmentsById($arPerson['id_departments']);
@@ -80,6 +81,7 @@
                   <?php
 
                     }
+                  }
                   ?>
 
                   </tbody>
