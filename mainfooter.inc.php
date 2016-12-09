@@ -5,5 +5,5 @@
           Информационно-справочная система СЗГТ
         </div>
         <!-- Default to the left -->
-        <strong>&copy; 2015</strong>
+        <strong>&copy; <?php echo date("Y") ?></strong>
       </footer>

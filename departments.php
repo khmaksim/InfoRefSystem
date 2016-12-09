@@ -22,7 +22,7 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
         <div class="wrapper">
 
 
@@ -143,7 +143,7 @@
         <!-- Bootstrap 3.3.5 -->
         <script src="/bootstrap/js/bootstrap.min.js"></script>
         <!-- AdminLTE App -->
-        <script src="/dist/js/app.min.js"></script>
+        <script src="/dist/js/app.js"></script>
         <!-- Optionally, you can add Slimscroll and FastClick plugins.
              Both of these plugins are recommended to enhance the
              user experience. Slimscroll is required when using the
