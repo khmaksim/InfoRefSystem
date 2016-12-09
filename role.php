@@ -22,7 +22,7 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
         <div class="wrapper">
 
 
@@ -36,8 +36,7 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Роли безопасности
-                        <small>Каждая роль определяется набором прав для работы с системой</small>
+                        <small></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="/departments.php"><i class="fa fa-dashboard"></i> Главная</a></li>
@@ -53,7 +52,7 @@
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Роли безопасности</h3>
+                                    <h3 class="box-title">Роли безопасности<i class="fa fa-info-circle"></i> Каждая роль определяется набором прав для работы с системой</small></h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">

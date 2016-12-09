@@ -23,7 +23,7 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
         <div class="wrapper">
 
 
@@ -37,8 +37,7 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Заголовок страницы
-                        <small>Описание</small>
+                        <small></small>
                     </h1>
                 </section>
 

@@ -324,7 +324,7 @@ a:focus {
   font-weight: 300;
 }
 .content-header > .breadcrumb {
-  float: right;
+  float: left;
   background: transparent;
   margin-top: 0;
   margin-bottom: 0;
@@ -332,7 +332,7 @@ a:focus {
   padding: 7px 5px;
   position: absolute;
   top: 15px;
-  right: 10px;
+  left: 10px;
   border-radius: 2px;
 }
 .content-header > .breadcrumb > li > a {
@@ -1726,6 +1726,16 @@ a:focus {
   font-size: 18px;
   margin: 0;
   line-height: 1;
+}
+.box-header .box-title > small {
+  float: right;
+  position: absolute;
+  font-size: 12px;
+  display: inline-block;
+  right: 10px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 4px 0px;
 }
 .box-header > .fa,
 .box-header > .glyphicon,

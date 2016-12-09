@@ -22,7 +22,7 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
         <div class="wrapper">
 
 
@@ -36,7 +36,6 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Типы наград
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">

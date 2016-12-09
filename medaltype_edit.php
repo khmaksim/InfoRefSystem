@@ -22,7 +22,7 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
         <div class="wrapper">
 
 
@@ -36,8 +36,7 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Типы наград
-                        <small><?= ($_GET['act'] == 'add') ? 'Добавление.' : 'Редактирование.'; ?></small>
+                        <small></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="/departments.php"><i class="fa fa-dashboard"></i> Главная</a></li>
