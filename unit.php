@@ -64,7 +64,7 @@
                                     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th class="col-xs-1">Номер</th>
+                                                <th class="col-xs-1">№</th>
                                                 <th>Должность</th>
                                                 <th>В/звание</th>
                                                 <th>Тариф</th>

@@ -63,7 +63,7 @@
         <link rel="stylesheet" href="/plugins/datepicker/datepicker3.css">
         <link rel="stylesheet" href="/plugins/datatables/dataTables.bootstrap.css">
         <!-- Theme style -->
-        <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="/dist/css/AdminLTE.css">
         <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
               page. However, you can choose any other skin. Make sure you
               apply the skin class to the body tag so the changes take effect.
