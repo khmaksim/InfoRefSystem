@@ -69,7 +69,7 @@
                                             <label for="exampleInputEmail1">ФИО</label>
                                             <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="Фамилия Имя Отчество пользователя"<?= ($_GET['act'] == 'edit') ? ' value="' . $arUser['title'] . '"' : ''; ?>>
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="exampleInputFile">Роль</label>
                                             <select class="form-control" name="role_id">
                                                 <?php
@@ -81,7 +81,8 @@
                                                     }
                                                 ?>
                                             </select>
-                                        </div>
+                                        </div> -->
+                                        
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Имя</label>
                                             <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Имя для входа в систему"<?= ($_GET['act'] == 'edit') ? ' value="' . $arUser['name'] . '"' : ''; ?>>
@@ -90,7 +91,66 @@
                                             <label for="exampleInputPassword1">Пароль</label>
                                             <input type="password" name="passwd" class="form-control" id="exampleInputPassword1" placeholder="Указать при создании пользователя или если необходимо поменять при редактировании">
                                         </div>
-
+                                        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Наименование программного модуля</th>
+                                                    <th>Просмотр</th>
+                                                    <th>Редактирование</th>
+                                                    <th>Удаление</th>
+                                                </tr>
+                                            </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Администрирование</td>
+                                                <td class="text-center"><input type="checkbox" name="adminView" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="adminEdit" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="adminRemove" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Организационно-мобилизационное управление</td>
+                                                <td class="text-center"><input type="checkbox" name="omuView" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="omuEdit" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="omuRemove" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Кадры</td>
+                                                <td class="text-center"><input type="checkbox" name="kadrView" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="kadrEdit" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="kadrRemove" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Телефонный справочник</td>
+                                                <td class="text-center"><input type="checkbox" name="telephoneView" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="telephoneEdit" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="telephoneRemove" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><s>ЗГТ</s></td>
+                                                <td class="text-center"><input type="checkbox" name="zgtView" value="0" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="zgtEdit" value="0" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="zgtRemove" value="0" disabled></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Входящие документы</td>
+                                                <td class="text-center"><input type="checkbox" name="incomeView" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="incomeEdit" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="incomeRemove" value="0"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><s>Контроль исполнения документов</s></td>
+                                                <td class="text-center"><input type="checkbox" name="controlView" value="0" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="controlEdit" value="0" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="controlRemove" value="0" disabled></td>
+                                            </tr>
+                                            <tr>
+                                                <td><s>Исходящие документы</s></td>
+                                                <td class="text-center"><input type="checkbox" name="outgoingView" value="0" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="outgoingEdit" value="0" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="outgoingRemove" value="0" disabled></td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Активен до</label>
                                             <div class="input-group date">
