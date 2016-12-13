@@ -69,20 +69,6 @@
                                             <label for="exampleInputEmail1">ФИО</label>
                                             <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="Фамилия Имя Отчество пользователя"<?= ($_GET['act'] == 'edit') ? ' value="' . $arUser['title'] . '"' : ''; ?>>
                                         </div>
-                                        <!-- <div class="form-group">
-                                            <label for="exampleInputFile">Роль</label>
-                                            <select class="form-control" name="role_id">
-                                                <?php
-                                                    $sql = "SELECT * FROM public.role ORDER BY title";
-                                                    foreach ($dbconn->query($sql) as $row) {
-                                                ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arUser['role_id'] == $row['id']) ? ' selected="selected"' : ''; ?>><?= $row['title']; ?></option>
-                                                <?php
-                                                    }
-                                                ?>
-                                            </select>
-                                        </div> -->
-                                        
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Имя</label>
                                             <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Имя для входа в систему"<?= ($_GET['act'] == 'edit') ? ' value="' . $arUser['name'] . '"' : ''; ?>>
@@ -103,51 +89,51 @@
                                         <tbody>
                                             <tr>
                                                 <td>Администрирование</td>
-                                                <td class="text-center"><input type="checkbox" name="adminView" value="0"></td>
-                                                <td class="text-center"><input type="checkbox" name="adminEdit" value="0"></td>
-                                                <td class="text-center"><input type="checkbox" name="adminRemove" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="adminView" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="adminEdit" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="adminRemove" value="1"></td>
                                             </tr>
                                             <tr>
                                                 <td>Организационно-мобилизационное управление</td>
-                                                <td class="text-center"><input type="checkbox" name="omuView" value="0"></td>
-                                                <td class="text-center"><input type="checkbox" name="omuEdit" value="0"></td>
-                                                <td class="text-center"><input type="checkbox" name="omuRemove" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="omuView" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="omuEdit" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="omuRemove" value="1"></td>
                                             </tr>
                                             <tr>
                                                 <td>Кадры</td>
-                                                <td class="text-center"><input type="checkbox" name="kadrView" value="0"></td>
-                                                <td class="text-center"><input type="checkbox" name="kadrEdit" value="0"></td>
-                                                <td class="text-center"><input type="checkbox" name="kadrRemove" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="kadrView" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="kadrEdit" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="kadrRemove" value="1"></td>
                                             </tr>
                                             <tr>
                                                 <td>Телефонный справочник</td>
-                                                <td class="text-center"><input type="checkbox" name="telephoneView" value="0"></td>
-                                                <td class="text-center"><input type="checkbox" name="telephoneEdit" value="0"></td>
-                                                <td class="text-center"><input type="checkbox" name="telephoneRemove" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="telephoneView" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="telephoneEdit" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="telephoneRemove" value="1"></td>
                                             </tr>
                                             <tr>
                                                 <td><s>ЗГТ</s></td>
-                                                <td class="text-center"><input type="checkbox" name="zgtView" value="0" disabled></td>
-                                                <td class="text-center"><input type="checkbox" name="zgtEdit" value="0" disabled></td>
-                                                <td class="text-center"><input type="checkbox" name="zgtRemove" value="0" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="zgtView" value="1" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="zgtEdit" value="1" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="zgtRemove" value="1" disabled></td>
                                             </tr>
                                             <tr>
                                                 <td>Входящие документы</td>
-                                                <td class="text-center"><input type="checkbox" name="incomeView" value="0"></td>
-                                                <td class="text-center"><input type="checkbox" name="incomeEdit" value="0"></td>
-                                                <td class="text-center"><input type="checkbox" name="incomeRemove" value="0"></td>
+                                                <td class="text-center"><input type="checkbox" name="incomeView" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="incomeEdit" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="incomeRemove" value="1"></td>
                                             </tr>
                                             <tr>
                                                 <td><s>Контроль исполнения документов</s></td>
-                                                <td class="text-center"><input type="checkbox" name="controlView" value="0" disabled></td>
-                                                <td class="text-center"><input type="checkbox" name="controlEdit" value="0" disabled></td>
-                                                <td class="text-center"><input type="checkbox" name="controlRemove" value="0" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="controlView" value="1" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="controlEdit" value="1" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="controlRemove" value="1" disabled></td>
                                             </tr>
                                             <tr>
                                                 <td><s>Исходящие документы</s></td>
-                                                <td class="text-center"><input type="checkbox" name="outgoingView" value="0" disabled></td>
-                                                <td class="text-center"><input type="checkbox" name="outgoingEdit" value="0" disabled></td>
-                                                <td class="text-center"><input type="checkbox" name="outgoingRemove" value="0" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="outgoingView" value="1" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="outgoingEdit" value="1" disabled></td>
+                                                <td class="text-center"><input type="checkbox" name="outgoingRemove" value="1" disabled></td>
                                             </tr>
                                         </tbody>
                                         </table>
@@ -224,8 +210,8 @@
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
             $(document).ready(function(){
-      		    $("#items").load("/role.func.php");
-                setInterval(function() {$("#items").load("/role.func.php");}, 5000);
+      		    // $("#items").load("/role.func.php");
+            //     setInterval(function() {$("#items").load("/role.func.php");}, 5000);
 
                 $('input').iCheck({
                     checkboxClass: 'icheckbox_square-blue',
@@ -249,11 +235,20 @@
 
             function checkForm()
             {
-                if (document.role.title.value != '') {
-                    document.role.submit();
+                if (document.role.adate.value == '') {
+                    alert('Укажите дату до которой пользователь активен!');
+                    document.role.adate.focus();
+                } else if (document.role.bdate.value == '') {
+                    alert('Укажите дату рождения пользователя!');
+                    document.editform.ordernumber.focus();
                 } else {
-                    alert('Укажите название роли безопасности!');
+                    document.role.submit();
                 }
+                // if (document.role.title.value != '') {
+
+                // } else {
+                //     alert('Укажите название роли безопасности!');
+                // }
             }
         /*]]>*/
         </script>

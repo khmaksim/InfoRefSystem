@@ -27,7 +27,6 @@
     if (!empty($_POST)) {
         extract($_POST);
     }
-
     // Обработка события
     switch ($act) {
         case 'addRole':  $sql = "INSERT INTO public.role (
@@ -350,8 +349,35 @@
                             break;
 
 
-        case 'addUser':  $sql = "INSERT INTO public.user (
-                                    role_id,
+        case 'addUser':  
+                            $sql = "INSERT INTO public.access_right (
+                                    admin,
+                                    omu,
+                                    kadr,
+                                    telephone,
+                                    incoming
+                                                )
+                                                VALUES (
+                                                    '" . (string)base_convert($adminView . $adminEdit . $adminRemove, 2, 10) . "',
+                                                    '" . (string)base_convert($omuView . $omuEdit . $omuRemove, 2, 10) . "',
+                                                    '" . (string)base_convert($kadrView . $kadrEdit . $kadrRemove, 2, 10) . "',
+                                                    '" . (string)base_convert($telephoneView . $telephoneEdit . $telephoneRemove, 2, 10) . "',
+                                                    '" . (string)base_convert($incomingView . $incomingEdit . $incomingRemove, 2, 10) . "'
+                                                ) RETURNING id";
+                            $res = $dbconn->query($sql);
+                            
+                            if ($mysqli->errno) {
+                                die('Error (' . $mysqli->errno . ') ' . $mysqli->error . " " . $sql);
+                            } else {
+                                // Если изменения в БД прошли нормально, делаем пост-обновления
+                                if ($res) {
+                                     $res = $res->fetch();
+                                    $access_right_id = $res['id'];
+                                }
+                            }
+
+                            $sql = "INSERT INTO public.user (
+                                    access_right_id,
                                     active,
                                     title,
                                     bdate,
@@ -360,7 +386,7 @@
                                     passwd
                                                 )
                                                 VALUES (
-                                                    '" . $role_id . "',
+                                                    '" . $access_right_id . "',
                                                     '" . $active . "',
                                                     '" . $title . "',
                                                     '" . DateFromRUtoEN($bdate) . " 00:00:00 Europe/Moscow',
@@ -372,8 +398,7 @@
 
         case 'editUser':
             if (!isset($active)) $active = 'false';
-            $sql = "UPDATE public.user SET role_id = '" . $role_id . "',
-                                                            active = '" . $active . "',
+            $sql = "UPDATE public.user SET active = '" . $active . "',
                                                             title = '" . $title . "',
                                                             bdate = '" . DateFromRUtoEN($bdate) . " 00:00:00 Europe/Moscow',
                                                             adate = '" . DateFromRUtoEN($adate) . " 00:00:00 Europe/Moscow',
