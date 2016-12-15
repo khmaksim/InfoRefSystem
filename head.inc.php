@@ -12,6 +12,7 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getroletitlebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getusertitlebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserbyid.func.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/getaccessrightbyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getrolebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getinfobyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getinfoblockbyid.func.php';

@@ -350,34 +350,7 @@
 
 
         case 'addUser':  
-                            $sql = "INSERT INTO public.access_right (
-                                    admin,
-                                    omu,
-                                    kadr,
-                                    telephone,
-                                    incoming
-                                                )
-                                                VALUES (
-                                                    '" . (string)base_convert($adminView . $adminEdit . $adminRemove, 2, 10) . "',
-                                                    '" . (string)base_convert($omuView . $omuEdit . $omuRemove, 2, 10) . "',
-                                                    '" . (string)base_convert($kadrView . $kadrEdit . $kadrRemove, 2, 10) . "',
-                                                    '" . (string)base_convert($telephoneView . $telephoneEdit . $telephoneRemove, 2, 10) . "',
-                                                    '" . (string)base_convert($incomingView . $incomingEdit . $incomingRemove, 2, 10) . "'
-                                                ) RETURNING id";
-                            $res = $dbconn->query($sql);
-                            
-                            if ($mysqli->errno) {
-                                die('Error (' . $mysqli->errno . ') ' . $mysqli->error . " " . $sql);
-                            } else {
-                                // Если изменения в БД прошли нормально, делаем пост-обновления
-                                if ($res) {
-                                     $res = $res->fetch();
-                                    $access_right_id = $res['id'];
-                                }
-                            }
-
-                            $sql = "INSERT INTO public.user (
-                                    access_right_id,
+                           $sql = "INSERT INTO public.user (
                                     active,
                                     title,
                                     bdate,
@@ -386,7 +359,6 @@
                                     passwd
                                                 )
                                                 VALUES (
-                                                    '" . $access_right_id . "',
                                                     '" . $active . "',
                                                     '" . $title . "',
                                                     '" . DateFromRUtoEN($bdate) . " 00:00:00 Europe/Moscow',
@@ -402,9 +374,9 @@
                                                             title = '" . $title . "',
                                                             bdate = '" . DateFromRUtoEN($bdate) . " 00:00:00 Europe/Moscow',
                                                             adate = '" . DateFromRUtoEN($adate) . " 00:00:00 Europe/Moscow',
-                                                            name = '" . $name . "'" . (($passwd != '') ? ", passwd = '" . md5($passwd) . "' " : '') . "
-                                                                WHERE
-                                                                    id = '" . $id . "'";
+                                                            name = '" . $name . "'" . (($passwd != '') ? ", 
+                                                            passwd = '" . md5($passwd) . "' " : '') . "
+                                                            WHERE id = '" . $id . "'";
                             break;
 
         case 'delUser':  $sql = "DELETE FROM public.user WHERE id = '" . $id . "'";
@@ -542,14 +514,39 @@
 
                                                                         $dbconn->query("UPDATE public.user SET img_ext = '" . $file_ext . "' WHERE id = " . $user_id);
                                                                     }
+                                                    // insert/update access right
+                                                    $sql = "INSERT INTO public.access_right (user_id, admin, omu, kadr, telephone, incoming) 
+                                                            VALUES (
+                                                                '" . $user_id . "',
+                                                                '" . getIntValueAccessRight($adminView, $adminEdit, $adminRemove) . "',
+                                                                '" . getIntValueAccessRight($omuView, $omuEdit, $omuRemove) . "',
+                                                                '" . getIntValueAccessRight($kadrView, $kadrEdit, $kadrRemove) . "',
+                                                                '" . getIntValueAccessRight($telephoneView, $telephoneEdit, $telephoneRemove) . "',
+                                                                '" . getIntValueAccessRight($incomingView, $incomingEdit, $incomingRemove) . "'
+                                                            ) 
+                                                            ON CONFLICT (user_id) 
+                                                            DO UPDATE SET admin = '" . getIntValueAccessRight($adminView, $adminEdit, $adminRemove) . "', 
+                                                            omu = '" . getIntValueAccessRight($omuView, $omuEdit, $omuRemove) . "', 
+                                                            kadr = '" . getIntValueAccessRight($kadrView, $kadrEdit, $kadrRemove) . "', 
+                                                            telephone = '" . getIntValueAccessRight($telephoneView, $telephoneEdit, $telephoneRemove) . "', 
+                                                            incoming = '" . getIntValueAccessRight($incomingView, $incomingEdit, $incomingRemove) . "'
+                                                            ";
+                                                    $res = $dbconn->query($sql);
+                                                    if ($mysqli->errno) {
+                                                        die('Error (' . $mysqli->errno . ') ' . $mysqli->error . " " . $sql);
+                                                    } 
                                                     break;
                 // Удалем картинку если она есть
                 case 'delUser':        if (file_exists('/face/' . $id . '.' . $photo['file_ext']))
                                                     unlink('../face/' . $id . '.' . $photo['file_ext']);
                                                 if (file_exists('../face/' . $id . '_thumb.' . $photo['file_ext']))
                                                     unlink('../face/' . $id . '_thumb.' . $photo['file_ext']);
-
-                                            break;
+                                        $sql = "DELETE FROM public.access_right WHERE user_id = '" . $id . "'";
+                                        $res = $dbconn->query($sql);
+                                        if ($mysqli->errno) {
+                                            die('Error (' . $mysqli->errno . ') ' . $mysqli->error . " " . $sql);
+                                        }
+                                        break;
 
                 // Загружаем картинку если она есть
                 case 'addPerson': case 'editPerson':    if (isset($id) && $id != '') {
@@ -649,5 +646,19 @@
         echo "\n<META http-equiv='REFRESH' content='0; url=/'>";
     }
     else echo "\n<META http-equiv='REFRESH' content='0; url=/'>";
+
+    function getIntValueAccessRight($view, $edit, $remove)
+    {
+        if ($view == '') {
+            $view = '0';
+        }
+        if ($edit == '') {
+            $edit = '0';
+        }
+        if ($remove == '') {
+            $remove = '0';
+        }
+        return (string)base_convert($view . $edit . $remove, 2, 10);
+    }
 ?>
 

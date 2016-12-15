@@ -51,6 +51,7 @@
                 <?php
                     if ($_GET['act'] == 'edit') {
                         $arUser = getUserById($_GET['id']);
+                        $arAccessRight = getAccessRightById($_GET['id']);
                     }
                 ?>
                 <!-- Your Page Content Here -->
@@ -89,27 +90,27 @@
                                         <tbody>
                                             <tr>
                                                 <td>Администрирование</td>
-                                                <td class="text-center"><input type="checkbox" name="adminView" value="1"></td>
-                                                <td class="text-center"><input type="checkbox" name="adminEdit" value="1"></td>
-                                                <td class="text-center"><input type="checkbox" name="adminRemove" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="adminView" value="1"<?= ($_GET['act'] == 'edit' && $arAccessRight['admin'] < 4) ? '' : ' checked="checked"'; ?>></td>
+                                                <td class="text-center"><input type="checkbox" name="adminEdit" value="1"<?= ($_GET['act'] == 'edit' && !in_array($arAccessRight['admin'], array(2, 3, 6, 7))) ? '' : ' checked="checked"'; ?>></td>
+                                                <td class="text-center"><input type="checkbox" name="adminRemove" value="1"<?= ($_GET['act'] == 'edit' && !in_array($arAccessRight['admin'], array(1, 3, 5, 7))) ? '' : ' checked="checked"'; ?>></td>
                                             </tr>
                                             <tr>
                                                 <td>Организационно-мобилизационное управление</td>
-                                                <td class="text-center"><input type="checkbox" name="omuView" value="1"></td>
-                                                <td class="text-center"><input type="checkbox" name="omuEdit" value="1"></td>
-                                                <td class="text-center"><input type="checkbox" name="omuRemove" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="omuView" value="1"<?= ($_GET['act'] == 'edit' && $arAccessRight['omu'] < 4) ? '' : ' checked="checked"'; ?>></td>
+                                                <td class="text-center"><input type="checkbox" name="omuEdit" value="1"<?= ($_GET['act'] == 'edit' && !in_array($arAccessRight['omu'], array(2, 3, 6, 7))) ? '' : ' checked="checked"'; ?>></td>
+                                                <td class="text-center"><input type="checkbox" name="omuRemove" value="1"<?= ($_GET['act'] == 'edit' && !in_array($arAccessRight['omu'], array(1, 3, 5, 7))) ? '' : ' checked="checked"'; ?>></td>
                                             </tr>
                                             <tr>
                                                 <td>Кадры</td>
-                                                <td class="text-center"><input type="checkbox" name="kadrView" value="1"></td>
-                                                <td class="text-center"><input type="checkbox" name="kadrEdit" value="1"></td>
-                                                <td class="text-center"><input type="checkbox" name="kadrRemove" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="kadrView" value="1"<?= ($_GET['act'] == 'edit' && $arAccessRight['kadr'] < 4) ? '' : ' checked="checked"'; ?>></td>
+                                                <td class="text-center"><input type="checkbox" name="kadrEdit" value="1"<?= ($_GET['act'] == 'edit' && !in_array($arAccessRight['kadr'], array(2, 3, 6, 7))) ? '' : ' checked="checked"'; ?>></td>
+                                                <td class="text-center"><input type="checkbox" name="kadrRemove" value="1"<?= ($_GET['act'] == 'edit' && !in_array($arAccessRight['kadr'], array(1, 3, 5, 7))) ? '' : ' checked="checked"'; ?>></td>
                                             </tr>
                                             <tr>
                                                 <td>Телефонный справочник</td>
-                                                <td class="text-center"><input type="checkbox" name="telephoneView" value="1"></td>
-                                                <td class="text-center"><input type="checkbox" name="telephoneEdit" value="1"></td>
-                                                <td class="text-center"><input type="checkbox" name="telephoneRemove" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="telephoneView" value="1"<?= ($_GET['act'] == 'edit' && $arAccessRight['telephone'] < 4) ? '' : ' checked="checked"'; ?>></td>
+                                                <td class="text-center"><input type="checkbox" name="telephoneEdit" value="1"<?= ($_GET['act'] == 'edit' && !in_array($arAccessRight['telephone'], array(2, 3, 6, 7))) ? '' : ' checked="checked"'; ?>></td>
+                                                <td class="text-center"><input type="checkbox" name="telephoneRemove" value="1"<?= ($_GET['act'] == 'edit' && !in_array($arAccessRight['telephone'], array(1, 3, 5, 7))) ? '' : ' checked="checked"'; ?>></td>
                                             </tr>
                                             <tr>
                                                 <td><s>ЗГТ</s></td>
@@ -119,9 +120,9 @@
                                             </tr>
                                             <tr>
                                                 <td>Входящие документы</td>
-                                                <td class="text-center"><input type="checkbox" name="incomeView" value="1"></td>
-                                                <td class="text-center"><input type="checkbox" name="incomeEdit" value="1"></td>
-                                                <td class="text-center"><input type="checkbox" name="incomeRemove" value="1"></td>
+                                                <td class="text-center"><input type="checkbox" name="incomingView" value="1"<?= ($_GET['act'] == 'edit' && $arAccessRight['incoming'] < 4) ? '' : ' checked="checked"'; ?>></td>
+                                                <td class="text-center"><input type="checkbox" name="incomingEdit" value="1"<?= ($_GET['act'] == 'edit' && !in_array($arAccessRight['incoming'], array(2, 3, 6, 7))) ? '' : ' checked="checked"'; ?>></td>
+                                                <td class="text-center"><input type="checkbox" name="incomingRemove" value="1"<?= ($_GET['act'] == 'edit' && !in_array($arAccessRight['incoming'], array(1, 3, 5, 7))) ? '' : ' checked="checked"'; ?>></td>
                                             </tr>
                                             <tr>
                                                 <td><s>Контроль исполнения документов</s></td>
