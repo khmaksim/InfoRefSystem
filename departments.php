@@ -115,10 +115,12 @@
                             </div><!-- /.box -->
                         </div><!-- /.col -->
                     </div>
-
+                    <?php
+                        $arAccessRight = getAccessRightById($_SESSION['user_id']);
+                    ?>
                     <div class="row">
                         <div class="col-xs-12">
-                            <p class="text-right"><a href="/departments_edit.php?act=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                            <p class="text-right"><a href="/departments_edit.php?act=add" type="button" class="btn btn-primary <?= in_array($arAccessRight['omu'], array(2, 3, 6, 7)) ? '' : disabled; ?>"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                         </div><!-- /.col -->
                     </div>
                 </section><!-- /.content -->

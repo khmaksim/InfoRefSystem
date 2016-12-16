@@ -36,7 +36,7 @@
                                     }
                                 ?>
                             </td>
-                            <td><?= $row['title']; ?><br />(<?= getRoleTitleById($row['role_id']); ?>)</td>
+                            <td><?= $row['title']; ?></td>
                             <td><?= $row['name']; ?></td>
                             <td><?= ($row['active']) ? 'Нет' : 'Да'; ?></td>
                             <td><?= DateFromENtoRU(mb_substr($row['adate'], 0, 10), '-'); ?></td>
