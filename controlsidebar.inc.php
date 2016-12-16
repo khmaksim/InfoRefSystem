@@ -10,10 +10,13 @@
             <div class="tab-content">
                 <!-- Table tab content -->
                 <div class="tab-pane active" id="control-sidebar-table-tab">
+                    <?php
+                        // получение прав доступа на ПМ пользователя
+                        $arAccessRight = getAccessRightById($_SESSION['user_id']);
+                    ?>
                     <ul class="control-sidebar-menu">
                         <?php
-                            // Если пользователь администратор
-                            if (getUserRoleById($_SESSION['user_id']) == 1) {
+                            if ($arAccessRight['admin'] > 0) {
                         ?>
                         <li>
                             <a href="/user.php">
@@ -27,6 +30,9 @@
                         <?php
                             }
                         ?>
+                        <?php
+                            if ($arAccessRight['omu'] > 0) {
+                        ?>
                         <li>
                             <a href="/departments.php">
                                 <i class="menu-icon fa fa-table bg-red"></i>
@@ -36,6 +42,12 @@
                                 </div>
                             </a>
                         </li>
+                        <?php
+                            }
+                        ?>
+                        <?php
+                            if ($arAccessRight['incoming'] > 0) {
+                        ?>
                         <li>
                             <a href="/incoming.php">
                                 <i class="menu-icon fa fa-table bg-red"></i>
@@ -45,6 +57,12 @@
                                 </div>
                             </a>
                         </li>
+                        <?php
+                            }
+                        ?>
+                        <?php
+                            if ($arAccessRight['telephone'] > 0) {
+                        ?>
                         <li>
                             <a href="/phonelist.php">
                                 <i class="menu-icon fa fa-table bg-red"></i>
@@ -63,6 +81,9 @@
                                 </div>
                             </a>
                         </li>
+                         <?php
+                            }
+                        ?>
                     </ul><!-- /.control-sidebar-menu -->
                 </div><!-- /.tab-pane -->
                 <!-- Settings tab content -->
