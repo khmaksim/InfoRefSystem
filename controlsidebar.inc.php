@@ -90,8 +90,7 @@
                 <div class="tab-pane" id="control-sidebar-settings-tab">
                     <ul class="control-sidebar-menu">
                         <?php
-                            // Если пользователь администратор
-                            if (getUserRoleById($_SESSION['user_id']) == 1) {
+                            if ($arAccessRight['admin'] > 0) {
                         ?>
                         <li>
                             <a href="/role.php">
@@ -102,10 +101,6 @@
                                 </div>
                             </a>
                         </li>
-
-                        <?php
-                            }
-                        ?>
                         <li>
                             <a href="/militaryrank.php">
                                 <i class="menu-icon fa fa-book bg-green"></i>
@@ -205,8 +200,9 @@
                                 </div>
                             </a>
                         </li>
-
-
+                         <?php
+                            }
+                        ?>
                     </ul><!-- /.control-sidebar-menu -->
                 </div><!-- /.tab-pane -->
                 <!-- Home tab content -->
