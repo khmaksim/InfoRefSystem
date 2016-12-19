@@ -100,10 +100,12 @@
                             </div><!-- /.box -->
                         </div><!-- /.col -->
                     </div>
-
+                    <?php
+                        $arAccessRight = getAccessRightById($_SESSION['user_id']);
+                    ?>
                     <div class="row">
                         <div class="col-xs-12">
-                            <p class="text-right"><a href="/unit_edit.php?act=add&id_departments=<?= $_GET['id']; ?>" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                            <p class="text-right"><a href="/unit_edit.php?act=add&id_departments=<?= $_GET['id']; ?>" type="button" class="btn btn-primary <?= in_array($arAccessRight['kadr'], array(2, 3, 6, 7)) ? '' : disabled; ?>"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                         </div><!-- /.col -->
                     </div>
                 </section><!-- /.content -->
