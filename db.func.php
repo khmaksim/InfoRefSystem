@@ -1,5 +1,5 @@
 <?php
-    $host       = '192.168.1.18';
+    $host       = 'localhost';
     $port       = 5432;
     $dbname     = 'isys-db';
     $username   = 'postgres';

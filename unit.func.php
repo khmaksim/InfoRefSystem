@@ -29,10 +29,10 @@
                         ?>
                         <tr>
                             <td><?= ++$number; ?></td>
-                            <td><?= getMilitaryPositionById($row['id_militaryposition'])['name']; ?></td>
-                            <td><?= getMilitaryRankById($row['id_militaryrank'])['name']; ?></td>
+                            <td><? $t1 = getMilitaryPositionById($row['id_militaryposition']); print $t1['name']; ?></td>
+                            <td><? $t1 = getMilitaryRankById($row['id_militaryrank']); print $t1['name']; ?></td>
                             <td><?= $row['tariffcategory']; ?></td>
-                            <td><?= getAccessTypeById($row['id_accesslevel'])['name']; ?></td>
+                            <td><? $t1= getAccessTypeById($row['id_accesslevel']); print $t1['name']; ?></td>
                             <td><?= $row['ordernumber']; ?></td>
                             <td><?= DateFromENtoRU($row['dateorderstart'], '-'); ?></td>
                             <td><?= $row['orderowner']; ?></td>

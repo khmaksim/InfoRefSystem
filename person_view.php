@@ -37,7 +37,7 @@
             <div class="row">
               <div class="col-xs-12">
                 <h2 class="page-header">
-                  <i class="fa fa-user"></i> <?= mb_strtolower(getMilitaryRankById($arPerson['id_militaryrank'])['name'], 'utf-8') . ' ' . $arPerson['lastname'] . ' ' . $arPerson['firstname'] . ' ' . $arPerson['patronymic'] . ' (' . $arPerson['personalnumber'] . ')'; ?>
+                  <i class="fa fa-user"></i> <? $t1 = getMilitaryRankById($arPerson['id_militaryrank']); print mb_strtolower($t1['name'], 'utf-8') . ' ' . $arPerson['lastname'] . ' ' . $arPerson['firstname'] . ' ' . $arPerson['patronymic'] . ' (' . $arPerson['personalnumber'] . ')'; ?>
                   <small class="pull-right">Дата печати: <?= date('d-m-Y'); ?></small>
                 </h2>
               </div>
@@ -63,7 +63,8 @@
                   <?php
                     $sql = "SELECT * FROM public.tunit WHERE id = '" . $arPerson['id_tunit'] . "' ORDER BY id";
                     foreach ($dbconn->query($sql) as $row) {
-                        echo getMilitaryPositionById($row['id_militaryposition'])['name'];
+						$t1 = getMilitaryPositionById($row['id_militaryposition']);
+                        echo $t1['name'];
                     }
                   ?>
                 </address>
@@ -82,7 +83,7 @@
               <div class="col-sm-4 invoice-col">
                 <strong>Форма допуска</strong>
                 <address>
-                  <?= getAccessTypeById($arPerson['id_accesslevel'])['name']; ?>
+                  <? $t1 = getAccessTypeById($arPerson['id_accesslevel']); print $t1['name']; ?>
                 </address>
               </div>
               <!-- /.col -->
@@ -94,7 +95,7 @@
               <div class="col-sm-4 invoice-col">
                 <strong>Адрес</strong>
                 <address>
-                  <?= getCityById($arPerson['id_city'])['name'] . ', ' . $arPerson['address']; ?>
+                  <? $t1 = getCityById($arPerson['id_city']); print $t1['name'] . ', ' . $arPerson['address']; ?>
                 </address>
               </div>
               <!-- /.col -->

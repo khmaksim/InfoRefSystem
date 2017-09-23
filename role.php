@@ -1,4 +1,4 @@
-<?php
+﻿<?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     $page = 'militaryrank';
 ?>
@@ -22,7 +22,7 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+    <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
 
 
@@ -39,7 +39,7 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="/departments.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                        <li><a href="./"><i class="fa fa-dashboard"></i> Главная</a></li>
                         <li class="active">Роли безопасности</li>
                     </ol>
                 </section>
@@ -52,7 +52,7 @@
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Роли безопасности<i class="fa fa-info-circle"></i> Каждая роль определяется набором прав для работы с системой</small></h3>
+                                    <h3 class="box-title">Роли безопасности<small><i class="fa fa-info-circle"></i> Каждая роль определяется набором прав для работы с системой</small></h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">

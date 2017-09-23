@@ -13,7 +13,7 @@
                         <tr>
                             <td>' . ++$depNumber . '</td>
                             <td style="padding-left: ' . (8 * $padding) . 'px;">' . $row['fullname'] . '</td>
-                            <!--<td>' . getDepartmentsById($row['parent'])['fullname']. '</td>-->';
+                            <!--<td>' . /* getDepartmentsById($row['parent'])['fullname']. */ '</td>-->';
                             if ($row['editable'] == true and !in_array($arAccessRight['omu'], array(0, 4))) {
                                 if (in_array($arAccessRight['omu'], array(2, 3, 6, 7))) {
                                     echo '

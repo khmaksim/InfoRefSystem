@@ -22,7 +22,7 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+    <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
 
 
@@ -39,7 +39,7 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="/departments.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                        <li><a href="./"><i class="fa fa-dashboard"></i> Главная</a></li>
                         <li class="active">Должности</li>
                     </ol>
                 </section>

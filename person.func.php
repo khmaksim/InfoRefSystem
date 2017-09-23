@@ -40,9 +40,9 @@
                             </td>
                             <td><?= $row['personalnumber']; ?></td>
                             <td><?= $row['lastname']; ?> <?= $row['firstname']; ?> <?= $row['patronymic']; ?></td>
-                            <td><?= getAccessTypeById($row['id_accesslevel'])['name']; ?></td>
+                            <td><? $t1 = getAccessTypeById($row['id_accesslevel']); print $t1['name']; ?></td>
                             <td><?= DateFromENtoRU($row['birthday'], '-'); ?></td>
-                            <td><?= getMilitaryPositionById(getUnitByid($row['id_tunit'])['id_militaryposition'])['name']; ?></td>
+                            <td><? $t1 = getUnitByid($row['id_tunit']); $t2 = getMilitaryPositionById($t1['id_militaryposition']); print $t2['name']; ?></td>
                             <td class="col-xs-1 text-center"><a href="/person_view.php?id=<?= $row['id']; ?>&id_departments=<?= $_GET['id']; ?>" target="_blank" class="button btn-warning btn-sm"><span class="glyphicon glyphicon-print"></span></a></td>
                             <?php
                                 if ($row['editable'] == true) {

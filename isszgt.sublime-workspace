@@ -1,0 +1,558 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ch",
+				"check_values"
+			],
+			[
+				"indi",
+				"indicators_aviation_regiment"
+			],
+			[
+				"num_",
+				"num_aviation_regiment"
+			],
+			[
+				"nu",
+				"num_aviation_regiment"
+			],
+			[
+				"ex",
+				"exists"
+			],
+			[
+				"ma",
+				"matrix_comparisons"
+			],
+			[
+				"carre",
+				"carre_file"
+			],
+			[
+				"source",
+				"source_file"
+			],
+			[
+				"access",
+				"access_right"
+			],
+			[
+				"acce",
+				"access_right_for_module"
+			],
+			[
+				"omu",
+				"omuEdit"
+			],
+			[
+				"admin",
+				"adminRemove"
+			],
+			[
+				"inlin",
+				"inline-block"
+			],
+			[
+				"b",
+				"inline-block"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"off",
+				"offset_y"
+			],
+			[
+				"se",
+				"self"
+			],
+			[
+				"size",
+				"size_part"
+			],
+			[
+				"data",
+				"data_msg"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "db.func.php",
+			"settings":
+			{
+				"buffer_size": 635,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/xampp/php/php.ini",
+			"settings":
+			{
+				"buffer_size": 73143,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 334.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"server.py",
+			"python server.py"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/xampp/htdocs/isszgt"
+	],
+	"file_history":
+	[
+		"//OTD3SRV/Documents$/m.khorlo/Desktop/isszgt",
+		"/C/xampp/apache/conf/extra/httpd-vhosts.conf",
+		"/C/xampp/readme_en.txt",
+		"/D/обнова 01.08.2017/обнова 01.08.2017/mainheader.inc.php",
+		"/D/обнова 01.08.2017/обнова 01.08.2017/index.php",
+		"/D/обнова 01.08.2017/обнова 01.08.2017/head.inc.php",
+		"/D/isszgt/getaccessrightbyid.func.php",
+		"/D/projects/python/recur/recur.py",
+		"/D/projects/django/airs/static/Highcharts-4.2.3/examples/arearange/index.htm",
+		"/D/projects/django/airs/static/Highcharts-4.2.3/examples/treemap-with-levels/index.htm",
+		"/D/projects/django/airs/static/Highcharts-4.2.3/examples/waterfall/index.htm",
+		"/D/projects/python/ranking/mainwindow.py",
+		"/D/projects/python/ranking/matrix.txt",
+		"/D/projects/python/ranking/mainwindow.ui",
+		"/D/projects/python/ranking/main.py",
+		"/D/projects/django/airs/static/Highcharts-4.2.3/examples/3d-column-interactive/index.htm",
+		"/D/projects/django/airs/static/Highcharts-4.2.3/index.htm",
+		"/D/projects/django/airs/static/Highcharts-4.2.3/examples/3d-column-interactive/index_test.htm",
+		"/D/projects/django/airs/.gitignore",
+		"/D/projects/django/airs/.idea/workspace.xml",
+		"/C/Python34/Lib/venv/__main__.py",
+		"/D/isszgt/index.php",
+		"//OTD3SRV/Documents$/m.khorlo/Documents/ТТЗ - болванка - всё в одном.doc",
+		"/D/reportlab-3.4.0/reportlab-3.4.0/README.txt",
+		"/D/reportlab-3.4.0/reportlab-3.4.0/INSTALL.txt",
+		"/D/dist/bootstrap-3.3.6/README.md",
+		"/D/dist/jekyll-master/jekyll-master/README.markdown",
+		"/D/dist/jekyll-master/README.markdown",
+		"/D/dist/jekyll-master/jekyll-master/CONDUCT.markdown",
+		"/D/dist/jekyll-master/jekyll-master/Gemfile",
+		"/D/dist/jekyll-master/jekyll-master/.rubocop.yml",
+		"/D/dist/jekyll-master/jekyll-master/LICENSE",
+		"/D/dist/jekyll-master/jekyll-master/History.markdown",
+		"/D/dist/jekyll-master/jekyll-master/Rakefile",
+		"/D/dist/jekyll-master/jekyll-master/jekyll.gemspec",
+		"/D/dist/jekyll-master/jekyll-master/.jrubyrc",
+		"/D/dist/jekyll-master/jekyll-master/.travis.yml",
+		"/D/dist/Django-1.9.tar/dist/Django-1.9/Django-1.9/README.rst",
+		"/D/dist/jekyll-master/exe/jekyll",
+		"/D/projects/python/lifeComp/main.py",
+		"/D/projects/python/lifeComp/people.py",
+		"/D/projects/python/sort_file_date_folder.py",
+		"/D/projects/python/monitor_db/monitor.py",
+		"/D/projects/python/monitor_db/main.py",
+		"/D/projects/python/monitor_db/monitor.pyc",
+		"/T/isszgt/db.func.php",
+		"/D/projects/python/recur/dist (1)/RECUR.exe",
+		"//OTD3SRV/Documents$/m.khorlo/Documents/ax_files.xml",
+		"/D/OpenServer/domains/isszgt/departments.php",
+		"/D/OpenServer/domains/isszgt/dist/css/AdminLTE.css",
+		"/D/OpenServer/domains/isszgt/head.inc.php",
+		"/D/OpenServer/domains/isszgt/index.php",
+		"/D/OpenServer/domains/isszgt/unit.func.php",
+		"/D/OpenServer/domains/isszgt/unit.php",
+		"/D/OpenServer/domains/isszgt/controlsidebar.inc.php",
+		"/D/OpenServer/domains/isszgt/db.func.php",
+		"/D/OpenServer/domains/isszgt/user.php",
+		"/D/OpenServer/domains/isszgt/showdepartmentstree.func.php",
+		"/D/OpenServer/domains/isszgt/departments.func.php",
+		"/D/OpenServer/domains/isszgt/getaccessrightbyid.func.php",
+		"/D/OpenServer/domains/isszgt/user.func.php",
+		"/D/OpenServer/domains/isszgt/unit_edit.php",
+		"/D/OpenServer/domains/isszgt/user_edit.php",
+		"/D/OpenServer/domains/isszgt/lib/login.php",
+		"/D/OpenServer/domains/isszgt/save.php",
+		"/D/OpenServer/domains/isszgt/showphonelisttree.func.php",
+		"/D/OpenServer/domains/isszgt/phone_list.php",
+		"/D/OpenServer/domains/isszgt/person_view_list.php",
+		"/D/OpenServer/domains/isszgt/getuserbyid.func.php",
+		"/D/OpenServer/domains/isszgt/phonelist.php",
+		"/D/OpenServer/domains/isszgt/phonelist.func.php",
+		"/D/OpenServer/domains/isszgt/lib/auth.php",
+		"/D/OpenServer/domains/isszgt/login.php",
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/D/OpenServer/domains/isszgt/plugins/iCheck/icheck.js",
+		"/D/OpenServer/domains/isszgt/plugins/iCheck/all.css",
+		"/D/OpenServer/domains/isszgt/dist/js/app.js",
+		"/D/OpenServer/domains/isszgt/plugins/datatables/dataTables.bootstrap.css",
+		"/D/OpenServer/domains/isszgt/phonelistperson.php",
+		"/D/OpenServer/domains/isszgt/plugins/ckeditor/ckeditor.js",
+		"/D/OpenServer/domains/isszgt/militaryposition.php",
+		"/D/OpenServer/domains/isszgt/city.php",
+		"/D/OpenServer/domains/isszgt/.gitignore",
+		"/D/OpenServer/domains/isszgt/role.php",
+		"/D/OpenServer/domains/isszgt/person.php",
+		"/D/OpenServer/domains/isszgt/militaryrank.php",
+		"/D/OpenServer/domains/isszgt/phonetype.php",
+		"/D/OpenServer/domains/isszgt/phonetype_edit.php",
+		"/D/OpenServer/domains/isszgt/role_edit.php",
+		"/D/OpenServer/domains/isszgt/person_edit.php",
+		"/D/OpenServer/domains/isszgt/phonenumbertype.php",
+		"/D/OpenServer/domains/isszgt/phonenumbertype_edit.php",
+		"/D/OpenServer/domains/isszgt/medaltype.php",
+		"/D/OpenServer/domains/isszgt/medaltype_edit.php",
+		"/D/OpenServer/domains/isszgt/militaryposition_edit.php",
+		"/D/OpenServer/domains/isszgt/militaryrank_edit.php",
+		"/D/OpenServer/domains/isszgt/emailtype_edit.php",
+		"/D/OpenServer/domains/isszgt/incoming.php",
+		"/D/OpenServer/domains/isszgt/incoming_edit.php",
+		"/D/OpenServer/domains/isszgt/interpassporttype.php",
+		"/D/OpenServer/domains/isszgt/interpassporttype_edit.php",
+		"/D/OpenServer/domains/isszgt/emailtype.php",
+		"/D/OpenServer/domains/isszgt/accesstype.php",
+		"/D/OpenServer/domains/isszgt/accesstype_edit.php",
+		"/D/OpenServer/domains/isszgt/addresstype.php",
+		"/D/OpenServer/domains/isszgt/addresstype_edit.php",
+		"/D/OpenServer/domains/isszgt/city_edit.php",
+		"/D/OpenServer/domains/isszgt/departments_edit.php",
+		"/D/OpenServer/domains/isszgt/departments_view.php",
+		"/D/OpenServer/domains/isszgt/dist/css/font-awesome.css",
+		"/D/OpenServer/domains/isszgt/dist/css/ionicons.css",
+		"/D/OpenServer/domains/isszgt/dist/fonts/ionicons.svg",
+		"/D/OpenServer/domains/isszgt/leftcolumn.inc.php",
+		"/D/OpenServer/domains/isszgt/accesstype.func.php",
+		"/D/OpenServer/domains/isszgt/mainheader.inc.php",
+		"/D/OpenServer/domains/isszgt/showdepartmentsnavtree.func.php",
+		"/D/OpenServer/domains/isszgt/mainfooter.inc.php",
+		"/D/OpenServer/domains/isszgt/dist/css/AdminLTE.min.css",
+		"/D/OpenServer/domains/isszgt/dist/css/skins/skin-green.min.css",
+		"/D/OpenServer/domains/isszgt/havechilde.func.php",
+		"/D/OpenServer/domains/isszgt/dist/js/app.min.js",
+		"/D/OpenServer/domains/isszgt/build/less/sidebar.less",
+		"/D/OpenServer/domains/isszgt/build/less/sidebar-mini.less",
+		"/D/OpenServer/domains/isszgt/build/less/skins/skin-blue.less",
+		"/D/OpenServer/domains/isszgt/dist/css/skins/skin-blue.min.css",
+		"/D/OpenServer/domains/isszgt/build/less/skins/_all-skins.less",
+		"/D/OpenServer/domains/isszgt/bootstrap/css/bootstrap.css",
+		"/D/OpenServer/domains/isszgt/build/bootstrap-less/mixins/border-radius.less"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"*.htm,D:\\projects\\django\\airs\\static\\Highcharts-4.2.3\\examples",
+			"*.php",
+			"/,<open files>,D:\\OpenServer\\domains\\isszgt",
+			"/,<open files>",
+			"/",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"extension=",
+			"extension",
+			"extensi",
+			"averages",
+			"https://code.highcharts.com/",
+			"https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js",
+			"num_indicator",
+			"numAviationRegimentLineEdit",
+			"python34",
+			"python",
+			"getAccessRightById",
+			"arAccessRight",
+			"user_id",
+			"getIntValueAccessRight",
+			"getUserById",
+			"arUser",
+			"session_start",
+			"could not find driver",
+			"var",
+			"icheckbox_square-blue",
+			"table ",
+			"table",
+			"table-bordered",
+			"table-striped",
+			"department_view",
+			"<body class=\"hold-transition skin-blue sidebar-mini\">",
+			"info",
+			"content-header",
+			"content-wrapper",
+			"box-title",
+			"broad",
+			"<h1>\n                        <small>",
+			"<h1><small>",
+			"<h1>",
+			"<h1",
+			"content-header",
+			"main-sidebar",
+			"sidebar-menu",
+			"sideba",
+			"180",
+			"230",
+			".sidebar-menu>li",
+			"li",
+			".sidebar-menu>li",
+			"li",
+			"span",
+			"span:not(.pull-right)",
+			"span",
+			"180",
+			".sidebar-mini.sidebar-collapse .sidebar-menu>li",
+			".sidebar-mini.sidebar-collapse .sidebar-menu>li>a",
+			".sidebar-mini.sidebar-collapse .sidebar-menu>li>a>span",
+			"word-",
+			".sidebar-mini.sidebar-collapse .sidebar-menu > li > a > span",
+			".sidebar-menu > li > a ",
+			"sidebar-menu>li>a",
+			"230",
+			".sidebar-menu",
+			".sidebar-menu li>a>.fa-angle-left",
+			".sidebar-menu .treeview-menu > li > a",
+			".sidebar-menu .treeview-menu>li>a",
+			"span",
+			"main-sidebar",
+			"400",
+			"print",
+			"View",
+			"header",
+			"items",
+			"shutdown",
+			"connect",
+			"socket"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"../../js/",
+			"../../api/js/jquery-1.11.3.min.js",
+			"arAccessRight",
+			"<body class=\"hold-transition skin-blue sidebar-mini sidebar-collapse\">",
+			"250",
+			"300"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "db.func.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 635,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								588,
+								588
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/xampp/php/php.ini",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 73143,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								34586,
+								34586
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 12618.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 205.0
+	},
+	"output.find_results":
+	{
+		"height": 100.0
+	},
+	"pinned_build_system": "",
+	"project": "isszgt.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 243.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

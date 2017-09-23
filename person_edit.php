@@ -115,7 +115,7 @@
                                                     $sql = "SELECT * FROM public.tunit WHERE id_departments = '" . $_GET['id_departments'] . "' AND vacant = 'true' AND dateorderend = '1970-01-01' ORDER BY id";
                                                     foreach ($dbconn->query($sql) as $row) {
                                                 ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arPerson['id_tunit'] == $row['id']) ? ' selected="selected"' : ''; ?>><?= getMilitaryPositionById($row['id_militaryposition'])['name']; ?></option>
+                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arPerson['id_tunit'] == $row['id']) ? ' selected="selected"' : ''; ?>><? $t1 = getMilitaryPositionById($row['id_militaryposition']); print $t1['name']; ?></option>
                                                 <?php
                                                     }
                                                 ?>
@@ -129,7 +129,7 @@
                                                     $sql = "SELECT * FROM public.tmilitaryrank ORDER BY name";
                                                     foreach ($dbconn->query($sql) as $row) {
                                                 ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arPerson['id_militaryrank'] == $row['id']) ? ' selected="selected"' : ''; ?>><?= getMilitaryRankById($row['id'])['name']; ?></option>
+                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arPerson['id_militaryrank'] == $row['id']) ? ' selected="selected"' : ''; ?>><? $t1 = getMilitaryRankById($row['id']); print $t1['name']; ?></option>
                                                 <?php
                                                     }
                                                 ?>
