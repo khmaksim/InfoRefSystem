@@ -23,13 +23,13 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
             <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
+            <div class="fixed content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
