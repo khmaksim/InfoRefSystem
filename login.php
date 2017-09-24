@@ -1,14 +1,14 @@
 <?php
     header('Content-type: text/html; charset=utf-8');
     // Запуск механизма сессий
-    session_start();
+    echo session_start();
 
     // Механизм авторизации
     include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/auth.php';
 
     // Функции БД и настройки соединения
     include_once $_SERVER['DOCUMENT_ROOT'] . '/db.func.php';
-
+    
     ConnectDatabase();
 ?>
 <!DOCTYPE html>
@@ -59,7 +59,13 @@
             <div class="col-xs-4">
               <button type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
             </div><!-- /.col -->
-            <p class="text-center"><?= $_SESSION['error']; ?></p>
+            <p class="text-center">
+                <?php 
+                    if (isset($_SESSION['error'])) {
+                        $_SESSION['error']; 
+                    }
+                ?>
+            </p>
           </div>
         </form>
       </div><!-- /.login-box-body -->

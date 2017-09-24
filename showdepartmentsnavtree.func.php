@@ -2,7 +2,7 @@
     function showDepartmentsNavTree($id = 0) {
         global $dbconn;
 
-        $arActive = getActiveArray($_GET['id']);
+        $arActive = getActiveArray(isset($_GET['id']) ? $_GET['id'] : 0);
 
         $sql = "SELECT * FROM tdepartments WHERE parent = '" . $id . "' ORDER BY id, parent";
         foreach ($dbconn->query($sql) as $row) {

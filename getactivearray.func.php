@@ -10,8 +10,8 @@
             do {
                 $res = $dbconn->query("SELECT parent FROM public.tdepartments WHERE id = '" . intval($id) . "' AND parent != '0'");
                 $row = $res->fetchAll();
-                $arReturn[] = $row[0]['parent'];
-                $id = $row[0]['parent'];
+                $arReturn[] = isset($row[0]['parent']) ? $row[0]['parent'] : 0;
+                $id = isset($row[0]['parent']) ? $row[0]['parent'] : 0;
             }
             while ($res->rowCount() != 0);
             return $arReturn;

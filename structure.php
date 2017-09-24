@@ -1,6 +1,6 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $page = 'phonelist';
+    $page = 'structure';
 ?>
   <!--
   BODY TAG OPTIONS:
@@ -27,7 +27,6 @@
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -37,13 +36,13 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-                        <li class="active">Телефонный справочник</li>
+                        <li class="active">Cтруктура ЧНП ВКС</li>
                     </ol>
                 </section>
 
                 <!-- Main content -->
                 <section class="content">
-                    <form action="/phone_list.php" method="POST" name="View" target="_blank">
+                    <!-- <form action="/phone_list.php" method="POST" name="View" target="_blank"> -->
 
                 <!-- Your Page Content Here -->
                         <div class="row">
@@ -59,27 +58,21 @@
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Телефонный справочник</h3>
+                                    <h3 class="box-title">Cтруктура ЧНП ВКС</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
-                                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-xs-1 text-center">Печать</th>
-                                                <th>Наименование</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tfoot>
-                                            <tr>
-                                                <th class="col-xs-1 text-center">Печать</th>
-                                                <th>Наименование</th>
-                                            </tr>
-                                        </tfoot>
-
-                                        <tbody id="items"></tbody>
-                                    </table>
-
+                                    <!-- sidebar: style can be found in sidebar.less -->
+                                    <section class="sidebar">
+                                       <!-- Sidebar Menu -->
+                                      <ul class="sidebar-menu">
+                                        <li class="header">Оргштатная структура</li>
+                                        <!-- Optionally, you can add icons to the links -->
+                                        <?php
+                                            showDepartmentsNavTree();
+                                        ?>
+                                      </ul><!-- /.sidebar-menu -->
+                                    </section>
+                                    <!-- /.sidebar -->
                                  </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div><!-- /.col -->
@@ -88,9 +81,6 @@
 
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
             include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';

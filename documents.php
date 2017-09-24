@@ -1,6 +1,6 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $page = 'phonelist';
+    $page = 'structure';
 ?>
   <!--
   BODY TAG OPTIONS:
@@ -27,7 +27,6 @@
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -37,60 +36,15 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-                        <li class="active">Телефонный справочник</li>
+                        <li class="active">Руководящие документы</li>
                     </ol>
                 </section>
 
                 <!-- Main content -->
                 <section class="content">
-                    <form action="/phone_list.php" method="POST" name="View" target="_blank">
-
-                <!-- Your Page Content Here -->
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <p class="text-right">
-                                    <a href="javascript:void(0);" onclick="document.View.submit();" type="button" class="btn btn-app"><i class="fa fa-print"></i> Печать</a>
-                                    <!--<a href="javascript:void(0);" onclick="document.View.submit();" type="button" class="btn btn-app"><i class="fa fa-print"></i> Справочник</a>-->
-                                </p>
-                            </div><!-- /.col -->
-                        </div>
-
-                        <div class="row">
-                        <div class="col-xs-12">
-                            <div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title">Телефонный справочник</h3>
-                                </div><!-- /.box-header -->
-                                <div class="box-body">
-                                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-xs-1 text-center">Печать</th>
-                                                <th>Наименование</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tfoot>
-                                            <tr>
-                                                <th class="col-xs-1 text-center">Печать</th>
-                                                <th>Наименование</th>
-                                            </tr>
-                                        </tfoot>
-
-                                        <tbody id="items"></tbody>
-                                    </table>
-
-                                 </div><!-- /.box-body -->
-                            </div><!-- /.box -->
-                        </div><!-- /.col -->
-                    </div>
-                    </form>
 
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
             include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';

@@ -54,7 +54,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <a href="{% url 'research-activities' %}">
-                                        <h4 class="text-center">Шифроваальная работа</h4>
+                                        <h4 class="text-center">Шифровальная работа</h4>
                                     </a>
                                 </div>
                             </div>
@@ -88,11 +88,24 @@
                                     </a>
                                 </div>
                             </div>
+                            <?php
+                                if ($arAccessRight['admin'] == 7) {
+                            ?>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <a href="/administration.php">
+                                        <h4 class="text-center">Администрирование</h4>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php
+                                }
+                            ?>
                         </div>
                         <div class="col-lg-4">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <a href="{% url 'research-activities' %}">
+                                    <a href="/documents.php">
                                         <h4 class="text-center">Руководящие документы</h4>
                                     </a>
                                 </div>
@@ -112,7 +125,7 @@
                             ?>
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <a href="{% url 'research-activities' %}">
+                                    <a href="/structure.php">
                                         <h4 class="text-center">Cтруктура ЧНП ВКС</h4>
                                     </a>
                                 </div>
@@ -123,7 +136,6 @@
             </div><!-- /.content-wrapper -->
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
             <!-- Add the sidebar's background. This div must be placed
             immediately after the control sidebar -->
