@@ -70,13 +70,6 @@
                                             </tr>
                                         </thead>
 
-                                        <tfoot>
-                                            <tr>
-                                                <th class="col-xs-1 text-center">Печать</th>
-                                                <th>Наименование</th>
-                                            </tr>
-                                        </tfoot>
-
                                         <tbody id="items"></tbody>
                                     </table>
 
@@ -89,11 +82,8 @@
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
 
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
             <!-- Add the sidebar's background. This div must be placed
             immediately after the control sidebar -->

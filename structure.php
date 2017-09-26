@@ -48,6 +48,7 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <p class="text-right">
+                                    <a href="javascript:void(0);" onclick="document.View.submit();" type="button" class="btn btn-app"><i class="glyphicon glyphicon-edit"></i> Редактировать</a>
                                     <a href="javascript:void(0);" onclick="document.View.submit();" type="button" class="btn btn-app"><i class="fa fa-print"></i> Печать</a>
                                     <!--<a href="javascript:void(0);" onclick="document.View.submit();" type="button" class="btn btn-app"><i class="fa fa-print"></i> Справочник</a>-->
                                 </p>

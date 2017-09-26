@@ -8,7 +8,7 @@
             echo '
                         <tr>
                             <td class="text-center"><input type="checkbox" name="active[]" value="' . $row['id'] . '" /></td>
-                            <td style="padding-left: ' . (8 * $padding) . 'px;">' . $row['fullname'] . '</td>
+                            <td style="padding-left: ' . (8 * $padding) . 'px;"><a href="/phonelistperson.php?id_departments=' . $row['id'] . '">' . $row['fullname'] . '</a></td>
                         </tr>
             ';
 

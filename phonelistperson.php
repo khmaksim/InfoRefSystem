@@ -1,6 +1,13 @@
 <?php
+    if (!isset($_GET['id_departments'])) {
+        header('Location: /phonelist.php');
+    }
+
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     $page = 'phonelistperson';
+
+    // $arPerson = getPersonById($_GET['id']);
+    $arDepartments = getDepartmentsById($_GET['id_departments']);
 ?>
   <!--
   BODY TAG OPTIONS:
@@ -22,13 +29,10 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+    <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/leftcolumn.inc.php';
         ?>
 
             <!-- Content Wrapper. Contains page content -->
@@ -39,8 +43,9 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="/departments.php"><i class="fa fa-dashboard"></i> Главная</a></li>
-                        <li class="active">Телефонный справочник людей</li>
+                        <li><a href="/departments.php"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
+                        <li><a href="/phonelist.php">Телефонный справочник</a></li>
+                        <li class="active"><?= $arDepartments['fullname'] ?></li>
                     </ol>
                 </section>
 
@@ -61,7 +66,7 @@
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Телефонный справочник людей</h3>
+                                    <h3 class="box-title"><?= $arDepartments['fullname'] ?></h3>
                                 </div><!-- /.box-header -->
                                     <div id="data" class="box-body" style="display: none;">
                                         <table id="Person" class="table table-bordered table-striped">
@@ -82,7 +87,7 @@
 
                                             <tbody>
                                                 <?php
-                                                    $sql = "SELECT * FROM tperson ORDER BY lastname, firstname, patronymic";
+                                                    $sql = "SELECT * FROM tperson WHERE id_departments = " . $_GET['id_departments'] . " ORDER BY lastname, firstname, patronymic";
                                                     foreach ($dbconn->query($sql) as $arPerson) {
                                                 ?>
 
@@ -150,7 +155,6 @@
 
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
             <!-- Add the sidebar's background. This div must be placed
             immediately after the control sidebar -->
