@@ -22,13 +22,12 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+    <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
 
 
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/leftcolumn.inc.php';
         ?>
 
             <!-- Content Wrapper. Contains page content -->
@@ -39,7 +38,8 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="/departments.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                        <li><a href="/departments.php"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
+                        <li><a href="/structure.php">Cтруктура ЧНП ВКС</a></li>
                         <li><a href="/departments.php">Подразделения</a></li>
                         <li class="active"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
                     </ol>
@@ -128,7 +128,6 @@
 
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
             <!-- Add the sidebar's background. This div must be placed
             immediately after the control sidebar -->

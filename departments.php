@@ -39,7 +39,7 @@
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                         <li><a href="/structure.php">Cтруктура ЧНП ВКС</a></li>
-                        <li class="active">Редактировать</li>
+                        <li class="active">Подразделения</li>
                     </ol>
                 </section>
 
