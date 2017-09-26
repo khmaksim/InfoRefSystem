@@ -39,9 +39,6 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>
-                        <?= $arDepartment['fullname']; ?>
-                    </h1>
                     <ol class="breadcrumb">
                         <li><a href="/departments.php"><i class="fa fa-dashboard"></i> Главная</a></li>
                         <li class="active"><?= $arDepartment['fullname']; ?></li>
