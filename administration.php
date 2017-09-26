@@ -140,7 +140,7 @@
                                                     if ($arAccessRight['admin'] > 0) {
                                                 ?>
                                                 <li>
-                                                    <a href="/role.php">
+                                                    <a href="/dictionary.php?name=role">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Роли безопасности</h4>
@@ -148,7 +148,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="/militaryrank.php">
+                                                    <a href="/dictionary.php?name=militaryrank">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Воинские звания</h4>
@@ -156,7 +156,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="/militaryposition.php">
+                                                    <a href="/dictionary.php?name=militaryposition">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Должности</h4>
@@ -164,7 +164,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="/phonetype.php">
+                                                    <a href="/dictionary.php?name=phonetype">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Типы телефонной связи</h4>
@@ -173,7 +173,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="/phonenumbertype.php">
+                                                    <a href="/dictionary.php?name=phonenumbertype">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Типы телефонных номеров</h4>
@@ -182,7 +182,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="/medaltype.php">
+                                                    <a href="/dictionary.php?name=medaltype">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Типы наград</h4>
@@ -191,7 +191,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="/interpassporttype.php">
+                                                    <a href="/dictionary.php?name=interpassporttype">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Типы заграничных паспортов</h4>
@@ -200,7 +200,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="/accesstype.php">
+                                                    <a href="/dictionary.php?name=accesstype">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Формы допуска</h4>
@@ -209,7 +209,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="/city.php">
+                                                    <a href="/dictionary.php?name=city">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Города</h4>
@@ -218,7 +218,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="/addresstype.php">
+                                                    <a href="/dictionary.php?name=addresstype">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Типы адресов</h4>
@@ -227,7 +227,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="/emailtype.php">
+                                                    <a href="/dictionary.php?name=emailtype">
                                                         <i class="menu-icon fa fa-book bg-green"></i>
                                                         <div class="menu-info">
                                                             <h4 class="control-sidebar-subheading">Типы email</h4>
