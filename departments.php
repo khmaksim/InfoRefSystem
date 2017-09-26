@@ -22,13 +22,11 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
-
 
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/leftcolumn.inc.php';
         ?>
 
             <!-- Content Wrapper. Contains page content -->
@@ -39,8 +37,9 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="./"><i class="fa fa-dashboard"></i> Главная</a></li>
-                        <li class="active">Подразделения</li>
+                        <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
+                        <li><a href="/structure.php">Cтруктура ЧНП ВКС</a></li>
+                        <li class="active">Редактировать</li>
                     </ol>
                 </section>
 
@@ -98,16 +97,6 @@
                                             </tr>
                                         </thead>
 
-                                        <!--<tfoot>
-                                            <tr>
-                                                <th>Номер</th>
-                                                <th>Наименование</th>
-                                                <th>Кому подчиняется</th>
-                                                <th>Редактировать</th>
-                                                <th>Удалить</th>
-                                            </tr>
-                                        </tfoot>-->
-
                                         <tbody id="items"></tbody>
                                     </table>
 
@@ -126,11 +115,8 @@
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
 
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
             <!-- Add the sidebar's background. This div must be placed
             immediately after the control sidebar -->
