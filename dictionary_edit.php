@@ -1,6 +1,6 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $page = 'dictionary';
+    $page = 'accesstype';
     $nameDictionary = $_GET['name'];
 ?>
   <!--
@@ -28,6 +28,7 @@
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
+
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -38,16 +39,17 @@
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                         <li><a href="/administration.php">Администрирование</a></li>
-                <?php
-                    include_once $_SERVER['DOCUMENT_ROOT'] . '/' . $nameDictionary . '.php';
-                ?>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <p class="text-right"><a href="/dictionary_edit.php?name=<?= $nameDictionary ?>&act=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
-                            </div><!-- /.col -->
-                        </div>
-                    </section><!-- /.content -->
-                </div><!-- /.content-wrapper -->
+                                    <?php
+                                        include_once $_SERVER['DOCUMENT_ROOT'] . '/' . $nameDictionary . '_edit.php';
+                                    ?>
+                                    <div class="box-footer">
+                                        <a href="/dictionary.php?name=<?= $nameDictionary ?>" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- /.col -->
+                    </div>
+                </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
@@ -71,16 +73,12 @@
              fixed layout. -->
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
-            $(document).ready(function(){
-      		    $("#items").load("/<?= $nameDictionary ?>.func.php");
-                setInterval(function() {$("#items").load("/<?= $nameDictionary ?>.func.php");}, 5000);
-            });
-
-            function ConfirmDelete(id)
+            function checkForm()
             {
-                var ObjectId = id;
-                if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./save.php?id="+ObjectId+"&act=del<?= ucfirst($nameDictionary) ?>";
+                if (document.editform.name.value != '') {
+                    document.editform.submit();
+                } else {
+                    alert('<?= $alertMessage ?>');
                 }
             }
         /*]]>*/

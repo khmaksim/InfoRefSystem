@@ -1,11 +1,3 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        <small></small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="/departments.php"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-        <li><a href="/administration.php">Администрирование</a></li>
         <li class="active">Города</li>
     </ol>
 </section>

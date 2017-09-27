@@ -11,9 +11,6 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getroleusertitlebyid.func.php';
 
     ConnectDatabase();
-
-
-
                             // Выполним SQL запрос
                             try {
                                 $sql = 'SELECT * FROM role ORDER BY id';
@@ -26,7 +23,7 @@
                             <?php
                                 if ($row['editable'] == true) {
                             ?>
-                            <td class="col-xs-1 text-center"><a href="/role_edit.php?act=edit&id=<?= $row['id']; ?>" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                            <td class="col-xs-1 text-center"><a href="/dictionary_edit.php?name=role&act=edit&id=<?= $row['id']; ?>" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                             <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('<?= $row['id']; ?>');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
                             <?php
                                 } else {
