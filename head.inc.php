@@ -7,6 +7,7 @@
     // Функции БД и настройки соединения
     include_once $_SERVER['DOCUMENT_ROOT'] . '/db.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getusernumloginbyid.func.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/gettechniquebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserprevloginbyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserrolebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getroletitlebyid.func.php';

@@ -13,6 +13,7 @@
                     <ul class="treeview-menu">
                         <li><a href="/unit.php?id=' . $row['id'] . '"><i class="fa fa-circle-o text-red"></i> <span>Штатное расписание</span></a></li>
                         <li><a href="/person.php?id=' . $row['id'] . '"><i class="fa fa-circle-o text-red"></i> <span>Личный состав</span></a></li>
+                        <li><a href="/technique.php?id=' . $row['id'] . '"><i class="fa fa-circle-o text-red"></i> <span>Техника</span></a></li>
                 ';
                 showDepartmentsNavTree($row['id']);
                 echo '
@@ -27,6 +28,7 @@
                         <ul class="treeview-menu">
                             <li><a href="/unit.php?id=' . $row['id'] . '"><i class="fa fa-circle-o text-red"></i> <span>Штатное расписание</span></a></li>
                             <li><a href="/person.php?id=' . $row['id'] . '"><i class="fa fa-circle-o text-red"></i> <span>Личный состав</span></a></li>
+                            <li><a href="/technique.php?id=' . $row['id'] . '"><i class="fa fa-circle-o text-red"></i> <span>Техника</span></a></li>
                         </ul>
                     </li>
                 ';

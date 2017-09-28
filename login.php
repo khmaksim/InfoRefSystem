@@ -1,7 +1,7 @@
 <?php
     header('Content-type: text/html; charset=utf-8');
     // Запуск механизма сессий
-    echo session_start();
+    session_start();
 
     // Механизм авторизации
     include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/auth.php';
@@ -40,7 +40,7 @@
   <body class="hold-transition login-page">
     <div class="login-box">
       <div class="login-logo">
-        <a href="/departments.php">ИСС СЗГТ</a>
+        <a href="./">ИСС СЗГТ</a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Для работы с Информационной системой Вам необходимо указать свои Имя и Пароль</p>

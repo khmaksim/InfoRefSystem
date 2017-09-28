@@ -463,8 +463,25 @@
                                                                 WHERE
                                                                     code = '" . $code . "'";
                             break;
-
-
+        case 'addTechnique':
+            $sql = "INSERT INTO public.ttechnique (
+                                                  fullname,
+                                                  shortname,
+                                                  id_departments
+                                                )
+                                                VALUES (
+                                                    '" . $fullname . "',
+                                                    '" . $shortname . "',
+                                                    '" . $id_departments . "'
+                                                )";
+                            break;
+        case 'editTechnique':
+            $sql = "UPDATE public.ttechnique SET fullname = '" . $fullname . "',
+                                                                shortname = '" . $shortname . "'
+                                                                WHERE id = '" . $id . "'";
+                            break;
+        case 'delTechnique':  $sql = "DELETE FROM public.ttechnique WHERE id = '" . $id . "'";
+                            break;
 
         default:    echo '<pre>';
                     print_r($_POST);
@@ -477,7 +494,6 @@
                     echo '</pre>';
                     exit;
     }
-
     $res = $dbconn->query($sql);
 
     /*echo '<pre>';
@@ -491,9 +507,9 @@
                     echo '</pre>';
                     exit;*/
 
-    if ($mysqli->errno) {
-        die('Error (' . $mysqli->errno . ') ' . $mysqli->error . " " . $sql);
-    } else {
+    // if ($mysqli->errno) {
+    //     die('Error (' . $mysqli->errno . ') ' . $mysqli->error . " " . $sql);
+    // } else {
         // Если изменения в БД прошли нормально, делаем пост-обновления
         if ($res) {
             switch ($act) {
@@ -618,14 +634,14 @@
                                                     unlink('../info/' . $id . '_thumb.' . $photo['file_ext']);
 
                                             break;
-
             }
         }
-    }                                                 
+    // }                                                 
 
     // Перенаправление в зависимости от действия
     if(preg_match("/pwd/i", $act) && $id == $_SESSION['admin_id']) echo "\n<META http-equiv='REFRESH' content='0; url=./lib/logout.php'>";
     else if(preg_match("/person/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./person.php?id=" . $id_departments . "'>";
+    else if(preg_match("/technique/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./technique.php?id=" . $id_departments . "'>";
     else if(preg_match("/unit/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./unit.php?id=" . $id_departments . "'>";
     else if(preg_match("/departments/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./departments.php'>";
     else if(preg_match("/accesstype/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./dictionary.php?name=accesstype'>";

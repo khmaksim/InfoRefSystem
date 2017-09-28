@@ -26,13 +26,10 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+    <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/leftcolumn.inc.php';
         ?>
 
             <!-- Content Wrapper. Contains page content -->
@@ -43,9 +40,9 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="/departments.php"><i class="fa fa-dashboard"></i> Главная</a></li>
-                        <li>Личный состав</li>
-                        <li><a href="/unit.php?id=<?= $arDepartment['id']; ?>"><?= $arDepartment['fullname']; ?></a></li>
+                        <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
+                        <li><a href="/structure.php">Cтруктура ЧНП ВКС</a></li>
+                        <li><a href="/person.php?id=<?= $arDepartment['id']; ?>">Личный состав - <?= $arDepartment['fullname']; ?></a></li>
                         <li class="active"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
                     </ol>
                 </section>

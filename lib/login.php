@@ -105,4 +105,4 @@
     //чистим таблицу банов от разбаненых при каждой попытке авторизации...
     $dbconn->query("DELETE FROM public.antibrutforce WHERE unban <= '" . (int)date("d") . "' AND unban > '0'");
 
-    echo "\n<META http-equiv='REFRESH' content='0; url=/departments.php'>";
+    echo "\n<META http-equiv='REFRESH' content='0; url=/index.php'>";

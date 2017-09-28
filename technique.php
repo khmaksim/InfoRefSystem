@@ -28,8 +28,6 @@
   -->
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
@@ -44,7 +42,7 @@
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                         <li><a href="/structure.php">Cтруктура ЧНП ВКС</a></li>
-                        <li class="active">Личный состав - <?= $arDepartment['fullname']; ?></li>
+                        <li class="active">Техника - <?= $arDepartment['fullname']; ?></li>
                     </ol>
                 </section>
 
@@ -56,28 +54,22 @@
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Личный состав подразделения</h3>
+                                    <h3 class="box-title">Техника подразделения</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th class="col-xs-1">№</th>
-                                                <th class="col-xs-1">Фото</th>
-                                                <th class="col-xs-1">Личный номер</th>
-                                                <th class="col-xs-1">Фамилия Имя Отчество</th>
-                                                <th class="col-xs-1">Форма допуска</th>
-                                                <th class="col-xs-1">Дата рождения</th>
-                                                <th class="col-xs-1">Должность</th>
+                                                <th class="col-xs-5">Полное наименование</th>
+                                                <th class="col-xs-2">Сокращенное наименование</th>
                                                 <th class="col-xs-1 text-center">Печать</th>
-                                                <th class="col-xs-1 text-center">Редак-ть</th>
+                                                <th class="col-xs-1 text-center">Редактировать</th>
                                                 <th class="col-xs-1 text-center">Удалить</th>
                                             </tr>
                                         </thead>
-
                                         <tbody id="items"></tbody>
                                     </table>
-
                                  </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div><!-- /.col -->
@@ -85,12 +77,11 @@
 
                     <div class="row">
                         <div class="col-xs-12">
-                            <p class="text-right"><a href="/person_edit.php?act=add&id_departments=<?= $_GET['id']; ?>" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                            <p class="text-right"><a href="/technique_edit.php?act=add&id_departments=<?= $_GET['id']; ?>" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                         </div><!-- /.col -->
                     </div>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
@@ -114,15 +105,15 @@
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
             $(document).ready(function(){
-      		    $("#items").load("/person.func.php?id=<?= $_GET['id']; ?>");
-                setInterval(function() {$("#items").load("/person.func.php?id=<?= $_GET['id']; ?>");}, 5000);
+      		    $("#items").load("/technique.func.php?id=<?= $_GET['id']; ?>");
+                setInterval(function() {$("#items").load("/technique.func.php?id=<?= $_GET['id']; ?>");}, 5000);
             });
 
             function ConfirmDelete(id)
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./save.php?id="+ObjectId+"&act=delPerson";
+                    document.location = "./save.php?id="+ObjectId+"&act=delTechnique&id_departments=<?= $_GET['id']; ?>";
                 }
             }
         /*]]>*/
