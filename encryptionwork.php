@@ -36,7 +36,7 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-                        <li class="active">Режим секретности</li>
+                        <li class="active">Шифровальная работа</li>
                     </ol>
                 </section>
 
@@ -47,19 +47,15 @@
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Режим секретности</h3>
+                                    <h3 class="box-title">Шифровальная работа</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <div class="col-xs-2">
                                         <ul class="nav nav-pills nav-stacked">
-                                            <li><a href="#">Выезд за границу</a></li>
-                                            <li><a href="#">Лицензирование</a></li>
-                                            <li><a href="#">Разбирательства</a></li>
-                                            <li><a href="#">Оценка степени секретности</a></li>
-                                            <li><a href="#">Проверки РС И ЗИ НСД</a></li>
-                                            <li><a href="#">Передача НССГТ</a></li>
-                                            <li><a href="#">Допуск в воинские части ВКС</a></li>
-                                            <li><a href="#">Допуск к государственной тайне</a></li>
+                                            <li><a href="#">ТСС</a></li>
+                                            <li><a href="#">Ключевка</a></li>
+                                            <li><a href="#">Документы БГ</a></li>
+                                            <li><a href="#">Планы</a></li>
                                         </ul>
                                     </div>
                                 </div><!-- /.box-body -->

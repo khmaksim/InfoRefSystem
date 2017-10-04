@@ -46,46 +46,34 @@
                         <div class="col-lg-4">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <a href="/secrecy.php">
-                                        <h4 class="text-center">Режим секретности</h4>
-                                    </a>
+                                    <a href="/secrecy.php"><h4 class="text-center">Режим секретности</h4></a>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <a href="{% url 'research-activities' %}">
-                                        <h4 class="text-center">Шифровальная работа</h4>
-                                    </a>
+                                    <a href="/encryptionwork.php"><h4 class="text-center">Шифровальная работа</h4></a>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <a href="#">
-                                        <h4 class="text-center">Кадровая работа</h4>
-                                    </a>
+                                    <a href="/personnelwork.php"><h4 class="text-center">Кадровая работа</h4></a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                              <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <a href="{% url 'research-activities' %}">
-                                        <h4 class="text-center">Защита информации от НСД</h4>
-                                    </a>
+                                    <a href="/protectioninformation.php"><h4 class="text-center">Защита информации от НСД</h4></a>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <a href="{% url 'research-activities' %}">
-                                        <h4 class="text-center">Техническая защита информации</h4>
-                                    </a>
+                                    <a href="/technicalprotectedinformation.php"><h4 class="text-center">Техническая защита информации</h4></a>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <a href="{% url 'research-activities' %}">
-                                        <h4 class="text-center">Научно-исследовательская работа</h4>
-                                    </a>
+                                    <a href="/researchwork.php"><h4 class="text-center">Научно-исследовательская работа</h4></a>
                                 </div>
                             </div>
                             <?php

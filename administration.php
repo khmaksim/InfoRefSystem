@@ -65,17 +65,12 @@
                                                 // получение прав доступа на ПМ пользователя
                                                 $arAccessRight = getAccessRightById($_SESSION['user_id']);
                                             ?>
-                                            <ul class="control-sidebar-menu">
+                                            <ul class="nav nav-pills nav-stacked">
                                                 <?php
                                                     if ($arAccessRight['admin'] > 0) {
                                                 ?>
                                                 <li>
-                                                    <a href="/user.php">
-                                                        <i class="menu-icon fa fa-table bg-red"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Пользователи</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/user.php">Пользователи</a>
                                                 </li>
                                                 <?php
                                                     }
@@ -84,12 +79,7 @@
                                                     if ($arAccessRight['omu'] > 0) {
                                                 ?>
                                                 <li>
-                                                    <a href="/departments.php">
-                                                        <i class="menu-icon fa fa-table bg-red"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Подразделения</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/departments.php">Подразделения</a>
                                                 </li>
                                                 <?php
                                                     }
@@ -98,12 +88,7 @@
                                                     if ($arAccessRight['incoming'] > 0) {
                                                 ?>
                                                 <li>
-                                                    <a href="/incoming.php">
-                                                        <i class="menu-icon fa fa-table bg-red"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Учет входящих несекретных документов</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/incoming.php">Учет входящих несекретных документов</a>
                                                 </li>
                                                 <?php
                                                     }
@@ -112,20 +97,10 @@
                                                     if ($arAccessRight['telephone'] > 0) {
                                                 ?>
                                                 <li>
-                                                    <a href="/phonelist.php">
-                                                        <i class="menu-icon fa fa-table bg-red"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Телефонный справочник подразделений</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/phonelist.php">Телефонный справочник подразделений</a>
                                                 </li>
                                                 <li>
-                                                    <a href="/phonelistperson.php">
-                                                        <i class="menu-icon fa fa-table bg-red"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Телефонный справочник людей</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/phonelistperson.php">Телефонный справочник людей</a>
                                                 </li>
                                                  <?php
                                                     }
@@ -133,104 +108,45 @@
                                             </ul><!-- /.control-sidebar-menu -->
                                         </div>
                                         <div class="tab-pane" id="dictionary">
-                                            <ul class="control-sidebar-menu">
+                                            <ul class="nav nav-pills nav-stacked">
                                                 <?php
                                                     if ($arAccessRight['admin'] > 0) {
                                                 ?>
                                                 <li>
-                                                    <a href="/dictionary.php?name=role">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Роли безопасности</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/dictionary.php?name=role">Роли безопасности</a>
                                                 </li>
                                                 <li>
-                                                    <a href="/dictionary.php?name=militaryrank">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Воинские звания</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/dictionary.php?name=militaryrank">Воинские звания</a>
                                                 </li>
                                                 <li>
-                                                    <a href="/dictionary.php?name=militaryposition">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Должности</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/dictionary.php?name=militaryposition">Должности</a>
                                                 </li>
                                                 <li>
-                                                    <a href="/dictionary.php?name=phonetype">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Типы телефонной связи</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/dictionary.php?name=phonetype">Типы телефонной связи</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/dictionary.php?name=phonenumbertype">Типы телефонных номеров</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="/dictionary.php?name=phonenumbertype">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Типы телефонных номеров</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/dictionary.php?name=medaltype">Типы наград</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/dictionary.php?name=interpassporttype">Типы заграничных паспортов</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/dictionary.php?name=accesstype">Формы допуска</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/dictionary.php?name=city">Города</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="/dictionary.php?name=medaltype">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Типы наград</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/dictionary.php?name=addresstype">Типы адресов</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="/dictionary.php?name=interpassporttype">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Типы заграничных паспортов</h4>
-                                                        </div>
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="/dictionary.php?name=accesstype">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Формы допуска</h4>
-                                                        </div>
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="/dictionary.php?name=city">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Города</h4>
-                                                        </div>
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="/dictionary.php?name=addresstype">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Типы адресов</h4>
-                                                        </div>
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="/dictionary.php?name=emailtype">
-                                                        <i class="menu-icon fa fa-book bg-green"></i>
-                                                        <div class="menu-info">
-                                                            <h4 class="control-sidebar-subheading">Типы email</h4>
-                                                        </div>
-                                                    </a>
+                                                    <a href="/dictionary.php?name=emailtype">Типы email</a>
                                                 </li>
                                                  <?php
                                                     }
@@ -243,12 +159,8 @@
                         </div><!-- /.col -->
                     </div>
                     </form>
-
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
             include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
