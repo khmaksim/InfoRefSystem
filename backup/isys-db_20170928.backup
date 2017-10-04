@@ -1,0 +1,3410 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.3
+-- Dumped by pg_dump version 9.6.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: isys-db; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE "isys-db" IS 'database for ISSZGT app';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: attached_ad(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION attached_ad() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+begin
+   if EXISTS(select distinct loid from pg_largeobject WHERE loid=OLD.lo)=true then
+	PERFORM lo_unlink(OLD.lo);
+   end if;
+   return OLD;
+end;
+$$;
+
+
+ALTER FUNCTION public.attached_ad() OWNER TO postgres;
+
+--
+-- Name: controlnotes(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION controlnotes(integer) RETURNS text
+    LANGUAGE plpgsql
+    AS $_$
+declare
+	cur_rec controlstages%rowtype;
+	query text;
+	res_txt text;
+begin
+	res_txt := '';
+	query := 'select * from controlstages where control='||$1::text||' order by notedate;';
+	for cur_rec in execute query loop
+		res_txt := res_txt || to_char(cur_rec.notedate, 'DD.MM.YYYY') || ' ' || cur_rec.note || chr(13)||chr(10);
+	end loop;
+	return res_txt;
+end;
+$_$;
+
+
+ALTER FUNCTION public.controlnotes(integer) OWNER TO postgres;
+
+--
+-- Name: controls_ad(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION controls_ad() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+begin
+   insert into freenumbers (number, depart) values (OLD.number, 2);
+   delete from controlstages where control = OLD.code;
+   update incomings set control=0 where code=OLD.incoming;	
+   return OLD;
+end;
+$$;
+
+
+ALTER FUNCTION public.controls_ad() OWNER TO postgres;
+
+--
+-- Name: controls_n(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION controls_n() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+begin
+        notify controls;
+	return old;
+end;
+$$;
+
+
+ALTER FUNCTION public.controls_n() OWNER TO postgres;
+
+--
+-- Name: incomings_ad(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION incomings_ad() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+begin
+   insert into freenumbers (number, depart) values (OLD.number_in, CASE WHEN old.grif < 2 THEN 0 ELSE 1 END);
+   delete from attached where incoming=OLD.code;
+   return OLD;
+end;
+$$;
+
+
+ALTER FUNCTION public.incomings_ad() OWNER TO postgres;
+
+--
+-- Name: incomings_n(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION incomings_n() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+begin
+        notify incomings;
+	return old;
+end;
+$$;
+
+
+ALTER FUNCTION public.incomings_n() OWNER TO postgres;
+
+--
+-- Name: new_number(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION new_number(integer) RETURNS character varying
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $_$
+declare
+	cur_rec freenumbers%rowtype;
+	minNumber text;
+	query text;
+	deleteResult integer;
+begin
+	minNumber:=NULL;
+	for cur_rec in select code, number, depart from freenumbers where depart=$1 order by number loop
+		query:='delete from freenumbers where code='||cur_rec.code::text||';';
+		execute query;
+		GET DIAGNOSTICS deleteResult = ROW_COUNT;
+		if deleteResult > 0 then
+			minNumber:=cur_rec.number;
+			EXIT;
+		end if;
+	end loop;
+	if minNumber is NULL then
+           if $1=0 then
+		minNumber:='Н-'||nextval('number_in_ns_seq')::text;
+	   elsif $1=1 then
+		minNumber:='П-'||nextval('number_in_s_seq')::text;
+           elsif $1=2 then	
+		minNumber:='К-'||nextval('number_control_seq')::text;
+           elsif $1=3 then	
+		minNumber:=nextval('number_out_ns_seq')::text;
+           end if;
+	end if;
+	return minNumber;
+end;
+$_$;
+
+
+ALTER FUNCTION public.new_number(integer) OWNER TO postgres;
+
+--
+-- Name: out_attached_ad(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION out_attached_ad() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+begin
+   if EXISTS(select distinct loid from pg_largeobject WHERE loid=OLD.lo)=true then
+	PERFORM lo_unlink(OLD.lo);
+   end if;
+   return OLD;
+end;
+$$;
+
+
+ALTER FUNCTION public.out_attached_ad() OWNER TO postgres;
+
+--
+-- Name: outgoings_ad(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION outgoings_ad() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+begin
+   insert into freenumbers (number, depart) values (OLD.number_in, 3);
+   delete from out_attached where outgoing=OLD.code;
+   return OLD;
+end;
+$$;
+
+
+ALTER FUNCTION public.outgoings_ad() OWNER TO postgres;
+
+--
+-- Name: outgoings_n(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION outgoings_n() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+begin
+        notify outgoings;
+	return old;
+end;
+$$;
+
+
+ALTER FUNCTION public.outgoings_n() OWNER TO postgres;
+
+--
+-- Name: plpgsql_call_handler(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION plpgsql_call_handler() RETURNS language_handler
+    LANGUAGE c
+    AS '$libdir/plpgsql', 'plpgsql_call_handler';
+
+
+ALTER FUNCTION public.plpgsql_call_handler() OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: access_right; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE access_right (
+    user_id integer NOT NULL,
+    admin integer NOT NULL,
+    omu integer NOT NULL,
+    kadr integer NOT NULL,
+    telephone integer NOT NULL,
+    incoming integer NOT NULL
+);
+
+
+ALTER TABLE access_right OWNER TO postgres;
+
+--
+-- Name: access_right_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE access_right_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE access_right_id_seq OWNER TO postgres;
+
+--
+-- Name: access_right_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE access_right_id_seq OWNED BY access_right.user_id;
+
+
+SET default_with_oids = true;
+
+--
+-- Name: addressees; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE addressees (
+    code integer NOT NULL,
+    short_name text NOT NULL,
+    address text,
+    note text
+);
+
+
+ALTER TABLE addressees OWNER TO postgres;
+
+--
+-- Name: addressees_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE addressees_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE addressees_code_seq OWNER TO postgres;
+
+--
+-- Name: addressees_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE addressees_code_seq OWNED BY addressees.code;
+
+
+SET default_with_oids = false;
+
+--
+-- Name: antibrutforce; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE antibrutforce (
+    user_id integer,
+    col integer,
+    unban integer,
+    user_name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE antibrutforce OWNER TO postgres;
+
+SET default_with_oids = true;
+
+--
+-- Name: attached; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE attached (
+    code integer NOT NULL,
+    incoming integer NOT NULL,
+    lo oid,
+    filename text,
+    note text,
+    mime character varying(255)
+);
+
+
+ALTER TABLE attached OWNER TO postgres;
+
+--
+-- Name: attached_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE attached_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE attached_code_seq OWNER TO postgres;
+
+--
+-- Name: attached_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE attached_code_seq OWNED BY attached.code;
+
+
+--
+-- Name: controls; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE controls (
+    code integer NOT NULL,
+    number text NOT NULL,
+    incoming integer NOT NULL,
+    number_ud text,
+    number_ctrl_ud text,
+    datecontrol_ud date,
+    orderer text,
+    datecontrol date NOT NULL,
+    datedone date,
+    executor text
+);
+
+
+ALTER TABLE controls OWNER TO postgres;
+
+--
+-- Name: incomings; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE incomings (
+    code integer NOT NULL,
+    number_in text NOT NULL,
+    date_in date NOT NULL,
+    number_primary text,
+    date_primary date,
+    senders_numbers text,
+    grif integer DEFAULT 0 NOT NULL,
+    sheets text,
+    copies integer,
+    copies_numbers text,
+    subject text,
+    orders text,
+    instructions text,
+    notes text,
+    control integer,
+    out_where text,
+    out_details text,
+    out_date date,
+    editable boolean DEFAULT true
+);
+
+
+ALTER TABLE incomings OWNER TO postgres;
+
+--
+-- Name: controls_all; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW controls_all AS
+ SELECT controls.code,
+    controls.number AS number_ctrl,
+    controls.incoming,
+    controls.number_ud,
+    controls.number_ctrl_ud,
+    controls.datecontrol_ud,
+    controls.orderer,
+    controls.datecontrol,
+    controls.datedone,
+    (controls.datecontrol - ('now'::text)::date) AS days,
+    controls.executor,
+    incomings.number_in,
+    incomings.date_in,
+    incomings.number_primary,
+    incomings.date_primary,
+    incomings.senders_numbers,
+    incomings.grif,
+    incomings.sheets,
+    incomings.copies,
+    incomings.copies_numbers,
+    incomings.subject,
+    incomings.orders,
+    incomings.instructions,
+    incomings.notes,
+    incomings.control,
+    incomings.out_where,
+    incomings.out_details,
+    incomings.out_date
+   FROM (controls
+     LEFT JOIN incomings ON ((incomings.code = controls.incoming)));
+
+
+ALTER TABLE controls_all OWNER TO postgres;
+
+--
+-- Name: controls_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE controls_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE controls_code_seq OWNER TO postgres;
+
+--
+-- Name: controls_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE controls_code_seq OWNED BY controls.code;
+
+
+--
+-- Name: controlstages; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE controlstages (
+    code integer NOT NULL,
+    control integer NOT NULL,
+    notedate date NOT NULL,
+    note text
+);
+
+
+ALTER TABLE controlstages OWNER TO postgres;
+
+--
+-- Name: controlstages_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE controlstages_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE controlstages_code_seq OWNER TO postgres;
+
+--
+-- Name: controlstages_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE controlstages_code_seq OWNED BY controlstages.code;
+
+
+--
+-- Name: tdepartments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tdepartments (
+    id integer NOT NULL,
+    fullname text NOT NULL,
+    shortname text,
+    dep_index text,
+    server_addr text,
+    note text,
+    parent integer DEFAULT 0 NOT NULL,
+    active boolean,
+    editable boolean DEFAULT true
+);
+
+
+ALTER TABLE tdepartments OWNER TO postgres;
+
+--
+-- Name: departments_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE departments_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE departments_code_seq OWNER TO postgres;
+
+--
+-- Name: departments_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE departments_code_seq OWNED BY tdepartments.id;
+
+
+--
+-- Name: executors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE executors (
+    code integer NOT NULL,
+    uname text NOT NULL,
+    surname text,
+    name text,
+    patronymic text,
+    birthdate date,
+    post text,
+    department integer,
+    contacts text NOT NULL,
+    note text
+);
+
+
+ALTER TABLE executors OWNER TO postgres;
+
+--
+-- Name: executors_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE executors_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE executors_code_seq OWNER TO postgres;
+
+--
+-- Name: executors_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE executors_code_seq OWNED BY executors.code;
+
+
+--
+-- Name: folders; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE folders (
+    code integer NOT NULL,
+    number integer NOT NULL,
+    subject text,
+    date_from date,
+    date_to date
+);
+
+
+ALTER TABLE folders OWNER TO postgres;
+
+--
+-- Name: folders_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE folders_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE folders_code_seq OWNER TO postgres;
+
+--
+-- Name: folders_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE folders_code_seq OWNED BY folders.code;
+
+
+--
+-- Name: freenumbers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE freenumbers (
+    code integer NOT NULL,
+    number text NOT NULL,
+    depart integer NOT NULL
+);
+
+
+ALTER TABLE freenumbers OWNER TO postgres;
+
+--
+-- Name: freenumbers_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE freenumbers_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE freenumbers_code_seq OWNER TO postgres;
+
+--
+-- Name: freenumbers_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE freenumbers_code_seq OWNED BY freenumbers.code;
+
+
+--
+-- Name: incomings_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE incomings_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE incomings_code_seq OWNER TO postgres;
+
+--
+-- Name: incomings_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE incomings_code_seq OWNED BY incomings.code;
+
+
+--
+-- Name: incomings_ns; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW incomings_ns AS
+ SELECT incomings.code,
+    incomings.number_in,
+    incomings.date_in,
+    incomings.number_primary,
+    incomings.date_primary,
+    incomings.senders_numbers,
+    incomings.grif,
+    incomings.sheets,
+    incomings.copies,
+    incomings.copies_numbers,
+    incomings.subject,
+    incomings.orders,
+    incomings.instructions,
+    incomings.notes,
+    incomings.control,
+    controls.number AS number_ctrl,
+    incomings.out_where,
+    incomings.out_details,
+    incomings.out_date
+   FROM (incomings
+     LEFT JOIN controls ON ((controls.incoming = incomings.code)))
+  WHERE (incomings.grif < 2);
+
+
+ALTER TABLE incomings_ns OWNER TO postgres;
+
+--
+-- Name: incomings_s; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW incomings_s AS
+ SELECT incomings.code,
+    incomings.number_in,
+    incomings.date_in,
+    incomings.number_primary,
+    incomings.date_primary,
+    incomings.senders_numbers,
+    incomings.grif,
+    incomings.sheets,
+    incomings.copies,
+    incomings.copies_numbers,
+    incomings.subject,
+    incomings.orders,
+    incomings.instructions,
+    incomings.notes,
+    incomings.control,
+    controls.number AS number_ctrl,
+    incomings.out_where,
+    incomings.out_details,
+    incomings.out_date
+   FROM (incomings
+     LEFT JOIN controls ON ((controls.incoming = incomings.code)))
+  WHERE (incomings.grif > 1);
+
+
+ALTER TABLE incomings_s OWNER TO postgres;
+
+SET default_with_oids = false;
+
+--
+-- Name: info; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE info (
+    id integer NOT NULL,
+    idate timestamp with time zone,
+    title character varying(255),
+    active boolean DEFAULT true NOT NULL,
+    img_ext character varying(4),
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE info OWNER TO postgres;
+
+--
+-- Name: info_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE info_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE info_id_seq OWNER TO postgres;
+
+--
+-- Name: info_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE info_id_seq OWNED BY info.id;
+
+
+--
+-- Name: infoblock; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE infoblock (
+    user_id integer,
+    blockdate timestamp with time zone,
+    info_id integer
+);
+
+
+ALTER TABLE infoblock OWNER TO postgres;
+
+--
+-- Name: number_control_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE number_control_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE number_control_seq OWNER TO postgres;
+
+--
+-- Name: number_in_ns_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE number_in_ns_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE number_in_ns_seq OWNER TO postgres;
+
+--
+-- Name: number_in_s_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE number_in_s_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE number_in_s_seq OWNER TO postgres;
+
+--
+-- Name: number_out_ns_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE number_out_ns_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE number_out_ns_seq OWNER TO postgres;
+
+SET default_with_oids = true;
+
+--
+-- Name: operators; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE operators (
+    code integer NOT NULL,
+    uname text NOT NULL,
+    surname text,
+    name text,
+    patronymic text,
+    note text
+);
+
+
+ALTER TABLE operators OWNER TO postgres;
+
+--
+-- Name: operators_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE operators_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE operators_code_seq OWNER TO postgres;
+
+--
+-- Name: operators_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE operators_code_seq OWNED BY operators.code;
+
+
+--
+-- Name: out_attached; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE out_attached (
+    code integer NOT NULL,
+    outgoing integer NOT NULL,
+    lo oid,
+    filename text,
+    note text
+);
+
+
+ALTER TABLE out_attached OWNER TO postgres;
+
+--
+-- Name: out_attached_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE out_attached_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE out_attached_code_seq OWNER TO postgres;
+
+--
+-- Name: out_attached_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE out_attached_code_seq OWNED BY out_attached.code;
+
+
+--
+-- Name: out_copies; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE out_copies (
+    code integer NOT NULL,
+    outgoing integer NOT NULL,
+    copy_number integer,
+    addressee integer,
+    folder integer,
+    note text
+);
+
+
+ALTER TABLE out_copies OWNER TO postgres;
+
+--
+-- Name: out_copies_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE out_copies_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE out_copies_code_seq OWNER TO postgres;
+
+--
+-- Name: out_copies_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE out_copies_code_seq OWNED BY out_copies.code;
+
+
+--
+-- Name: outgoings; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE outgoings (
+    code integer NOT NULL,
+    number_out text NOT NULL,
+    date_out date NOT NULL,
+    subject text NOT NULL,
+    notes text,
+    grif integer DEFAULT 0 NOT NULL,
+    init_number text,
+    init_date date,
+    init_type integer,
+    department integer NOT NULL,
+    executor integer,
+    executor_fio text NOT NULL,
+    executor_contacts text NOT NULL,
+    sheets text,
+    copies text
+);
+
+
+ALTER TABLE outgoings OWNER TO postgres;
+
+--
+-- Name: outgoings_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE outgoings_code_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE outgoings_code_seq OWNER TO postgres;
+
+--
+-- Name: outgoings_code_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE outgoings_code_seq OWNED BY outgoings.code;
+
+
+SET default_with_oids = false;
+
+--
+-- Name: role; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE role (
+    id integer NOT NULL,
+    title character varying(255),
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE role OWNER TO postgres;
+
+--
+-- Name: TABLE role; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE role IS 'The role of security in the system';
+
+
+--
+-- Name: role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE role_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE role_id_seq OWNER TO postgres;
+
+--
+-- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE role_id_seq OWNED BY role.id;
+
+
+SET default_with_oids = true;
+
+--
+-- Name: taccesstype; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE taccesstype (
+    id integer NOT NULL,
+    name text,
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE taccesstype OWNER TO postgres;
+
+--
+-- Name: taccesstype_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE taccesstype_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE taccesstype_id_seq OWNER TO postgres;
+
+--
+-- Name: taccesstype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE taccesstype_id_seq OWNED BY taccesstype.id;
+
+
+--
+-- Name: taddresstype; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE taddresstype (
+    id integer NOT NULL,
+    name character varying(255),
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE taddresstype OWNER TO postgres;
+
+--
+-- Name: taddresstype_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE taddresstype_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE taddresstype_id_seq OWNER TO postgres;
+
+--
+-- Name: taddresstype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE taddresstype_id_seq OWNED BY taddresstype.id;
+
+
+--
+-- Name: tcity; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tcity (
+    id integer NOT NULL,
+    name character varying(255),
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE tcity OWNER TO postgres;
+
+--
+-- Name: tcity_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tcity_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tcity_id_seq OWNER TO postgres;
+
+--
+-- Name: tcity_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tcity_id_seq OWNED BY tcity.id;
+
+
+--
+-- Name: technique_code_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE technique_code_seq
+    START WITH 11
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE technique_code_seq OWNER TO postgres;
+
+--
+-- Name: temail; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE temail (
+    id integer NOT NULL,
+    id_person integer,
+    name character varying(255),
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE temail OWNER TO postgres;
+
+--
+-- Name: temail_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE temail_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE temail_id_seq OWNER TO postgres;
+
+--
+-- Name: temail_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE temail_id_seq OWNED BY temail.id;
+
+
+--
+-- Name: temailtype; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE temailtype (
+    id integer NOT NULL,
+    name character varying(255),
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE temailtype OWNER TO postgres;
+
+--
+-- Name: temailtype_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE temailtype_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE temailtype_id_seq OWNER TO postgres;
+
+--
+-- Name: temailtype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE temailtype_id_seq OWNED BY temailtype.id;
+
+
+SET default_with_oids = false;
+
+--
+-- Name: test; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE test (
+    id integer NOT NULL,
+    tipo character varying(255),
+    images integer
+);
+
+
+ALTER TABLE test OWNER TO postgres;
+
+--
+-- Name: test_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE test_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE test_id_seq OWNER TO postgres;
+
+--
+-- Name: test_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE test_id_seq OWNED BY test.id;
+
+
+SET default_with_oids = true;
+
+--
+-- Name: tinterpassporttype; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tinterpassporttype (
+    id integer NOT NULL,
+    name text,
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE tinterpassporttype OWNER TO postgres;
+
+--
+-- Name: tinterpassporttype_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tinterpassporttype_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tinterpassporttype_id_seq OWNER TO postgres;
+
+--
+-- Name: tinterpassporttype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tinterpassporttype_id_seq OWNED BY tinterpassporttype.id;
+
+
+--
+-- Name: tmedaltype; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tmedaltype (
+    id integer NOT NULL,
+    name text,
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE tmedaltype OWNER TO postgres;
+
+--
+-- Name: tmedaltype_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tmedaltype_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tmedaltype_id_seq OWNER TO postgres;
+
+--
+-- Name: tmedaltype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tmedaltype_id_seq OWNED BY tmedaltype.id;
+
+
+--
+-- Name: tmilitaryposition; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tmilitaryposition (
+    id integer NOT NULL,
+    name character varying(255),
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE tmilitaryposition OWNER TO postgres;
+
+--
+-- Name: tmilitaryposition_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tmilitaryposition_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tmilitaryposition_id_seq OWNER TO postgres;
+
+--
+-- Name: tmilitaryposition_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tmilitaryposition_id_seq OWNED BY tmilitaryposition.id;
+
+
+--
+-- Name: tmilitaryrank; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tmilitaryrank (
+    id integer NOT NULL,
+    name character varying(255),
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE tmilitaryrank OWNER TO postgres;
+
+--
+-- Name: tmilitaryrank_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tmilitaryrank_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tmilitaryrank_id_seq OWNER TO postgres;
+
+--
+-- Name: tmilitaryrank_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tmilitaryrank_id_seq OWNED BY tmilitaryrank.id;
+
+
+--
+-- Name: tperson; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tperson (
+    id integer NOT NULL,
+    firstname text,
+    lastname text,
+    patronymic text,
+    military boolean,
+    personalnumber text,
+    birthday date,
+    id_accesslevel integer,
+    id_tunit integer,
+    id_departments integer,
+    editable boolean DEFAULT true NOT NULL,
+    id_militaryrank integer,
+    img_ext character varying(4),
+    address text,
+    id_city integer,
+    comment text
+);
+
+
+ALTER TABLE tperson OWNER TO postgres;
+
+--
+-- Name: tperson_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tperson_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tperson_id_seq OWNER TO postgres;
+
+--
+-- Name: tperson_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tperson_id_seq OWNED BY tperson.id;
+
+
+--
+-- Name: tphone; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tphone (
+    id integer NOT NULL,
+    id_person integer,
+    name character varying(255),
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE tphone OWNER TO postgres;
+
+--
+-- Name: tphone_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tphone_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tphone_id_seq OWNER TO postgres;
+
+--
+-- Name: tphone_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tphone_id_seq OWNED BY tphone.id;
+
+
+SET default_with_oids = false;
+
+--
+-- Name: tphonenumbertype; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tphonenumbertype (
+    id integer NOT NULL,
+    name character varying(255),
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE tphonenumbertype OWNER TO postgres;
+
+--
+-- Name: tphonenumbertype_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tphonenumbertype_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tphonenumbertype_id_seq OWNER TO postgres;
+
+--
+-- Name: tphonenumbertype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tphonenumbertype_id_seq OWNED BY tphonenumbertype.id;
+
+
+SET default_with_oids = true;
+
+--
+-- Name: tphonetype; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tphonetype (
+    id integer NOT NULL,
+    name character varying(255),
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE tphonetype OWNER TO postgres;
+
+--
+-- Name: tphonetype_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tphonetype_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tphonetype_id_seq OWNER TO postgres;
+
+--
+-- Name: tphonetype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tphonetype_id_seq OWNED BY tphonetype.id;
+
+
+--
+-- Name: ttechnique; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE ttechnique (
+    id integer DEFAULT nextval('departments_code_seq'::regclass) NOT NULL,
+    fullname text NOT NULL,
+    shortname text,
+    id_departments integer
+);
+
+
+ALTER TABLE ttechnique OWNER TO postgres;
+
+SET default_with_oids = false;
+
+--
+-- Name: tunit; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE tunit (
+    id integer NOT NULL,
+    id_militaryrank integer,
+    id_militaryposition integer,
+    id_departments integer,
+    id_accesslevel integer,
+    ordernumber character varying(255),
+    orderowner character varying(255),
+    tariffcategory integer,
+    dateorderstart date,
+    dateorderend date,
+    vacant boolean DEFAULT true NOT NULL,
+    editable boolean DEFAULT true NOT NULL
+);
+
+
+ALTER TABLE tunit OWNER TO postgres;
+
+--
+-- Name: tunit_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tunit_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tunit_id_seq OWNER TO postgres;
+
+--
+-- Name: tunit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tunit_id_seq OWNED BY tunit.id;
+
+
+--
+-- Name: user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE "user" (
+    id integer NOT NULL,
+    role_id integer,
+    active boolean DEFAULT true,
+    title character varying(255),
+    bdate timestamp with time zone,
+    adate timestamp with time zone,
+    img_ext character varying(4),
+    name character varying(255) NOT NULL,
+    passwd character varying(255) NOT NULL,
+    editable boolean DEFAULT true NOT NULL,
+    access_right_id integer
+);
+
+
+ALTER TABLE "user" OWNER TO postgres;
+
+--
+-- Name: user_action; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE user_action (
+    user_id integer,
+    adate timestamp with time zone,
+    title character varying(255)
+);
+
+
+ALTER TABLE user_action OWNER TO postgres;
+
+--
+-- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE user_id_seq OWNER TO postgres;
+
+--
+-- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE user_id_seq OWNED BY "user".id;
+
+
+--
+-- Name: user_login; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE user_login (
+    user_id integer,
+    success boolean,
+    ldate timestamp with time zone
+);
+
+
+ALTER TABLE user_login OWNER TO postgres;
+
+--
+-- Name: addressees code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY addressees ALTER COLUMN code SET DEFAULT nextval('addressees_code_seq'::regclass);
+
+
+--
+-- Name: attached code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY attached ALTER COLUMN code SET DEFAULT nextval('attached_code_seq'::regclass);
+
+
+--
+-- Name: controls code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY controls ALTER COLUMN code SET DEFAULT nextval('controls_code_seq'::regclass);
+
+
+--
+-- Name: controlstages code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY controlstages ALTER COLUMN code SET DEFAULT nextval('controlstages_code_seq'::regclass);
+
+
+--
+-- Name: executors code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY executors ALTER COLUMN code SET DEFAULT nextval('executors_code_seq'::regclass);
+
+
+--
+-- Name: folders code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY folders ALTER COLUMN code SET DEFAULT nextval('folders_code_seq'::regclass);
+
+
+--
+-- Name: freenumbers code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY freenumbers ALTER COLUMN code SET DEFAULT nextval('freenumbers_code_seq'::regclass);
+
+
+--
+-- Name: incomings code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY incomings ALTER COLUMN code SET DEFAULT nextval('incomings_code_seq'::regclass);
+
+
+--
+-- Name: info id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY info ALTER COLUMN id SET DEFAULT nextval('info_id_seq'::regclass);
+
+
+--
+-- Name: operators code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY operators ALTER COLUMN code SET DEFAULT nextval('operators_code_seq'::regclass);
+
+
+--
+-- Name: out_attached code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY out_attached ALTER COLUMN code SET DEFAULT nextval('out_attached_code_seq'::regclass);
+
+
+--
+-- Name: out_copies code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY out_copies ALTER COLUMN code SET DEFAULT nextval('out_copies_code_seq'::regclass);
+
+
+--
+-- Name: outgoings code; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY outgoings ALTER COLUMN code SET DEFAULT nextval('outgoings_code_seq'::regclass);
+
+
+--
+-- Name: role id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY role ALTER COLUMN id SET DEFAULT nextval('role_id_seq'::regclass);
+
+
+--
+-- Name: taccesstype id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY taccesstype ALTER COLUMN id SET DEFAULT nextval('taccesstype_id_seq'::regclass);
+
+
+--
+-- Name: taddresstype id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY taddresstype ALTER COLUMN id SET DEFAULT nextval('taddresstype_id_seq'::regclass);
+
+
+--
+-- Name: tcity id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tcity ALTER COLUMN id SET DEFAULT nextval('tcity_id_seq'::regclass);
+
+
+--
+-- Name: tdepartments id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tdepartments ALTER COLUMN id SET DEFAULT nextval('departments_code_seq'::regclass);
+
+
+--
+-- Name: temail id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY temail ALTER COLUMN id SET DEFAULT nextval('temail_id_seq'::regclass);
+
+
+--
+-- Name: temailtype id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY temailtype ALTER COLUMN id SET DEFAULT nextval('temailtype_id_seq'::regclass);
+
+
+--
+-- Name: test id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY test ALTER COLUMN id SET DEFAULT nextval('test_id_seq'::regclass);
+
+
+--
+-- Name: tinterpassporttype id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tinterpassporttype ALTER COLUMN id SET DEFAULT nextval('tinterpassporttype_id_seq'::regclass);
+
+
+--
+-- Name: tmedaltype id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tmedaltype ALTER COLUMN id SET DEFAULT nextval('tmedaltype_id_seq'::regclass);
+
+
+--
+-- Name: tmilitaryposition id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tmilitaryposition ALTER COLUMN id SET DEFAULT nextval('tmilitaryposition_id_seq'::regclass);
+
+
+--
+-- Name: tmilitaryrank id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tmilitaryrank ALTER COLUMN id SET DEFAULT nextval('tmilitaryrank_id_seq'::regclass);
+
+
+--
+-- Name: tperson id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tperson ALTER COLUMN id SET DEFAULT nextval('tperson_id_seq'::regclass);
+
+
+--
+-- Name: tphone id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tphone ALTER COLUMN id SET DEFAULT nextval('tphone_id_seq'::regclass);
+
+
+--
+-- Name: tphonenumbertype id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tphonenumbertype ALTER COLUMN id SET DEFAULT nextval('tphonenumbertype_id_seq'::regclass);
+
+
+--
+-- Name: tphonetype id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tphonetype ALTER COLUMN id SET DEFAULT nextval('tphonetype_id_seq'::regclass);
+
+
+--
+-- Name: tunit id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tunit ALTER COLUMN id SET DEFAULT nextval('tunit_id_seq'::regclass);
+
+
+--
+-- Name: user id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "user" ALTER COLUMN id SET DEFAULT nextval('user_id_seq'::regclass);
+
+
+--
+-- Name: 66227; Type: BLOB; Schema: -; Owner: postgres
+--
+
+SELECT pg_catalog.lo_create('66227');
+
+
+ALTER LARGE OBJECT 66227 OWNER TO postgres;
+
+--
+-- Name: 66234; Type: BLOB; Schema: -; Owner: postgres
+--
+
+SELECT pg_catalog.lo_create('66234');
+
+
+ALTER LARGE OBJECT 66234 OWNER TO postgres;
+
+--
+-- Name: 66236; Type: BLOB; Schema: -; Owner: postgres
+--
+
+SELECT pg_catalog.lo_create('66236');
+
+
+ALTER LARGE OBJECT 66236 OWNER TO postgres;
+
+--
+-- Name: 66238; Type: BLOB; Schema: -; Owner: postgres
+--
+
+SELECT pg_catalog.lo_create('66238');
+
+
+ALTER LARGE OBJECT 66238 OWNER TO postgres;
+
+--
+-- Name: 66240; Type: BLOB; Schema: -; Owner: postgres
+--
+
+SELECT pg_catalog.lo_create('66240');
+
+
+ALTER LARGE OBJECT 66240 OWNER TO postgres;
+
+--
+-- Name: 66242; Type: BLOB; Schema: -; Owner: postgres
+--
+
+SELECT pg_catalog.lo_create('66242');
+
+
+ALTER LARGE OBJECT 66242 OWNER TO postgres;
+
+--
+-- Name: 66244; Type: BLOB; Schema: -; Owner: postgres
+--
+
+SELECT pg_catalog.lo_create('66244');
+
+
+ALTER LARGE OBJECT 66244 OWNER TO postgres;
+
+--
+-- Data for Name: access_right; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY access_right (user_id, admin, omu, kadr, telephone, incoming) FROM stdin;
+20	0	4	7	7	0
+3	0	0	0	0	0
+2	7	7	7	7	7
+\.
+
+
+--
+-- Name: access_right_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('access_right_id_seq', 12, true);
+
+
+--
+-- Data for Name: addressees; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY addressees (code, short_name, address, note) FROM stdin;
+1	Адресат1	\N	\N
+2	Адресат2	\N	\N
+3	Адресат3	\N	\N
+4	Адресат4	\N	\N
+5	Адресат5	\N	\N
+\.
+
+
+--
+-- Name: addressees_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('addressees_code_seq', 1, false);
+
+
+--
+-- Data for Name: antibrutforce; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY antibrutforce (user_id, col, unban, user_name) FROM stdin;
+\N	1	0	erger
+\N	1	0	wegewgwe
+\N	1	0	шмфт
+\N	1	0	vasa
+\N	1	0	Администратор
+\N	3	0	admin
+\N	1	0	nov
+\N	1	0	qw
+\N	1	0	dsa
+\.
+
+
+--
+-- Data for Name: attached; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY attached (code, incoming, lo, filename, note, mime) FROM stdin;
+\.
+
+
+--
+-- Name: attached_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('attached_code_seq', 15, true);
+
+
+--
+-- Data for Name: controls; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY controls (code, number, incoming, number_ud, number_ctrl_ud, datecontrol_ud, orderer, datecontrol, datedone, executor) FROM stdin;
+\.
+
+
+--
+-- Name: controls_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('controls_code_seq', 1, false);
+
+
+--
+-- Data for Name: controlstages; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY controlstages (code, control, notedate, note) FROM stdin;
+\.
+
+
+--
+-- Name: controlstages_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('controlstages_code_seq', 1, false);
+
+
+--
+-- Name: departments_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('departments_code_seq', 14, true);
+
+
+--
+-- Data for Name: executors; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY executors (code, uname, surname, name, patronymic, birthdate, post, department, contacts, note) FROM stdin;
+1	u1	Кучер	Анатолий	Юрьевич	\N	начальник отдела (документационного обеспечения) ГК ВВС	32	1	\N
+2	u2	Логунов	Олег	Викторович	\N	референт ГК ВВС	1	1	\N
+3	u4	Шишкин	Евгений	Викторович	\N	помощник НГШ ВВС	1	1	\N
+4	u5	Кондратьев	Евгений	Вячеславович	\N	помощник ГК ВВС	1	1	\N
+5	postgres	Медведков	Андрей	Николаевич	\N	заместитель ГК по вооружению	14	1	\N
+\.
+
+
+--
+-- Name: executors_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('executors_code_seq', 5, true);
+
+
+--
+-- Data for Name: folders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY folders (code, number, subject, date_from, date_to) FROM stdin;
+1	1	Федеральные законы РФ, Указы Президента РФ, постановления и распоряжения Правительства РФ	\N	\N
+2	2	Приказы Министра обороны РФ и его заместителей	\N	\N
+3	3	Директивы Министра обороны РФ, начальника Генерального штаба, заместителей Министра обороны РФ и главнокомандующих видами ВС РФ	\N	\N
+4	4	Указания Министра обороны РФ и его заместителей	\N	\N
+5	5	Приказы главнокомандующего ВВС	\N	\N
+6	6	Приказы начальника Главного штаба ВВС	\N	\N
+7	7	Номенклатуры дел, перечни книг и журналов, акты на уничтоженные дела и документы	\N	\N
+8	8	Материалы Коллегии МО РФ	\N	\N
+9	9	Материалы Военного совета ВВС	\N	\N
+10	10	Протоколы совещаний в Федеральных органах власти	\N	\N
+11	11	Протоколы совещаний в Минобороны России	\N	\N
+12	12	Протоколы совещаний в Главном командовании ВВС	\N	\N
+13	13	Исходящие документы, подписанные должностными лицами Главного командования ВВС	\N	\N
+14	14	Переписка по вопросам документационного обеспечения и контроля	\N	\N
+15	15	Переписка по обращениям граждан	\N	\N
+16	16	Переписка по общим, организационным и хозяйственным вопросам	\N	\N
+17	17	Переписка по вопросам государственной гражданской службы	\N	\N
+18	18	Дело с реестрами	\N	\N
+\.
+
+
+--
+-- Name: folders_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('folders_code_seq', 18, true);
+
+
+--
+-- Data for Name: freenumbers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY freenumbers (code, number, depart) FROM stdin;
+1	Н-	1
+2	Н-	0
+3	Н-	0
+4	temp	0
+5	temp	0
+6	temp	0
+7	temp	0
+8	temp	0
+9	temp	0
+10	temp	0
+11	Н-13	0
+\.
+
+
+--
+-- Name: freenumbers_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('freenumbers_code_seq', 11, true);
+
+
+--
+-- Data for Name: incomings; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY incomings (code, number_in, date_in, number_primary, date_primary, senders_numbers, grif, sheets, copies, copies_numbers, subject, orders, instructions, notes, control, out_where, out_details, out_date, editable) FROM stdin;
+15	Н-15	2016-10-03	\N	\N	\N	0	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t
+16	Н-16	2016-11-22	\N	\N	Петров	3	2	\N	\N	Текст		Нет		2	1	Нет	2016-11-23	t
+17	Н-17	2016-12-09	\N	\N	\N	0	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t
+18	Н-18	2016-12-12	\N	\N	\N	0	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t
+14	12d	2015-12-06	\N	\N	Отправители и номера дцйуцйцйокумента	2	4	\N	\N	Содержание	Поручения вышестоящего органа	Указания руководства	Комментарии	2	1		1970-01-01	t
+19	Н-19	2017-06-08	\N	\N	\N	0	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t
+20	Н-20	2017-09-18	\N	\N	\N	0	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t
+\.
+
+
+--
+-- Name: incomings_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('incomings_code_seq', 20, true);
+
+
+--
+-- Data for Name: info; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY info (id, idate, title, active, img_ext, user_id) FROM stdin;
+3	2015-04-23 22:00:00+02	Эллиптические тренажёры	t	png	2
+4	2015-04-24 22:00:00+02	Батуты	f	png	2
+5	2015-04-21 22:00:00+02	Третья запись	t	jpg	2
+\.
+
+
+--
+-- Name: info_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('info_id_seq', 5, true);
+
+
+--
+-- Data for Name: infoblock; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY infoblock (user_id, blockdate, info_id) FROM stdin;
+2	2015-04-23 08:26:56+02	\N
+3	2015-09-01 04:23:32+02	4
+\.
+
+
+--
+-- Name: number_control_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('number_control_seq', 1, false);
+
+
+--
+-- Name: number_in_ns_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('number_in_ns_seq', 1, false);
+
+
+--
+-- Name: number_in_s_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('number_in_s_seq', 1, false);
+
+
+--
+-- Name: number_out_ns_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('number_out_ns_seq', 1, false);
+
+
+--
+-- Data for Name: operators; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY operators (code, uname, surname, name, patronymic, note) FROM stdin;
+\.
+
+
+--
+-- Name: operators_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('operators_code_seq', 1, false);
+
+
+--
+-- Data for Name: out_attached; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY out_attached (code, outgoing, lo, filename, note) FROM stdin;
+\.
+
+
+--
+-- Name: out_attached_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('out_attached_code_seq', 1, false);
+
+
+--
+-- Data for Name: out_copies; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY out_copies (code, outgoing, copy_number, addressee, folder, note) FROM stdin;
+\.
+
+
+--
+-- Name: out_copies_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('out_copies_code_seq', 1, false);
+
+
+--
+-- Data for Name: outgoings; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY outgoings (code, number_out, date_out, subject, notes, grif, init_number, init_date, init_type, department, executor, executor_fio, executor_contacts, sheets, copies) FROM stdin;
+\.
+
+
+--
+-- Name: outgoings_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('outgoings_code_seq', 1, false);
+
+
+--
+-- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY role (id, title, editable) FROM stdin;
+1	Администратор	f
+2	Читатель	f
+\.
+
+
+--
+-- Name: role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('role_id_seq', 7, true);
+
+
+--
+-- Data for Name: taccesstype; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY taccesstype (id, name, editable) FROM stdin;
+2	С	t
+3	СС	t
+4	ОВ	t
+\.
+
+
+--
+-- Name: taccesstype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('taccesstype_id_seq', 4, true);
+
+
+--
+-- Data for Name: taddresstype; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY taddresstype (id, name, editable) FROM stdin;
+1	Домашний	t
+2	Рабочий	t
+\.
+
+
+--
+-- Name: taddresstype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('taddresstype_id_seq', 2, true);
+
+
+--
+-- Data for Name: tcity; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tcity (id, name, editable) FROM stdin;
+1	Москва	t
+2	Санкт-Петербург	t
+3	Тамбов	t
+4	Воронеж	t
+5	Щёлково	t
+6	Электросталь	t
+7	Люберцы	t
+8	Железнодорожный	t
+\.
+
+
+--
+-- Name: tcity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tcity_id_seq', 8, true);
+
+
+--
+-- Data for Name: tdepartments; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tdepartments (id, fullname, shortname, dep_index, server_addr, note, parent, active, editable) FROM stdin;
+1	ЦНИИ ВВС Минобороны России	ЦНИИ ВВС				0	t	t
+6	Управление ПАК СУ ВВС ЦНИИ ВВС Минобороны России	ПАК СУ ВВС				1	t	t
+2	1 отдел Управления ПАК СУ ВВС ЦНИИ ВВС Минобороны России	1 отдел Управления ПАК СУ ВВС				6	t	t
+3	2 отдел Управления ПАК СУ ВВС ЦНИИ ВВС Минобороны России	2 отдел Управления ПАК СУ ВВС				6	t	t
+4	3 отдел Управления ПАК СУ ВВС ЦНИИ ВВС Минобороны России	3 отдел Управления ПАК СУ ВВС				6	t	t
+5	4 отдел Управления ПАК СУ ВВС ЦНИИ ВВС Минобороны России	4 отдел Управления ПАК СУ ВВС				6	t	t
+7	5 отдел Управления ПАК СУ ВВС ЦНИИ ВВС Минобороны России	5 отдел Управления ПАК СУ ВВС				6	t	t
+8	НИЦ люберцы					0	t	t
+9	1 Управление					8	t	t
+10	ЦНИИ ВКО					0	t	t
+11	22 отдел У ПАК СУ ВВС ЦНИИ ВВС Минобороны России	22 отдел У ПАК СУ ВВС				3	t	t
+\.
+
+
+--
+-- Name: technique_code_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('technique_code_seq', 11, false);
+
+
+--
+-- Data for Name: temail; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY temail (id, id_person, name, editable) FROM stdin;
+41	1	novik@mail.ru	t
+42	1	pikov@pikov.com	t
+47	2	alex@yandex.ru	t
+48	3	gordeev@yandex.ru	t
+49	4	nikitin@yandex.ru	t
+50	5	grachev@yandex.ru	t
+51	6	durnev@mail.ru	t
+52	7	pikov@yandex.ru	t
+53	7	vitaliy@pikov.ru	t
+54	7	vitaliy@pikov.com	t
+56	8	novik@rambler.ru	t
+81	9		t
+\.
+
+
+--
+-- Name: temail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('temail_id_seq', 81, true);
+
+
+--
+-- Data for Name: temailtype; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY temailtype (id, name, editable) FROM stdin;
+3	Личная	t
+5	Рабочая	t
+\.
+
+
+--
+-- Name: temailtype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('temailtype_id_seq', 5, true);
+
+
+--
+-- Data for Name: test; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY test (id, tipo, images) FROM stdin;
+\.
+
+
+--
+-- Name: test_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('test_id_seq', 1, true);
+
+
+--
+-- Data for Name: tinterpassporttype; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tinterpassporttype (id, name, editable) FROM stdin;
+1	Служебный	t
+2	Общегражданский	t
+\.
+
+
+--
+-- Name: tinterpassporttype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tinterpassporttype_id_seq', 2, true);
+
+
+--
+-- Data for Name: tmedaltype; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tmedaltype (id, name, editable) FROM stdin;
+1	За отличие в военной службе III степени	t
+2	За отличие в военной службе II степени	t
+\.
+
+
+--
+-- Name: tmedaltype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tmedaltype_id_seq', 2, true);
+
+
+--
+-- Data for Name: tmilitaryposition; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tmilitaryposition (id, name, editable) FROM stdin;
+1	Начальник института	t
+2	Заместитель начальника института	t
+3	Начальник управления	t
+4	Заместитель начальника управления	t
+5	Главный конструктор	t
+6	Начальник отдела	t
+7	Заместитель начальника отдела - старший инженер	t
+\.
+
+
+--
+-- Name: tmilitaryposition_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tmilitaryposition_id_seq', 7, true);
+
+
+--
+-- Data for Name: tmilitaryrank; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tmilitaryrank (id, name, editable) FROM stdin;
+1	Лейтенант	t
+2	Старший лейтенант	t
+3	Капитан	t
+4	Майор	t
+5	Подполковник	t
+6	Полковник	t
+7	Генерал-майор	t
+8	Генерал-лейтенант	t
+9	Генерал-полковник	t
+10	Генерал армии	t
+\.
+
+
+--
+-- Name: tmilitaryrank_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tmilitaryrank_id_seq', 10, true);
+
+
+--
+-- Data for Name: tperson; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tperson (id, firstname, lastname, patronymic, military, personalnumber, birthday, id_accesslevel, id_tunit, id_departments, editable, id_militaryrank, img_ext, address, id_city, comment) FROM stdin;
+1	Сергей	Заиченко	Павлович	t	М-625354	2016-03-16	3	1	6	t	5	jpg	Вязовский	1	
+2	Александр	Палатников	Александрович	t	Ф-34324234	2016-03-16	4	3	1	t	6	jpg	Советская, дом 44, кв. 33	7	Комментарий про ПАЛАТНИКОВА.
+3	Виталий	Гордеев	Александрович	t	Ф-232323	2016-03-16	4	4	1	t	6	jpg	Интернациональная, дом 43, кв. 3	1	Комментарий про ГОРДЕЕВА.
+4	Александр	Никитин	Сергеевич	t	Ф-345345	2016-03-16	3	2	6	t	5	jpg	Борцов, дом 5, кв. 4	1	
+5	Антон	Грачев	Николаевич	t	Ф-232323	2016-03-16	3	5	6	t	5	jpg	Совецкая, 23-4	3	
+7	Виталий	Пиков	Александрович	t	Ф-596456	1979-07-25	3	7	4	t	4	jpg	ул. Московская, дом 10, кв. 7	7	Доцент кафедры ИТиЕНД РосНОУ.
+8	Егор	Новичихин	Александрович	t	В-546456	1982-12-29	3	8	4	t	3	jpg	ул. Заречная, дом 4, кв. 1	6	Новичихин умеет делать автомобили.
+9	Иван	Иванов	Сергеевич	t	х-123123	2016-12-24	3	0	2	t	5	jpg		1	
+\.
+
+
+--
+-- Name: tperson_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tperson_id_seq', 9, true);
+
+
+--
+-- Data for Name: tphone; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tphone (id, id_person, name, editable) FROM stdin;
+40	1	9155465656	t
+41	1	9031231212	t
+45	2	9263452323	t
+46	3	9155465656	t
+47	4	9031231212	t
+48	5	9263452323	t
+49	6	9261231212	t
+50	7	9637829278	t
+51	7	9264221562	t
+53	8	9262342323	t
+79	9	89264575645	t
+80	9	46845754	t
+81	9	45-45	t
+\.
+
+
+--
+-- Name: tphone_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tphone_id_seq', 81, true);
+
+
+--
+-- Data for Name: tphonenumbertype; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tphonenumbertype (id, name, editable) FROM stdin;
+2	Домашний	t
+3	Рабочий	t
+4	Мобильный	t
+5	Факс	t
+\.
+
+
+--
+-- Name: tphonenumbertype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tphonenumbertype_id_seq', 5, true);
+
+
+--
+-- Data for Name: tphonetype; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tphonetype (id, name, editable) FROM stdin;
+1	Сотовая	t
+2	Проводная	t
+\.
+
+
+--
+-- Name: tphonetype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tphonetype_id_seq', 2, true);
+
+
+--
+-- Data for Name: ttechnique; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY ttechnique (id, fullname, shortname, id_departments) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tunit; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tunit (id, id_militaryrank, id_militaryposition, id_departments, id_accesslevel, ordernumber, orderowner, tariffcategory, dateorderstart, dateorderend, vacant, editable) FROM stdin;
+4	6	2	1	4	324324	МО РФ	38	2016-03-16	1970-01-01	t	t
+1	5	3	6	3	3234234	МО РФ	30	2016-03-16	1970-01-01	t	t
+2	4	4	6	3	1940980	МО РФ	28	2016-03-08	1970-01-01	t	t
+5	4	5	6	3	543534534	МО РФ	26	2016-03-16	1970-01-01	t	t
+6	4	5	6	3	435345453	МО РФ	35	2016-03-17	1970-01-01	t	t
+8	3	7	4	3	1231231	МО РФ	16	2016-03-16	1970-01-01	t	t
+9	1	7	1	3	2	2	22	2016-10-20	1970-01-01	t	t
+7	4	6	4	3	123121	МО РФ	18	2016-03-17	1970-01-01	f	t
+3	6	1	1	4	234234	МО РФ	40	2016-03-16	1970-01-01	f	t
+\.
+
+
+--
+-- Name: tunit_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tunit_id_seq', 9, true);
+
+
+--
+-- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "user" (id, role_id, active, title, bdate, adate, img_ext, name, passwd, editable, access_right_id) FROM stdin;
+2	1	t	Иванов Иван Иванович	1979-01-01 16:37:25+01	2015-04-15 12:00:00+02	png	ivan	2c42e5cf1cdbafea04ed267018ef1511	f	\N
+16	2	t	Дурнев Василий Валентинович	1953-12-15 22:00:00+01	2016-12-30 22:00:00+01	jpg	durnev	202cb962ac59075b964b07152d234b70	t	\N
+3	1	f	Пиков Виталий Александрович	1979-07-24 23:00:00+02	2020-12-30 22:00:00+01	jpg	pikov	827ccb0eea8a706c4c34a16891f84e7b	t	\N
+20	\N	t	Новичихин Егор Александрович	1982-12-28 22:00:00+01	2016-12-30 22:00:00+01	jpg	novich	827ccb0eea8a706c4c34a16891f84e7b	t	\N
+\.
+
+
+--
+-- Data for Name: user_action; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY user_action (user_id, adate, title) FROM stdin;
+\.
+
+
+--
+-- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('user_id_seq', 20, true);
+
+
+--
+-- Data for Name: user_login; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY user_login (user_id, success, ldate) FROM stdin;
+2	t	2009-10-25 17:00:00+01
+2	t	2015-04-12 12:42:50+02
+2	f	2015-04-12 15:12:54+02
+2	f	2015-04-12 15:13:31+02
+2	t	2015-04-12 15:14:31+02
+2	f	2015-04-12 15:15:14+02
+2	f	2015-04-12 15:15:19+02
+2	t	2015-04-12 15:15:43+02
+2	t	2015-04-12 15:15:51+02
+2	t	2015-04-12 15:25:53+02
+2	t	2015-04-12 16:00:47+02
+2	t	2015-04-12 16:01:03+02
+2	t	2015-04-12 16:37:25+02
+2	t	2015-04-12 18:19:52+02
+3	t	2015-04-13 03:56:13+02
+2	t	2015-04-13 03:56:53+02
+3	f	2015-04-14 11:58:44+02
+3	t	2015-04-14 11:58:50+02
+2	t	2015-04-14 11:59:01+02
+2	t	2015-04-22 08:31:44+02
+2	t	2015-04-23 07:20:40+02
+3	t	2015-04-23 09:11:04+02
+14	f	2015-04-23 09:14:09+02
+14	f	2015-04-23 09:14:16+02
+14	f	2015-04-23 09:14:33+02
+14	f	2015-04-23 09:15:01+02
+14	f	2015-04-23 09:18:11+02
+14	f	2015-04-23 09:18:14+02
+14	f	2015-04-23 09:19:38+02
+14	f	2015-04-23 09:19:43+02
+14	f	2015-04-23 09:21:06+02
+14	t	2015-04-23 09:22:34+02
+14	t	2015-04-23 09:23:26+02
+14	f	2015-04-24 06:55:47+02
+14	t	2015-04-24 06:55:52+02
+2	t	2015-08-29 08:20:54+02
+2	t	2015-08-29 12:05:10+02
+2	t	2015-08-29 15:19:27+02
+2	t	2015-08-29 15:31:24+02
+2	t	2015-08-29 18:24:06+02
+2	t	2015-08-30 01:13:04+02
+2	t	2015-08-30 02:21:31+02
+2	t	2015-08-30 02:22:10+02
+2	t	2015-08-30 03:00:38+02
+2	t	2015-08-30 03:42:40+02
+3	t	2015-08-30 03:58:28+02
+2	t	2015-08-30 03:58:51+02
+2	t	2015-08-31 15:55:55+02
+2	f	2015-09-01 03:30:18+02
+2	t	2015-09-01 03:35:05+02
+2	t	2015-09-01 04:11:33+02
+2	t	2015-09-01 04:21:52+02
+2	t	2015-09-01 04:22:08+02
+3	t	2015-09-01 04:22:52+02
+2	t	2015-09-01 08:09:11+02
+2	t	2015-09-01 11:26:00+02
+2	f	2015-09-01 14:39:44+02
+2	t	2015-09-01 14:39:49+02
+2	t	2015-09-01 15:27:07+02
+2	t	2015-09-01 16:07:20+02
+2	t	2015-09-01 18:07:00+02
+2	t	2015-09-02 01:55:29+02
+3	t	2015-09-08 06:42:51+02
+2	t	2015-09-08 06:43:07+02
+2	t	2015-09-08 10:38:20+02
+2	t	2015-09-08 11:43:27+02
+2	t	2015-09-08 12:31:43+02
+2	t	2015-09-08 14:53:14+02
+2	t	2015-09-08 16:13:14+02
+2	t	2015-09-08 18:18:45+02
+2	t	2015-12-05 15:11:43+01
+2	t	2016-03-15 02:46:54+01
+2	t	2016-03-15 05:10:57+01
+3	t	2016-03-16 11:22:11+01
+3	t	2016-03-16 11:22:41+01
+3	t	2016-03-16 13:04:48+01
+3	t	2016-03-16 13:35:58+01
+3	t	2016-03-16 14:56:31+01
+3	t	2016-03-16 15:29:53+01
+3	t	2016-03-16 15:35:03+01
+3	t	2016-03-16 15:39:44+01
+3	t	2016-03-17 06:35:47+01
+3	t	2016-03-17 06:57:26+01
+16	t	2016-03-17 09:04:02+01
+16	t	2016-03-17 09:21:57+01
+16	t	2016-03-17 09:56:41+01
+16	t	2016-03-17 09:59:45+01
+3	t	2016-03-17 10:20:06+01
+2	t	2016-03-31 08:49:20+02
+2	t	2016-03-31 08:52:04+02
+2	t	2016-06-30 11:05:37+02
+2	t	2016-06-30 11:11:07+02
+2	t	2016-10-03 09:35:45+02
+2	f	2016-11-22 13:15:18+01
+2	t	2016-11-22 13:15:25+01
+2	t	2016-11-22 13:30:20+01
+3	t	2016-11-22 13:32:51+01
+2	t	2016-11-23 08:38:08+01
+2	t	2016-11-23 09:18:00+01
+2	t	2016-12-08 08:36:11+01
+2	t	2016-12-09 09:26:21+01
+2	t	2016-12-09 10:21:56+01
+2	t	2016-12-12 08:17:41+01
+16	t	2016-12-12 08:24:36+01
+2	t	2016-12-13 06:43:42+01
+3	f	2016-12-13 12:57:17+01
+3	f	2016-12-13 12:57:30+01
+3	f	2016-12-13 12:57:50+01
+3	f	2016-12-13 12:58:00+01
+3	f	2016-12-13 12:58:36+01
+20	t	2016-12-15 15:17:09+01
+2	t	2016-12-16 08:05:25+01
+2	t	2016-12-16 08:09:31+01
+20	t	2016-12-16 09:24:18+01
+20	f	2016-12-16 11:03:06+01
+20	t	2016-12-16 11:03:16+01
+20	t	2016-12-16 11:17:02+01
+2	t	2016-12-16 11:26:55+01
+3	t	2016-12-16 11:45:44+01
+2	t	2016-12-19 07:33:33+01
+3	t	2016-12-19 09:21:57+01
+2	t	2016-12-19 09:32:09+01
+2	t	2016-12-20 08:34:28+01
+2	t	2016-12-20 08:49:58+01
+20	t	2016-12-20 12:44:38+01
+2	t	2016-12-21 08:04:22+01
+2	t	2016-12-21 08:04:45+01
+2	t	2017-01-30 15:11:00+01
+2	t	2017-02-07 17:03:10+01
+2	t	2017-02-08 15:15:58+01
+2	t	2017-02-20 14:33:37+01
+2	t	2017-03-03 08:03:24+01
+2	t	2017-03-11 10:19:12+01
+2	t	2017-03-21 09:02:02+01
+2	t	2017-05-10 09:03:08+02
+2	t	2017-05-10 10:30:06+02
+2	t	2017-05-23 14:37:11+02
+20	t	2017-06-08 15:43:10+02
+2	t	2017-06-08 15:43:37+02
+2	t	2017-06-21 09:55:00+02
+2	t	2017-06-22 10:05:37+02
+2	t	2017-06-28 16:43:43+02
+2	t	2017-07-29 18:34:25+02
+2	t	2017-07-31 10:47:00+02
+2	t	2017-09-18 12:21:11+02
+2	t	2017-09-19 16:12:15+02
+2	t	2017-09-21 10:48:24+02
+2	t	2017-09-23 10:44:48+02
+20	t	2017-09-23 17:11:04+02
+2	t	2017-09-23 17:13:05+02
+2	t	2017-09-23 17:22:36+02
+2	t	2017-09-23 17:32:12+02
+2	t	2017-09-23 17:42:11+02
+2	t	2017-09-23 18:11:07+02
+2	t	2017-09-23 19:00:29+02
+20	t	2017-09-23 19:00:55+02
+2	t	2017-09-24 07:11:17+02
+2	t	2017-09-28 15:21:52+02
+2	t	2017-09-28 15:23:00+02
+2	t	2017-09-28 15:23:30+02
+\.
+
+
+--
+-- Data for Name: BLOBS; Type: BLOBS; Schema: -; Owner: 
+--
+
+SET search_path = pg_catalog;
+
+BEGIN;
+
+SELECT pg_catalog.lo_open('66227', 131072);
+SELECT pg_catalog.lo_close(0);
+
+SELECT pg_catalog.lo_open('66234', 131072);
+SELECT pg_catalog.lo_close(0);
+
+SELECT pg_catalog.lo_open('66236', 131072);
+SELECT pg_catalog.lo_close(0);
+
+SELECT pg_catalog.lo_open('66238', 131072);
+SELECT pg_catalog.lo_close(0);
+
+SELECT pg_catalog.lo_open('66240', 131072);
+SELECT pg_catalog.lo_close(0);
+
+SELECT pg_catalog.lo_open('66242', 131072);
+SELECT pg_catalog.lo_close(0);
+
+SELECT pg_catalog.lo_open('66244', 131072);
+SELECT pg_catalog.lo_close(0);
+
+COMMIT;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: access_right access_right_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY access_right
+    ADD CONSTRAINT access_right_pk PRIMARY KEY (user_id);
+
+
+--
+-- Name: addressees addressees_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY addressees
+    ADD CONSTRAINT addressees_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: attached attached_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY attached
+    ADD CONSTRAINT attached_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: controls controls_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY controls
+    ADD CONSTRAINT controls_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: controlstages controlstages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY controlstages
+    ADD CONSTRAINT controlstages_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: tdepartments departments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tdepartments
+    ADD CONSTRAINT departments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: executors executors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY executors
+    ADD CONSTRAINT executors_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: folders folders_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY folders
+    ADD CONSTRAINT folders_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: freenumbers freenumbers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY freenumbers
+    ADD CONSTRAINT freenumbers_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: role id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY role
+    ADD CONSTRAINT id PRIMARY KEY (id);
+
+
+--
+-- Name: info id_info; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY info
+    ADD CONSTRAINT id_info PRIMARY KEY (id);
+
+
+--
+-- Name: incomings incomings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY incomings
+    ADD CONSTRAINT incomings_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: operators operators_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY operators
+    ADD CONSTRAINT operators_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: out_attached out_attached_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY out_attached
+    ADD CONSTRAINT out_attached_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: out_copies out_copies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY out_copies
+    ADD CONSTRAINT out_copies_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: outgoings outgoings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY outgoings
+    ADD CONSTRAINT outgoings_pkey PRIMARY KEY (code);
+
+
+--
+-- Name: taccesstype taccesstype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY taccesstype
+    ADD CONSTRAINT taccesstype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: taddresstype taddresstype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY taddresstype
+    ADD CONSTRAINT taddresstype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tcity tcity_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tcity
+    ADD CONSTRAINT tcity_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ttechnique technique_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ttechnique
+    ADD CONSTRAINT technique_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: temail temail_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY temail
+    ADD CONSTRAINT temail_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: temailtype temailtype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY temailtype
+    ADD CONSTRAINT temailtype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tinterpassporttype tinterpassporttype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tinterpassporttype
+    ADD CONSTRAINT tinterpassporttype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tmedaltype tmedaltype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tmedaltype
+    ADD CONSTRAINT tmedaltype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tmilitaryposition tmilitaryposition_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tmilitaryposition
+    ADD CONSTRAINT tmilitaryposition_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tmilitaryrank tmilitaryrank_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tmilitaryrank
+    ADD CONSTRAINT tmilitaryrank_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tperson tperson_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tperson
+    ADD CONSTRAINT tperson_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tphone tphone_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tphone
+    ADD CONSTRAINT tphone_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tphonenumbertype tphonenumbertype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tphonenumbertype
+    ADD CONSTRAINT tphonenumbertype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tphonetype tphonetype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tphonetype
+    ADD CONSTRAINT tphonetype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tunit unit_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tunit
+    ADD CONSTRAINT unit_id PRIMARY KEY (id);
+
+
+--
+-- Name: user user_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT user_id PRIMARY KEY (id);
+
+
+--
+-- Name: fki_id_departments; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_id_departments ON ttechnique USING btree (id_departments);
+
+
+--
+-- Name: incomings_ns _DELETE; Type: RULE; Schema: public; Owner: postgres
+--
+
+CREATE RULE "_DELETE" AS
+    ON DELETE TO incomings_ns DO INSTEAD  DELETE FROM incomings
+  WHERE ((incomings.code = old.code) AND (old.grif < 2));
+
+
+--
+-- Name: incomings_s _DELETE; Type: RULE; Schema: public; Owner: postgres
+--
+
+CREATE RULE "_DELETE" AS
+    ON DELETE TO incomings_s DO INSTEAD  DELETE FROM incomings
+  WHERE ((incomings.code = old.code) AND (old.grif > 1));
+
+
+--
+-- Name: controls_all _DELETE; Type: RULE; Schema: public; Owner: postgres
+--
+
+CREATE RULE "_DELETE" AS
+    ON DELETE TO controls_all DO INSTEAD  DELETE FROM controls
+  WHERE (controls.code = old.code);
+
+
+--
+-- Name: incomings_ns _INSERT; Type: RULE; Schema: public; Owner: postgres
+--
+
+CREATE RULE "_INSERT" AS
+    ON INSERT TO incomings_ns DO INSTEAD  INSERT INTO incomings (code, number_in, date_in, number_primary, date_primary, senders_numbers, grif, sheets, copies, copies_numbers, subject, orders, instructions, notes, control, out_where, out_details, out_date)
+  VALUES (new.code, new.number_in, new.date_in, new.number_primary, new.date_primary, new.senders_numbers, new.grif, new.sheets, new.copies, new.copies_numbers, new.subject, new.orders, new.instructions, new.notes, new.control, new.out_where, new.out_details, new.out_date);
+
+
+--
+-- Name: incomings_s _INSERT; Type: RULE; Schema: public; Owner: postgres
+--
+
+CREATE RULE "_INSERT" AS
+    ON INSERT TO incomings_s DO INSTEAD  INSERT INTO incomings (code, number_in, date_in, number_primary, date_primary, senders_numbers, grif, sheets, copies, copies_numbers, subject, orders, instructions, notes, control, out_where, out_details, out_date)
+  VALUES (new.code, new.number_in, new.date_in, new.number_primary, new.date_primary, new.senders_numbers, new.grif, new.sheets, new.copies, new.copies_numbers, new.subject, new.orders, new.instructions, new.notes, new.control, new.out_where, new.out_details, new.out_date);
+
+
+--
+-- Name: controls_all _INSERT; Type: RULE; Schema: public; Owner: postgres
+--
+
+CREATE RULE "_INSERT" AS
+    ON INSERT TO controls_all DO INSTEAD  INSERT INTO controls (code, number, incoming, number_ud, number_ctrl_ud, datecontrol_ud, orderer, datecontrol, datedone, executor)
+  VALUES (new.code, new.number_ctrl, new.incoming, new.number_ud, new.number_ctrl_ud, new.datecontrol_ud, new.orderer, new.datecontrol, new.datedone, new.executor);
+
+
+--
+-- Name: incomings_ns _UPDATE; Type: RULE; Schema: public; Owner: postgres
+--
+
+CREATE RULE "_UPDATE" AS
+    ON UPDATE TO incomings_ns DO INSTEAD  UPDATE incomings SET code = new.code, number_in = new.number_in, date_in = new.date_in, number_primary = new.number_primary, date_primary = new.date_primary, senders_numbers = new.senders_numbers, grif = new.grif, sheets = new.sheets, copies = new.copies, copies_numbers = new.copies_numbers, subject = new.subject, orders = new.orders, instructions = new.instructions, notes = new.notes, control = new.control, out_where = new.out_where, out_details = new.out_details, out_date = new.out_date
+  WHERE ((incomings.code = new.code) AND (new.grif < 2));
+
+
+--
+-- Name: incomings_s _UPDATE; Type: RULE; Schema: public; Owner: postgres
+--
+
+CREATE RULE "_UPDATE" AS
+    ON UPDATE TO incomings_s DO INSTEAD  UPDATE incomings SET code = new.code, number_in = new.number_in, date_in = new.date_in, number_primary = new.number_primary, date_primary = new.date_primary, senders_numbers = new.senders_numbers, grif = new.grif, sheets = new.sheets, copies = new.copies, copies_numbers = new.copies_numbers, subject = new.subject, orders = new.orders, instructions = new.instructions, notes = new.notes, control = new.control, out_where = new.out_where, out_details = new.out_details, out_date = new.out_date
+  WHERE ((incomings.code = new.code) AND (new.grif > 1));
+
+
+--
+-- Name: controls_all _UPDATE; Type: RULE; Schema: public; Owner: postgres
+--
+
+CREATE RULE "_UPDATE" AS
+    ON UPDATE TO controls_all DO INSTEAD  UPDATE controls SET number = new.number_ctrl, incoming = new.incoming, number_ud = new.number_ud, number_ctrl_ud = new.number_ctrl_ud, datecontrol_ud = new.datecontrol_ud, orderer = new.orderer, datecontrol = new.datecontrol, datedone = new.datedone, executor = new.executor
+  WHERE (controls.code = new.code);
+
+
+--
+-- Name: controls_all _UPDATE1; Type: RULE; Schema: public; Owner: postgres
+--
+
+CREATE RULE "_UPDATE1" AS
+    ON UPDATE TO controls_all DO INSTEAD  UPDATE incomings SET number_in = new.number_in, date_in = new.date_in, number_primary = new.number_primary, date_primary = new.date_primary, senders_numbers = new.senders_numbers, grif = new.grif, sheets = new.sheets, copies = new.copies, copies_numbers = new.copies_numbers, subject = new.subject, orders = new.orders, instructions = new.instructions, notes = new.notes, control = new.control, out_where = new.out_where, out_details = new.out_details, out_date = new.out_date
+  WHERE (incomings.code = new.incoming);
+
+
+--
+-- Name: attached a_d; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER a_d AFTER DELETE ON attached FOR EACH ROW EXECUTE PROCEDURE attached_ad();
+
+
+--
+-- Name: controls a_d; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER a_d AFTER DELETE ON controls FOR EACH ROW EXECUTE PROCEDURE controls_ad();
+
+
+--
+-- Name: incomings a_d; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER a_d AFTER DELETE ON incomings FOR EACH ROW EXECUTE PROCEDURE incomings_ad();
+
+
+--
+-- Name: outgoings a_d; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER a_d AFTER DELETE ON outgoings FOR EACH ROW EXECUTE PROCEDURE outgoings_ad();
+
+
+--
+-- Name: out_attached a_d; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER a_d AFTER DELETE ON out_attached FOR EACH ROW EXECUTE PROCEDURE out_attached_ad();
+
+
+--
+-- Name: controls a_iud; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER a_iud AFTER INSERT OR DELETE OR UPDATE ON controls FOR EACH ROW EXECUTE PROCEDURE controls_n();
+
+
+--
+-- Name: incomings a_iud; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER a_iud AFTER INSERT OR DELETE OR UPDATE ON incomings FOR EACH ROW EXECUTE PROCEDURE incomings_n();
+
+
+--
+-- Name: outgoings a_iud; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER a_iud AFTER INSERT OR DELETE OR UPDATE ON outgoings FOR EACH ROW EXECUTE PROCEDURE outgoings_n();
+
+
+--
+-- Name: ttechnique departments_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ttechnique
+    ADD CONSTRAINT departments_fkey FOREIGN KEY (id_departments) REFERENCES tdepartments(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: taccesstype; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE taccesstype TO PUBLIC;
+
+
+--
+-- Name: taddresstype; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE taddresstype TO PUBLIC;
+
+
+--
+-- Name: tcity; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE tcity TO PUBLIC;
+
+
+--
+-- Name: temail; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE temail TO PUBLIC;
+
+
+--
+-- Name: temailtype; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE temailtype TO PUBLIC;
+
+
+--
+-- Name: tinterpassporttype; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE tinterpassporttype TO PUBLIC;
+
+
+--
+-- Name: tmedaltype; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE tmedaltype TO PUBLIC;
+
+
+--
+-- Name: tmilitaryposition; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE tmilitaryposition TO PUBLIC;
+
+
+--
+-- Name: tmilitaryrank; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE tmilitaryrank TO PUBLIC;
+
+
+--
+-- Name: tperson; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE tperson TO PUBLIC;
+
+
+--
+-- Name: tphone; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE tphone TO PUBLIC;
+
+
+--
+-- Name: tphonetype; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE tphonetype TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

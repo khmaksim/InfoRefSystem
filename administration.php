@@ -53,15 +53,14 @@
                                     <h3 class="box-title">Администрирование</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
-                                    <!-- Create the tabs -->
-                                    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                                        <li class="active"><a href="#control-sidebar-table-tab" data-toggle="tab"><i class="fa fa-table"></i></a></li>
-                                        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-book"></i> Словари</a></li>
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#admin" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> Учетная информация</a></li>
+                                        <li><a href="#dictionary" data-toggle="tab"><i class="fa fa-book"></i> Словари</a></li>
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content">
-                                        <!-- Table tab content -->
-                                        <div class="tab-pane active" id="control-sidebar-table-tab">
+                                        <div class="tab-pane active" id="admin">
                                             <?php
                                                 // получение прав доступа на ПМ пользователя
                                                 $arAccessRight = getAccessRightById($_SESSION['user_id']);
@@ -132,9 +131,8 @@
                                                     }
                                                 ?>
                                             </ul><!-- /.control-sidebar-menu -->
-                                        </div><!-- /.tab-pane -->
-                                        <!-- Settings tab content -->
-                                        <div class="tab-pane" id="control-sidebar-settings-tab">
+                                        </div>
+                                        <div class="tab-pane" id="dictionary">
                                             <ul class="control-sidebar-menu">
                                                 <?php
                                                     if ($arAccessRight['admin'] > 0) {
@@ -238,7 +236,7 @@
                                                     }
                                                 ?>
                                             </ul><!-- /.control-sidebar-menu -->
-                                        </div><!-- /.tab-pane -->
+                                        </div>
                                     </div>
                                  </div><!-- /.box-body -->
                             </div><!-- /.box -->

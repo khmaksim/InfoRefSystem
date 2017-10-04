@@ -46,7 +46,7 @@
                         <div class="col-lg-4">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <a href="{% url 'research-activities' %}">
+                                    <a href="/secrecy.php">
                                         <h4 class="text-center">Режим секретности</h4>
                                     </a>
                                 </div>
