@@ -39,19 +39,39 @@
                         <li class="active">Руководящие документы</li>
                     </ol>
                 </section>
-
                 <!-- Main content -->
                 <section class="content">
-
+                    <!-- Your Page Content Here -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Руководящие документы</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-xs-1">№</th>
+                                                <th>Наименование</th>
+                                                <th>Место отображения</th>
+                                                <th class="col-xs-1 text-center">Редактировать</th>
+                                                <th class="col-xs-1 text-center">Удалить</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="items"></tbody>
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- /.col -->
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="text-right"><a href="/documents_edit.php?act=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                        </div><!-- /.col -->
+                    </div>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-        <?php
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
-        ?>
-            <!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
 
         <!-- REQUIRED JS SCRIPTS -->
@@ -72,20 +92,10 @@
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
             $(document).ready(function(){
-                $("#items").load("/phonelist.func.php", function( response, status, xhr ) {
-                    $('input').iCheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue',
-                        increaseArea: '20%' // optional
-                    });
-                });
-                // setInterval(function() {$("#items").load("/phonelist.func.php");}, 5000);
-                $('input').iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue',
-                    increaseArea: '20%' // optional
-                });
-
+                $("#items").load("/documents.func.php");
+                setInterval(function() {
+                    $("#items").load("/documents.func.php");
+                }, 5000);
             });
         /*]]>*/
         </script>

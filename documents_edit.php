@@ -1,6 +1,6 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $page = 'departments';
+    $page = 'accesstype';
 ?>
   <!--
   BODY TAG OPTIONS:
@@ -36,16 +36,16 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-                        <li><a href="/structure.php">Cтруктура ЧНП ВКС</a></li>
-                        <li><a href="/departments.php">Подразделения</a></li>
+                        <li><a href="/documents.php">Руководящие документы</a></li>
                         <li class="active"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
                     </ol>
                 </section>
                 <!-- Main content -->
                 <section class="content">
                 <?php
+                    $alertMEssage = 'Укажите наименование типа email!';
                     if ($_GET['act'] == 'edit') {
-                        $arDepartments = getDepartmentsById($_GET['id']);
+                        $arEmailtype = getEmailtypeById($_GET['id']);
                     }
                 ?>
                 <!-- Your Page Content Here -->
@@ -57,42 +57,17 @@
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
                                 <form name="editform" role="form" action="/save.php" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="act" value="<?= $_GET['act']; ?>Departments" />
+                                    <input type="hidden" name="act" value="<?= $_GET['act']; ?>Documents" />
                                     <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Полное наименование</label>
-                                            <input type="text" name="fullname" class="form-control" id="exampleInputEmail1" placeholder="Полное наименование"<?= ($_GET['act'] == 'edit') ? ' value="' . $arDepartments['fullname'] . '"' : ''; ?> required autofocus>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Сокращенное наименование</label>
-                                            <input type="text" name="shortname" class="form-control" id="exampleInputEmail1" placeholder="Сокращенное наименование"<?= ($_GET['act'] == 'edit') ? ' value="' . $arDepartments['shortname'] . '"' : ''; ?> required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Индекс исходящего документа</label>
-                                            <input type="text" name="dep_index" class="form-control" id="exampleInputEmail1" placeholder="Индекс исходящего документа"<?= ($_GET['act'] == 'edit') ? ' value="' . $arDepartments['dep_index'] . '"' : ''; ?> required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Адрес сервера</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-laptop"></i>
-                                                </div>
-                                                <input type="text" name="server_addr" class="form-control" id="exampleInputEmail1" data-inputmask="'alias': 'ip'" data-mask=""<?= ($_GET['act'] == 'edit') ? ' value="' . $arDepartments['server_addr'] . '"' : ''; ?> required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Примечания</label>
-                                            <textarea name="note" class="form-control" rows="3" placeholder="Текст..."><?= ($_GET['act'] == 'edit') ? $arDepartments['note'] : ''; ?></textarea>
+                                            <label for="exampleInputDocuments">Наименование документа</label>
+                                            <input type="text" name="name" class="form-control" id="exampleInputDocuments" placeholder="Наименование документа"<?= ($_GET['act'] == 'edit') ? ' value="' . $arEmailtype['name'] . '"' : ''; ?> required autofocus>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Кому подчиняется</label>
+                                            <label for="exampleInputFile">Раздел для отображения</label>
                                             <select class="form-control" name="parent">
-                                                <option value="0">Никому</option>
+                                                <option value="0">-</option>
                                                 <?php
                                                     $sql = ($_GET['act'] == 'edit') ? "SELECT * FROM public.tdepartments WHERE id != '" . $arDepartments['id'] . "' ORDER BY fullname" : "SELECT * FROM public.tdepartments ORDER BY fullname";
                                                     foreach ($dbconn->query($sql) as $row) {
@@ -104,13 +79,14 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Активно</label><br />
-                                            <input type="checkbox" name="active" value="1"<?= ($_GET['act'] == 'edit' && $arDepartments['active'] != 'true') ? '' : ' checked="checked"'; ?>>
+                                            <?= ($_GET['act'] == 'edit' && $arUser['img_ext'] != '') ? '<img src="/face/' . $arUser['id'] . '_thumb.' . $arUser['img_ext'] . '" border="0" alt="" class="img-thumbnail" /><br />' : ''; ?>
+                                            <label for="exampleInputFile">Фото</label>
+                                            <input type="file" name="face" id="exampleInputFile">
+                                            <p class="help-block">Размер файла не более 2 Мб.</p>
                                         </div>
                                     </div><!-- /.box-body -->
-
                                     <div class="box-footer">
-                                        <a href="/departments.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                        <a href="/documents.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                     </div>
                                 </form>
                             </div>
@@ -118,15 +94,9 @@
                     </div>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
-            <!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
 
         <!-- REQUIRED JS SCRIPTS -->
@@ -141,34 +111,14 @@
              Both of these plugins are recommended to enhance the
              user experience. Slimscroll is required when using the
              fixed layout. -->
-        <!-- iCheck -->
-        <script src="/plugins/iCheck/icheck.min.js"></script>
-        <!-- select2 -->
-        <script src="/plugins/select2/select2.full.min.js"></script>
-        <!-- InputMask -->
-        <script src="/plugins/input-mask/jquery.inputmask.js"></script>
-        <script src="/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-        <script src="/plugins/input-mask/jquery.inputmask.extensions.js"></script>
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
-            $(document).ready(function(){
-      		    $('input').iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue',
-                    increaseArea: '20%' // optional
-                });
-
-                $('select').select2();
-                //Money Euro
-                $("[data-mask]").inputmask();
-            });
-
             function checkForm()
             {
-                if (document.editform.fullname.value != '') {
+                if (document.editform.name.value != '') {
                     document.editform.submit();
                 } else {
-                    alert('Укажите наименование подразделения!');
+                    alert('<?= $alertMessage ?>');
                 }
             }
         /*]]>*/
