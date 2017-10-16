@@ -165,21 +165,15 @@
                                                 )";
                             break;
 
-        case 'editCity': $sql = "UPDATE public.tcity SET name = '" . $name . "'
-                                                                WHERE
-                                                                    id = '" . $id . "'";
-                            break;
-
-        case 'delCity':  $sql = "DELETE FROM public.tcity WHERE id = '" . $id . "'";
-                            break;
-
-        case 'addMedaltype':  $sql = "INSERT INTO public.tmedaltype (
-                                                    name
-                                                )
-                                                VALUES (
-                                                    '" . $name . "'
-                                                )";
-                            break;
+        case 'editCity': 
+            $sql = "UPDATE public.tcity SET name = '" . $name . "' WHERE id = '" . $id . "'";
+            break;
+        case 'delCity':  
+            $sql = "DELETE FROM public.tcity WHERE id = '" . $id . "'";
+            break;
+        case 'addMedaltype':  
+            $sql = "INSERT INTO public.tmedaltype (name) VALUES ('" . $name . "')";
+            break;
 
         case 'editMedaltype': $sql = "UPDATE public.tmedaltype SET name = '" . $name . "'
                                                                 WHERE
@@ -463,25 +457,16 @@
                                                                 WHERE
                                                                     code = '" . $code . "'";
                             break;
-        case 'addTechnique':
-            $sql = "INSERT INTO public.ttechnique (
-                                                  fullname,
-                                                  shortname,
-                                                  id_departments
-                                                )
-                                                VALUES (
-                                                    '" . $fullname . "',
-                                                    '" . $shortname . "',
-                                                    '" . $id_departments . "'
-                                                )";
-                            break;
-        case 'editTechnique':
-            $sql = "UPDATE public.ttechnique SET fullname = '" . $fullname . "',
-                                                                shortname = '" . $shortname . "'
-                                                                WHERE id = '" . $id . "'";
-                            break;
-        case 'delTechnique':  $sql = "DELETE FROM public.ttechnique WHERE id = '" . $id . "'";
-                            break;
+        case 'addDocuments':
+            $sql = "INSERT INTO public.document (name, section) VALUES ('" . $name . "', '" . $section . "')";
+            break;
+        case 'editDocuments':
+            $sql = "UPDATE public.document SET name = '" . $name . "', section = '" . $section . "' WHERE id = '" . $id . "'";
+            break;
+        case 'delDocuments':  $sql = "DELETE FROM public.document WHERE id = '" . $id . "'";
+            break;
+
+
 
         default:    echo '<pre>';
                     print_r($_POST);
@@ -644,6 +629,7 @@
     else if(preg_match("/technique/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./technique.php?id=" . $id_departments . "'>";
     else if(preg_match("/unit/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./unit.php?id=" . $id_departments . "'>";
     else if(preg_match("/departments/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./departments.php'>";
+    else if(preg_match("/documents/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./documents.php'>";
     else if(preg_match("/accesstype/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./dictionary.php?name=accesstype'>";
     else if(preg_match("/interpassporttype/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./dictionary.php?name=interpassporttype'>";
     else if(preg_match("/medaltype/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./dictionary.php?name=medaltype'>";

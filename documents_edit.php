@@ -43,9 +43,9 @@
                 <!-- Main content -->
                 <section class="content">
                 <?php
-                    $alertMEssage = 'Укажите наименование типа email!';
+                    $alertMessage = 'Укажите наименование документа!';
                     if ($_GET['act'] == 'edit') {
-                        $arEmailtype = getEmailtypeById($_GET['id']);
+                        $arDocument = getDocumentById($_GET['id']);
                     }
                 ?>
                 <!-- Your Page Content Here -->
@@ -62,28 +62,28 @@
                                     <div class="box-body">
                                         <div class="form-group">
                                             <label for="exampleInputDocuments">Наименование документа</label>
-                                            <input type="text" name="name" class="form-control" id="exampleInputDocuments" placeholder="Наименование документа"<?= ($_GET['act'] == 'edit') ? ' value="' . $arEmailtype['name'] . '"' : ''; ?> required autofocus>
+                                            <input type="text" name="name" class="form-control" id="exampleInputDocuments" placeholder="Наименование документа"<?= ($_GET['act'] == 'edit') ? ' value="' . $arDocument['name'] . '"' : ''; ?> required autofocus>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Раздел для отображения</label>
-                                            <select class="form-control" name="parent">
+                                            <label for="exampleInputFile">Раздел отображения</label>
+                                            <select class="form-control" name="section">
                                                 <option value="0">-</option>
                                                 <?php
-                                                    $sql = ($_GET['act'] == 'edit') ? "SELECT * FROM public.tdepartments WHERE id != '" . $arDepartments['id'] . "' ORDER BY fullname" : "SELECT * FROM public.tdepartments ORDER BY fullname";
-                                                    foreach ($dbconn->query($sql) as $row) {
+                                                    $arSection = ['Защита информации от НСД', 'Кадровая работа', 'Научно-исследовательская работа', 'Режим секретности', 'Техническая защита информации', 'Шифровальная работа'];
+                                                    foreach ($arSection as $row) {
                                                 ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arDepartments['parent'] == $row['id']) ? ' selected="selected"' : ''; ?>><?= $row['fullname']; ?></option>
+                                                <option value="' . $row['section'] . '" <?= ($_GET['act'] == 'edit' && $arDocument['section'] == $row) ? ' selected="selected"' : ''; ?>><?= $row; ?></option>
                                                 <?php
                                                     }
                                                 ?>
+                                                <!-- <option value="Кадровая работа">Кадровая работа</option>
+                                                <option value="Научно-исследовательская работа">Научно-исследовательская работа</option>
+                                                <option value="Режим секретности">Режим секретности</option>
+                                                <option value="Техническая защита информации">Техническая защита информации</option>
+                                                <option value="Шифровальная работа">Шифровальная работа</option> -->
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <?= ($_GET['act'] == 'edit' && $arUser['img_ext'] != '') ? '<img src="/face/' . $arUser['id'] . '_thumb.' . $arUser['img_ext'] . '" border="0" alt="" class="img-thumbnail" /><br />' : ''; ?>
-                                            <label for="exampleInputFile">Фото</label>
-                                            <input type="file" name="face" id="exampleInputFile">
-                                            <p class="help-block">Размер файла не более 2 Мб.</p>
-                                        </div>
+                                        
                                     </div><!-- /.box-body -->
                                     <div class="box-footer">
                                         <a href="/documents.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
@@ -111,8 +111,14 @@
              Both of these plugins are recommended to enhance the
              user experience. Slimscroll is required when using the
              fixed layout. -->
+        <!-- select2 -->
+        <script src="/plugins/select2/select2.full.min.js"></script>
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
+            $(document).ready(function(){
+                $('select').select2();
+            });
+
             function checkForm()
             {
                 if (document.editform.name.value != '') {

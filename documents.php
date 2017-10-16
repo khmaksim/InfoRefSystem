@@ -54,7 +54,7 @@
                                             <tr>
                                                 <th class="col-xs-1">№</th>
                                                 <th>Наименование</th>
-                                                <th>Место отображения</th>
+                                                <th>Раздел отображения</th>
                                                 <th class="col-xs-1 text-center">Редактировать</th>
                                                 <th class="col-xs-1 text-center">Удалить</th>
                                             </tr>
@@ -97,6 +97,13 @@
                     $("#items").load("/documents.func.php");
                 }, 5000);
             });
+            function ConfirmDelete(id)
+            {
+                var ObjectId = id;
+                if(confirm("Вы действительно хотите удалить запись?")) {
+                    document.location = "./save.php?id="+ObjectId+"&act=delDocuments";
+                }
+            }
         /*]]>*/
         </script>
     </body>
