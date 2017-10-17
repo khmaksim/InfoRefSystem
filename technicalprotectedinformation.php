@@ -1,6 +1,7 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     $page = 'structure';
+    $section = 'Техническая защита информации';
 ?>
   <!--
   BODY TAG OPTIONS:
