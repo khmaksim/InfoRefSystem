@@ -72,15 +72,10 @@
                                                     $arSection = ['Защита информации от НСД', 'Кадровая работа', 'Научно-исследовательская работа', 'Режим секретности', 'Техническая защита информации', 'Шифровальная работа'];
                                                     foreach ($arSection as $row) {
                                                 ?>
-                                                <option value="' . $row['section'] . '" <?= ($_GET['act'] == 'edit' && $arDocument['section'] == $row) ? ' selected="selected"' : ''; ?>><?= $row; ?></option>
+                                                <option value="<?= $row; ?>" <?= ($_GET['act'] == 'edit' && $arDocument['section'] == $row) ? ' selected="selected"' : ''; ?>><?= $row; ?></option>
                                                 <?php
                                                     }
                                                 ?>
-                                                <!-- <option value="Кадровая работа">Кадровая работа</option>
-                                                <option value="Научно-исследовательская работа">Научно-исследовательская работа</option>
-                                                <option value="Режим секретности">Режим секретности</option>
-                                                <option value="Техническая защита информации">Техническая защита информации</option>
-                                                <option value="Шифровальная работа">Шифровальная работа</option> -->
                                             </select>
                                         </div>
                                         

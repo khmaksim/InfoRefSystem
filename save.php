@@ -456,7 +456,7 @@
                                                                 out_date = '" . DateFromRUtoEN($out_date) . " 00:00:00 Europe/Moscow'
                                                                 WHERE
                                                                     code = '" . $code . "'";
-                            break;
+            break;
         case 'addDocuments':
             $sql = "INSERT INTO public.document (name, section) VALUES ('" . $name . "', '" . $section . "')";
             break;
