@@ -34,3 +34,19 @@
             print "Error!: " . $e->getMessage() . "<br />";
         }   
     }
+    function getDocuments($section = "") {
+        global $dbconn;
+
+        try {
+            $sql = "SELECT * FROM document WHERE section LIKE '%" . $section . "%' ORDER BY name";
+            $res = $dbconn->query($sql);
+            if ($res->rowCount() != 0) {
+                $res = $res->fetchAll();
+                return $res;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            print "Error!: " . $e->getMessage() . "<br />";
+        }
+    }
