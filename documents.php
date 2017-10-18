@@ -101,7 +101,7 @@
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./save.php?id="+ObjectId+"&act=delDocuments";
+                    document.location = "./save.php?id="+ObjectId+"&act=delDocument";
                 }
             }
         /*]]>*/

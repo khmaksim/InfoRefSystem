@@ -21,7 +21,7 @@
         global $dbconn;
         // Выполним SQL запрос
         try {
-            $sql = "SELECT name, section FROM public.document WHERE id = " . intval($id);
+            $sql = "SELECT name, section, file_name FROM public.document WHERE id = " . intval($id);
             $res = $dbconn->query($sql);
             // Документ есть
             if ($res->rowCount() != 0) {

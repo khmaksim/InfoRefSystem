@@ -57,7 +57,7 @@
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
                                 <form name="editform" role="form" action="/save.php" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="act" value="<?= $_GET['act']; ?>Documents" />
+                                    <input type="hidden" name="act" value="<?= $_GET['act']; ?>Document" />
                                     <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
                                     <div class="box-body">
                                         <div class="form-group">
@@ -78,7 +78,11 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputFile"><?= ($_GET['act'] == 'edit' && $arDocument['file_name'] != '') ? '<a href="download.php?file=' . $arDocument['file_name'] . '" target="_blank">Файл</a><br />' : 'Файл'; ?></label>
+                                            <input type="file" name="document-file" id="exampleInputFile">
+                                            <p class="help-block">Размер файла не более 2 Мб.</p>
+                                        </div>
                                     </div><!-- /.box-body -->
                                     <div class="box-footer">
                                         <a href="/documents.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>

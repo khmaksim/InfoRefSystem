@@ -21,7 +21,7 @@
                 echo '
                     <tr>
                         <td>'. $count++ .'</td>
-                        <td>' . $row['name'] . '</td>
+                        <td><a href="download.php?file=' . $row['file_name'] . '" target="_blank">' . $row['name'] . '</a></td>
                         <td>' . $row['section'] . '</td>
                         <td class="col-xs-1 text-center"><a href="/documents_edit.php?act=edit&id=' . $row['id'] . '" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                         <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete(' . $row['id'] . ');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>

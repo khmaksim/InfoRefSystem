@@ -457,13 +457,13 @@
                                                                 WHERE
                                                                     code = '" . $code . "'";
             break;
-        case 'addDocuments':
-            $sql = "INSERT INTO public.document (name, section) VALUES ('" . $name . "', '" . $section . "')";
+        case 'addDocument':
+            $sql = "INSERT INTO public.document (name, section) VALUES ('" . $name . "', '" . $section . "') RETURNING id";
             break;
-        case 'editDocuments':
+        case 'editDocument':
             $sql = "UPDATE public.document SET name = '" . $name . "', section = '" . $section . "' WHERE id = '" . $id . "'";
             break;
-        case 'delDocuments':  $sql = "DELETE FROM public.document WHERE id = '" . $id . "'";
+        case 'delDocument':  $sql = "DELETE FROM public.document WHERE id = '" . $id . "'";
             break;
 
 
@@ -498,16 +498,15 @@
         // Если изменения в БД прошли нормально, делаем пост-обновления
         if ($res) {
             switch ($act) {
-
                 // Загружаем картинку если она есть
-                case 'addUser': case 'editUser':  if (isset($id) && $id != '') {
-                                                                        $user_id = $id;
-                                                                    } else {
-                                                                        $res = $res->fetch();
-                                                                        $user_id = $res['id'];
-                                                                    }
-
-                                                                    if (sizeof($_FILES) && !$_FILES['face']['error']) {
+                case 'addUser': case 'editUser':  
+                    if (isset($id) && $id != '') {
+                        $user_id = $id;
+                    } else {
+                        $res = $res->fetch();
+                        $user_id = $res['id'];
+                    }
+                    if (sizeof($_FILES) && !$_FILES['face']['error']) {
                                                                         // если есть старые картинки то удаляем их
                                                                         $file_ext = mb_strtolower(mb_substr($_FILES['face']['name'], mb_strpos($_FILES['face']['name'], '.', (mb_strlen($_FILES['face']['name'], 'utf-8') - 4), 'utf-8') + 1, (mb_strlen($_FILES['face']['name'], 'utf-8') - mb_strpos($_FILES['face']['name'], '.', 0, 'utf-8')), 'utf-8'), 'utf-8');
                                                                         copy($_FILES['face']['tmp_name'], "./face/" . $user_id . "." . $file_ext);
@@ -548,7 +547,50 @@
                                             die('Error (' . $mysqli->errno . ') ' . $mysqli->error . " " . $sql);
                                         }
                                         break;
-
+                 case 'addDocument': 
+                 case 'editDocument':  
+                    if (isset($id) && $id != '') {
+                        $document_id = $id;
+                    } else {
+                        $res = $res->fetch();
+                        $document_id = $res['id'];
+                    }
+                    if (sizeof($_FILES) && !$_FILES['document-file']['error'] && $_FILES['document-file']['size'] < 1024 * 2 * 1024) {
+                        $uploadInfo = $_FILES['document-file'];
+                        $fileName = $_SERVER['DOCUMENT_ROOT'] . 'documents/' . $document_id;
+                        switch ($uploadInfo['type']) {
+                            case 'image/jpeg':
+                                $fileName .= '.jpg';
+                                break;
+                            case 'image/png':
+                                $fileName .= '.png';
+                                break;
+                            case 'application/msword':
+                                $fileName .= '.doc';
+                                break;
+                            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                                $fileName .= '.docx';
+                                break;
+                            case 'application/pdf':
+                                $fileName .= '.pdf';
+                                break;
+                            default:
+                                exit;
+                        }
+                        $fileName = iconv('utf-8', 'windows-1251', $fileName);
+                        if (!move_uploaded_file($uploadInfo['tmp_name'], $fileName)) {
+                            echo 'Не удалось осуществить сохранение файла';
+                        }
+                        $dbconn->query("UPDATE public.document SET file_name = '" . $fileName . "' WHERE id = " . $document_id);
+                    }
+                    break;
+                // Удалем документ если он есть
+                case 'delDocument':        
+                    if (file_exists('/documents/' . $section . '/' . $id . '_' . $name . '.' . $photo['file_ext']))
+                        unlink('/documents/' . $section . '/' . $id . '_' . $name . '.' . $photo['file_ext']);
+                    if (file_exists('../documents/' . $section . '/' . $id . '_' . $name . '.' . $photo['file_ext']))
+                        unlink('../documents/' . $section . '/' . $id . '_' . $name . '.' . $photo['file_ext']);
+                    break;
                 // Загружаем картинку если она есть
                 case 'addPerson': case 'editPerson':    if (isset($id) && $id != '') {
                                                             $person_id = $id;
@@ -565,7 +607,6 @@
 
                                                             $dbconn->query("UPDATE public.tperson SET img_ext = '" . $file_ext . "' WHERE id = " . $person_id);
                                                         }
-
                                                         /**
                                                          *  Очищаем таблицы телефонов и email
                                                          */
@@ -629,7 +670,7 @@
     else if(preg_match("/technique/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./technique.php?id=" . $id_departments . "'>";
     else if(preg_match("/unit/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./unit.php?id=" . $id_departments . "'>";
     else if(preg_match("/departments/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./departments.php'>";
-    else if(preg_match("/documents/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./documents.php'>";
+    // else if(preg_match("/document/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./documents.php'>";
     else if(preg_match("/accesstype/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./dictionary.php?name=accesstype'>";
     else if(preg_match("/interpassporttype/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./dictionary.php?name=interpassporttype'>";
     else if(preg_match("/medaltype/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./dictionary.php?name=medaltype'>";
@@ -647,7 +688,7 @@
         $dbconn->query("DELETE FROM public.infoblock WHERE user_id = '" . $_SESSION['user_id'] . "' AND info_id = '" . $info_id . "'");
         echo "\n<META http-equiv='REFRESH' content='0; url=/'>";
     }
-    else echo "\n<META http-equiv='REFRESH' content='0; url=/'>";
+    // else echo "\n<META http-equiv='REFRESH' content='0; url=/'>";
 
     function getIntValueAccessRight($view, $edit, $remove)
     {
