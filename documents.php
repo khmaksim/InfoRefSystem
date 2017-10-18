@@ -97,11 +97,12 @@
                     $("#items").load("/documents.func.php");
                 }, 5000);
             });
-            function ConfirmDelete(id)
+            function ConfirmDelete(id, fileName)
             {
                 var ObjectId = id;
+                var FileName = fileName;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./save.php?id="+ObjectId+"&act=delDocument";
+                    document.location = "./save.php?id="+ObjectId+"&fileName="+FileName+"&act=delDocument";
                 }
             }
         /*]]>*/

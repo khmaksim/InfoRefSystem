@@ -558,6 +558,7 @@
                     if (sizeof($_FILES) && !$_FILES['document-file']['error'] && $_FILES['document-file']['size'] < 1024 * 2 * 1024) {
                         $uploadInfo = $_FILES['document-file'];
                         $fileName = $_SERVER['DOCUMENT_ROOT'] . 'documents/' . $document_id;
+
                         switch ($uploadInfo['type']) {
                             case 'image/jpeg':
                                 $fileName .= '.jpg';
@@ -586,10 +587,9 @@
                     break;
                 // Удалем документ если он есть
                 case 'delDocument':        
-                    if (file_exists('/documents/' . $section . '/' . $id . '_' . $name . '.' . $photo['file_ext']))
-                        unlink('/documents/' . $section . '/' . $id . '_' . $name . '.' . $photo['file_ext']);
-                    if (file_exists('../documents/' . $section . '/' . $id . '_' . $name . '.' . $photo['file_ext']))
-                        unlink('../documents/' . $section . '/' . $id . '_' . $name . '.' . $photo['file_ext']);
+                    echo $fileName;
+                    if (file_exists($_SERVER['DOCUMENT_ROOT'] . 'documents/' . $fileName))
+                        unlink($_SERVER['DOCUMENT_ROOT'] . 'documents/' . $fileName);
                     break;
                 // Загружаем картинку если она есть
                 case 'addPerson': case 'editPerson':    if (isset($id) && $id != '') {
@@ -670,7 +670,7 @@
     else if(preg_match("/technique/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./technique.php?id=" . $id_departments . "'>";
     else if(preg_match("/unit/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./unit.php?id=" . $id_departments . "'>";
     else if(preg_match("/departments/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./departments.php'>";
-    // else if(preg_match("/document/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./documents.php'>";
+    else if(preg_match("/document/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./documents.php'>";
     else if(preg_match("/accesstype/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./dictionary.php?name=accesstype'>";
     else if(preg_match("/interpassporttype/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./dictionary.php?name=interpassporttype'>";
     else if(preg_match("/medaltype/i", $act)) echo "\n<META http-equiv='REFRESH' content='0; url=./dictionary.php?name=medaltype'>";
@@ -688,7 +688,7 @@
         $dbconn->query("DELETE FROM public.infoblock WHERE user_id = '" . $_SESSION['user_id'] . "' AND info_id = '" . $info_id . "'");
         echo "\n<META http-equiv='REFRESH' content='0; url=/'>";
     }
-    // else echo "\n<META http-equiv='REFRESH' content='0; url=/'>";
+    else echo "\n<META http-equiv='REFRESH' content='0; url=/'>";
 
     function getIntValueAccessRight($view, $edit, $remove)
     {
