@@ -125,9 +125,6 @@
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
-            <!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
         <!-- REQUIRED JS SCRIPTS -->
         <!-- jQuery 2.1.4 -->

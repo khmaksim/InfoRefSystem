@@ -53,17 +53,17 @@
                                 <div class="box-body">
                                     <div class="col-xs-2">
                                         <ul class="nav nav-pills nav-stacked">
-                                            <li><a href="#">Подразделения по ЗИ</a></li>
-                                            <li><a href="#">Объекты информатизации</a></li>
-                                            <li><a href="#">Объекты КИИ</a></li>
-                                            <li><a href="#">Паспорт</a></li>
-                                            <li><a href="#">СЭД</a></li>
-                                            <li><a href="#">ЗС СПД</a></li>
-                                            <li><a href="#">Алушта</a></li>
+                                            <li class="disabled"><a href="#">Подразделения по ЗИ</a></li>
+                                            <li class="disabled"><a href="#">Объекты информатизации</a></li>
+                                            <li><a href="./objectskii.php">Объекты КИИ</a></li>
+                                            <li class="disabled"><a href="#">Паспорт</a></li>
+                                            <li class="disabled"><a href="#">СЭД</a></li>
+                                            <li class="disabled"><a href="#">ЗС СПД</a></li>
+                                            <li class="disabled"><a href="#">Алушта</a></li>
                                             <li><a href="#">Интернет</a></li>
-                                            <li><a href="#">Дистанционное обучение</a></li>
-                                            <li><a href="#">Разбирательства</a></li>
-                                            <li><a href="#">Программное обеспечение</a></li>
+                                            <li class="disabled"><a href="#">Дистанционное обучение</a></li>
+                                            <li class="disabled"><a href="#">Разбирательства</a></li>
+                                            <li class="disabled"><a href="#">Программное обеспечение</a></li>
                                         </ul>
                                     </div>
                                 </div><!-- /.box-body -->
