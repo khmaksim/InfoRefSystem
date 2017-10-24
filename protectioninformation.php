@@ -78,7 +78,6 @@
             </div><!-- /.content-wrapper -->
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
         </div><!-- ./wrapper -->
 

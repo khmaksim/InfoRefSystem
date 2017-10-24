@@ -27,7 +27,7 @@
                 <!-- Main content -->
                 <section class="content">
                 <?php
-                    $alertMessage = 'Укажите наименование типа email!';
+                    $alertMessage = 'Укажите наименование КВИТО!';
                 ?>
                 <!-- Your Page Content Here -->
                     <div class="row">
@@ -41,6 +41,7 @@
                                     <input type="hidden" name="action" value="edit" />
                                     <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
                                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" />
+                                    <input type="hidden" name="id_department" value="<?= (isset($_GET['id_department'])) ? $_GET['id_department'] : ''; ?>" />
                                     <div class="box-body">
                                         <?php
                                             if ($_GET['action'] == 'edit') {

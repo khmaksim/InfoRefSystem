@@ -1,4 +1,5 @@
 <?php
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     if (isset($_GET['id']))
         $arDepartment = getDepartmentsById($_GET['id']);
@@ -26,13 +27,11 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+    <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
-
 
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/leftcolumn.inc.php';
         ?>
 
             <!-- Content Wrapper. Contains page content -->
@@ -103,23 +102,6 @@
                                                 <th class="col-xs-1 text-center">Удалить</th>
                                             </tr>
                                         </thead>
-
-                                        <!--<tfoot>
-                                            <tr>
-                                                <th>Номер</th>
-                                                <th>Должность</th>
-                                                <th>В/звание</th>
-                                                <th>Тариф</th>
-                                                <th>Форма допуска</th>
-                                                <th>Номер приказа</th>
-                                                <th>Дата</th>
-                                                <th>Подписан</th>
-                                                <th>Упразднена</th>
-                                                <th>Редактировать</th>
-                                                <th>Удалить</th>
-                                            </tr>
-                                        </tfoot>-->
-
                                         <tbody id="items_unit"></tbody>
                                     </table>
 
@@ -157,22 +139,6 @@
                                                 <th class="col-xs-1 text-center">Удалить</th>
                                             </tr>
                                         </thead>
-
-                                        <!--<tfoot>
-                                            <tr>
-                                                <th>Номер</th>
-                                                <th>Личный номер</th>
-                                                <th>Фамилия</th>
-                                                <th>Имя</th>
-                                                <th>Отчество</th>
-                                                <th>Форма допуска</th>
-                                                <th>Дата рождения</th>
-                                                <th>Должность</th>
-                                                <th>Редактировать</th>
-                                                <th>Удалить</th>
-                                            </tr>
-                                        </tfoot>-->
-
                                         <tbody id="items_person"></tbody>
                                     </table>
 
@@ -189,15 +155,9 @@
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
 
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
-            <!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
 
         <!-- REQUIRED JS SCRIPTS -->

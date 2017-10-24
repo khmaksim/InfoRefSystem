@@ -32,19 +32,32 @@
                                 <h3 class="box-title"><?php echo $title; ?></h3>
                             </div><!-- /.box-header -->
                             <div class="box-body">
-                                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                    <?php
-                                       echo $wrapper->displayObjectsKii();
-                                    ?>
-                                    <tbody id="items"></tbody>
-                                </table>
+                                <div class="col-xs-3">
+                                    <section class="sidebar">
+                                       <!-- Sidebar Menu -->
+                                      <ul class="sidebar-menu">
+                                        <li class="header">Оргштатная структура</li>
+                                        <!-- Optionally, you can add icons to the links -->
+                                        <?php
+                                            showDepartmentsNavTree();
+                                        ?>
+                                      </ul><!-- /.sidebar-menu -->
+                                    </section>
+                                </div>
+                                <div class="col-xs-9">
+                                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                        <?php
+                                           echo $wrapper->displayObjectsKii();
+                                        ?>
+                                    </table>
+                                </div>
                             </div><!-- /.box-body -->
                         </div><!-- /.box -->
                     </div><!-- /.col -->
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                    <p class="text-right"><a href="/objectskii_edit.php?action=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                    <p class="text-right"><a onclick="addObjectKii();" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                     </div><!-- /.col -->
                 </div>
             </section><!-- /.content -->
@@ -69,16 +82,29 @@
              fixed layout. -->
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
+            var SelectedIdDepartment = null;
             // $(document).ready(function(){
       		    // $("#items").load("/objectskii.func.php");
             //     setInterval(function() {$("#items").load("/objectskii.func.php");}, 5000);
             // });
+            $(document).ready(function() {
+                SelectedIdDepartment = $("li.treeview > a").first().attr("href").match(/\d+/);
 
+                $("li.treeview > a").click(function() {
+                    SelectedIdDepartment = $(this).attr("href").match(/\d+/);
+                    $("table").load("/displayobjectskii.func.php?id_department=" + SelectedIdDepartment);
+                });
+            });
+            function addObjectKii()
+            {
+                if (SelectedIdDepartment != null)
+                    document.location = "/objectskii_edit.php?action=add&id_department=" + SelectedIdDepartment;
+            }  
             function ConfirmDelete(id)
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./save.php?id="+ObjectId+"&action=delObjectskii";
+                    document.location = "./delete.php?id=" + ObjectId;
                 }
             }
         /*]]>*/

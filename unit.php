@@ -1,4 +1,5 @@
 <?php
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     if (isset($_GET['id']))
         $arDepartment = getDepartmentsById($_GET['id']);

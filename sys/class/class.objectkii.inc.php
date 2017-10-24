@@ -7,6 +7,7 @@ class ObjectKii
 	public $reg_number;
 	public $certificate;
 	public $order;
+	public $id_department;
 
 	public function __construct($object_kii=NULL)
 	{
@@ -16,12 +17,14 @@ class ObjectKii
 			$this->reg_number = $object_kii['reg_number'];
 			$this->certificate = $object_kii['certificate'];
 			$this->order = $object_kii['order'];
+			$this->id_unit = $object_kii['id_department'];
 		}
 		else {
 			$this->name_kvito = "";
 			$this->reg_number = "";
 			$this->certificate = "";
-			$this->order = "";	
+			$this->order = "";
+			$this->id_department = "";
 		}
 	}
 }

@@ -17,11 +17,14 @@ class Wrapper extends DatabaseConnect
 	// 	return $title;
 	// }
 
-	private function _loadObjectKiiData($id=NULL)
+	private function _loadObjectKiiData($id=NULL, $id_department=NULL)
 	{
-		$sql = "SELECT id, name_kvito, reg_number, certificate, \"order\" FROM object_kii";
+		$sql = "SELECT * FROM object_kii";
 		if (!empty($id)) {
 			$sql .= " WHERE id=:id LIMIT 1";
+		} 
+		else if (!empty($id_department)) {
+			$sql .= " WHERE id_department=:id_department LIMIT 1";
 		}
 		else {
 		}
@@ -29,6 +32,9 @@ class Wrapper extends DatabaseConnect
 			$stmt = $this->db->prepare($sql);
 			if (!empty($id)) {
 				$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+			}
+			else if (!empty($id_department)) {
+				$stmt->bindParam(":id_department", $id_department, PDO::PARAM_INT);
 			}
 			$stmt->execute();
 			$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -40,9 +46,10 @@ class Wrapper extends DatabaseConnect
 		}
 	}
 
-	private function _createObjectKiiObj()
+	private function _createObjectKiiObj($id_department=NULL)
 	{
-		$arr = $this->_loadObjectKiiData();
+		// print_r($id_department);
+		$arr = $this->_loadObjectKiiData(NULL, $id_department);
 		$objects_kii = array();
 		foreach ($arr as $obj) {
 			try {
@@ -55,8 +62,8 @@ class Wrapper extends DatabaseConnect
 		return $objects_kii;
 	}
 
-	public function displayObjectsKii()
-	{
+	public function displayObjectsKii($id_department=NULL)
+	{		
 		$html = '
 			<thead>
 				<tr>
@@ -69,18 +76,19 @@ class Wrapper extends DatabaseConnect
 					<th class="col-xs-1 text-center">Удалить</th>
 				</tr>
 			</thead>
+			<tbody id="items"></tbody>
 			';
-		$objectskii = $this->_createObjectKiiObj();
+		$objectskii = $this->_createObjectKiiObj($id_department);
 		$count = 1;
 		foreach ($objectskii as $object) {
-			$html .= '<tr>
+			$html .= '<tr id="' . $object->id_unit . '">
 							<td>' . $count++ . '</td>
                             <td>' . $object->name_kvito . '</td>
                             <td>' . $object->reg_number . '</td>
                             <td>' . $object->certificate . '</td>
                             <td>' . $object->order . '</td>
                             <td class="col-xs-1 text-center"><a href="./objectskii_edit.php?action=edit&id='. $object->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                            <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete();" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $object->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>';
 		}
 		return $html;
@@ -137,7 +145,7 @@ class Wrapper extends DatabaseConnect
 		$order = htmlentities($_POST['order'], ENT_QUOTES);
 
 		if (empty($_POST['id'])) {
-			$sql = "INSERT INTO object_kii (name_kvito, reg_number, certificate, \"order\") VALUES (:name_kvito, :reg_number, :certificate, :order)";
+			$sql = "INSERT INTO object_kii (name_kvito, reg_number, certificate, \"order\", id_department) VALUES (:name_kvito, :reg_number, :certificate, :order, :id_department)";
 		}
 		else {
 			$id = (int) $_POST['id'];
@@ -150,10 +158,32 @@ class Wrapper extends DatabaseConnect
 			$stmt->bindParam(":reg_number", $reg_number, PDO::PARAM_STR);
 			$stmt->bindParam(":certificate", $certificate, PDO::PARAM_STR);
 			$stmt->bindParam(":order", $order, PDO::PARAM_STR);
+			$stmt->bindParam(":id_department", $_POST['id_department'], PDO::PARAM_STR);
 			$stmt->execute();
 			$stmt->closeCursor();
 			return TRUE;
 		}
+		catch (Exception $e) {
+			return $e->getMessage();
+		}
+	}
+
+	public function deleteObjectKii($id)
+	{
+		if (empty($id)) { 
+			return NULL; 
+		}
+		$id = preg_replace('/[^0-9]/', '', $id);
+
+		$sql = "DELETE FROM object_kii WHERE id=:id";
+		try {
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+			$stmt->execute();
+			$stmt->closeCursor();
+			header("Location: {$_SERVER['HTTP_REFERER']}");
+			return;
+		} 
 		catch (Exception $e) {
 			return $e->getMessage();
 		}
