@@ -5,7 +5,6 @@
 
     // Механизм авторизации
     include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/auth.php';
-
     // Функции БД и настройки соединения
     include_once $_SERVER['DOCUMENT_ROOT'] . '/db.func.php';
 

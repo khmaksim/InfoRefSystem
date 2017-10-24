@@ -1,4 +1,5 @@
 <?php
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     $page = 'structure';
     $section = 'Защита информации от НСД';
@@ -60,7 +61,7 @@
                                             <li class="disabled"><a href="#">СЭД</a></li>
                                             <li class="disabled"><a href="#">ЗС СПД</a></li>
                                             <li class="disabled"><a href="#">Алушта</a></li>
-                                            <li><a href="#">Интернет</a></li>
+                                            <li><a href="./view_data.php?name=internet">Интернет</a></li>
                                             <li class="disabled"><a href="#">Дистанционное обучение</a></li>
                                             <li class="disabled"><a href="#">Разбирательства</a></li>
                                             <li class="disabled"><a href="#">Программное обеспечение</a></li>
@@ -79,9 +80,6 @@
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
             include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
-            <!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
 
         <!-- REQUIRED JS SCRIPTS -->
@@ -102,14 +100,6 @@
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
             $(document).ready(function(){
-                $("#items").load("/phonelist.func.php", function( response, status, xhr ) {
-                    $('input').iCheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue',
-                        increaseArea: '20%' // optional
-                    });
-                });
-                // setInterval(function() {$("#items").load("/phonelist.func.php");}, 5000);
                 $('input').iCheck({
                     checkboxClass: 'icheckbox_square-blue',
                     radioClass: 'iradio_square-blue',

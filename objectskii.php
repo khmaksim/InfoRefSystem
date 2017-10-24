@@ -1,27 +1,9 @@
 <?php
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $page = 'kii';
+    $wrapper = new Wrapper($dbo);
+    $title = 'Объекты КИИ';
 ?>
-  <!--
-  BODY TAG OPTIONS:
-  =================
-  Apply one or more of the following classes to get the
-  desired effect
-  |---------------------------------------------------------|
-  | SKINS         | skin-blue                               |
-  |               | skin-black                              |
-  |               | skin-purple                             |
-  |               | skin-yellow                             |
-  |               | skin-red                                |
-  |               | skin-green                              |
-  |---------------------------------------------------------|
-  |LAYOUT OPTIONS | fixed                                   |
-  |               | layout-boxed                            |
-  |               | layout-top-nav                          |
-  |               | sidebar-collapse                        |
-  |               | sidebar-mini                            |
-  |---------------------------------------------------------|
-  -->
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
         <?php
@@ -37,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                         <li><a href="/protectioninformation.php">Защита информации от НСД</a></li>
-                        <li class="active">Объекты КИИ</li>
+                        <li class="active"><?php echo $title; ?></li>
                     </ol>
                 </section>
                 <!-- Main content -->
@@ -47,21 +29,13 @@
                     <div class="col-xs-12">
                         <div class="box">
                             <div class="box-header">
-                                <h3 class="box-title">Объекты КИИ</h3>
+                                <h3 class="box-title"><?php echo $title; ?></h3>
                             </div><!-- /.box-header -->
                             <div class="box-body">
                                 <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th class="col-xs-1">№</th>
-                                            <th>Наименование КВИТО</th>
-                                            <th>Регистрационный №</th>
-                                            <th>Аттестат</th>
-                                            <th>Приказ</th>
-                                            <th class="col-xs-1 text-center">Редактировать</th>
-                                            <th class="col-xs-1 text-center">Удалить</th>
-                                        </tr>
-                                    </thead>
+                                    <?php
+                                       echo $wrapper->displayObjectsKii();
+                                    ?>
                                     <tbody id="items"></tbody>
                                 </table>
                             </div><!-- /.box-body -->
@@ -70,7 +44,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                    <p class="text-right"><a href="/objectskii_edit.php?act=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                    <p class="text-right"><a href="/objectskii_edit.php?action=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                     </div><!-- /.col -->
                 </div>
             </section><!-- /.content -->
@@ -95,16 +69,16 @@
              fixed layout. -->
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
-            $(document).ready(function(){
-      		    $("#items").load("/objectskii.func.php");
-                setInterval(function() {$("#items").load("/objectskii.func.php");}, 5000);
-            });
+            // $(document).ready(function(){
+      		    // $("#items").load("/objectskii.func.php");
+            //     setInterval(function() {$("#items").load("/objectskii.func.php");}, 5000);
+            // });
 
             function ConfirmDelete(id)
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./save.php?id="+ObjectId+"&act=delObjectskii";
+                    document.location = "./save.php?id="+ObjectId+"&action=delObjectskii";
                 }
             }
         /*]]>*/
