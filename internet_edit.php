@@ -1,7 +1,7 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $objectKiiInterface = new ObjectKiiInterface($dbo);
+    $internetInterface = new InternetInterface($dbo);
     $page = 'objectskii';
 ?>
     <body class="hold-transition skin-blue sidebar-mini fixed">
@@ -20,7 +20,7 @@
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                         <li><a href="/protectioninformation.php">Защита информации от НСД</a></li>
-                        <li><a href="/objectkii.php">Объекты КИИ</a></li>
+                        <li><a href="/internet.php">Интернет</a></li>
                         <li class="active"><?= ($_GET['action'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
                     </ol>
                 </section>
@@ -41,19 +41,19 @@
                                     <input type="hidden" name="action" value="edit" />
                                     <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
                                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" />
-                                    <input type="hidden" name="object" value="ObjectKiiInterface" />
+                                    <input type="hidden" name="object" value="InternetInterface" />
                                     <input type="hidden" name="id_department" value="<?= (isset($_GET['id_department'])) ? $_GET['id_department'] : ''; ?>" />
                                     <div class="box-body">
                                         <?php
                                             if ($_GET['action'] == 'edit') {
-                                                echo $objectKiiInterface->display($_GET['id']);
+                                                echo $internetInterface->display($_GET['id']);
                                             }
                                             else
-                                                echo $objectKiiInterface->display();
+                                                echo $internetInterface->display();
                                         ?>
                                     </div>
                                     <div class="box-footer">
-                                        <a href="/objectskii.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                        <a href="/internet.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                     </div>
                                 </form>
                             </div>

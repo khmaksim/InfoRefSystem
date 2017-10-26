@@ -13,7 +13,7 @@ class Internet
 
 	public function __construct($internet=NULL)
 	{
-		if (is_array($object_kii)) {
+		if (is_array($internet)) {
 			$this->id = $internet['id'];
 			$this->location = $internet['location'];
 			$this->permission = $internet['permission'];

@@ -1,7 +1,8 @@
 <?php
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
 	
-	$header = 'Location: /'. strtolower($_POST['object']) .'.php';
+	$header = "Location: {$_SERVER['HTTP_REFERER']}";
+	$header = str_replace('_edit', '', $header);
 	$actions = array(
 		'edit' => array(
 			'object' => $_POST['object'],

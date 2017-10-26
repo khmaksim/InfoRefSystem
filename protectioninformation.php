@@ -61,7 +61,7 @@
                                             <li class="disabled"><a href="#">СЭД</a></li>
                                             <li class="disabled"><a href="#">ЗС СПД</a></li>
                                             <li class="disabled"><a href="#">Алушта</a></li>
-                                            <li><a href="./view_data.php?name=internet">Интернет</a></li>
+                                            <li><a href="./internet.php">Интернет</a></li>
                                             <li class="disabled"><a href="#">Дистанционное обучение</a></li>
                                             <li class="disabled"><a href="#">Разбирательства</a></li>
                                             <li class="disabled"><a href="#">Программное обеспечение</a></li>

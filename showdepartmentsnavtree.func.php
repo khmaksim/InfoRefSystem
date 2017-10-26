@@ -6,7 +6,6 @@
 
         $sql = "SELECT * FROM tdepartments WHERE parent = '" . $id . "' ORDER BY id, parent";
         foreach ($dbconn->query($sql) as $row) {
-
             if (haveChilde($row['id'])) {
                 echo '
                     <li class="' . ((in_array($row['id'], $arActive)) ? 'active ' : '') . 'treeview"><a href="/unit.php?id=' . $row['id'] . '"><i class="fa fa-angle-right text-yellow"></i> <span>' . $row['fullname'] . '</span> </a>
@@ -21,7 +20,6 @@
                     </li>
 
                 ';
-
             } else {
                 echo '
                     <li class="' . ((in_array($row['id'], $arActive)) ? 'active ' : '') . 'treeview"><a href="/unit.php?id=' . $row['id'] . '"><i class="fa fa-circle-o text-green"></i> <span>' . $row['fullname'] . '</span></a>

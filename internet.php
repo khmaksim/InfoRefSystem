@@ -1,8 +1,8 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $objectKiiInterface = new ObjectKiiInterface($dbo);
-    $title = 'Объекты КИИ';
+    $internetInterface = new InternetInterface($dbo);
+    $title = 'Интернет';
 ?>
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
@@ -47,7 +47,7 @@
                                 <div class="col-xs-9">
                                     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                         <?php
-                                           echo $objectKiiInterface->displayByIdDepartment();
+                                           echo $internetInterface->displayByIdDepartment();
                                         ?>
                                     </table>
                                 </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                    <p class="text-right"><a onclick="addObjectKii();" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                    <p class="text-right"><a onclick="addObject();" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                     </div><!-- /.col -->
                 </div>
             </section><!-- /.content -->
@@ -92,19 +92,19 @@
 
                 $("li.treeview > a").click(function() {
                     SelectedIdDepartment = $(this).attr("href").match(/\d+/);
-                    $("table").load("/display.func.php?object=ObjectKiiInterface&id_department=" + SelectedIdDepartment);
+                    $("table").load("/display.func.php?object=InternetInterface&id_department=" + SelectedIdDepartment);
                 });
             });
-            function addObjectKii()
+            function addObject()
             {
                 if (SelectedIdDepartment != null)
-                    document.location = "/objectkii_edit.php?action=add&id_department=" + SelectedIdDepartment;
+                    document.location = "/internet_edit.php?action=add&id_department=" + SelectedIdDepartment;
             }  
             function ConfirmDelete(id)
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./assets/inc/delete.inc.php?object=ObjectKiiInterface&id=" + ObjectId;
+                    document.location = "./assets/inc/delete.inc.php?object=InternetInterface&id=" + ObjectId;
                 }
             }
         /*]]>*/
