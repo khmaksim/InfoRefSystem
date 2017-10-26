@@ -14,7 +14,7 @@ class InternetInterface extends DatabaseConnect
 			$sql .= " WHERE id=:id LIMIT 1";
 		} 
 		else if (!empty($id_department)) {
-			$sql .= " WHERE id_department=:id_department LIMIT 1";
+			$sql .= " WHERE id_department=:id_department";
 		}
 		else {
 		}
@@ -99,11 +99,11 @@ class InternetInterface extends DatabaseConnect
 		return '
 			<div class="form-group">
 				<label for="exampleInputLocation">Местонахождение</label>
-				<input type="text" name="name_kvito" class="form-control" id="exampleInputLocation" placeholder="Местонахождение" value="' . $object->location . '" required autofocus>
+				<input type="text" name="location" class="form-control" id="exampleInputLocation" placeholder="Местонахождение" value="' . $object->location . '" required autofocus>
 			</div>
 			<div class="form-group">
 				<label for="exampleInputPermission">Разрешение об открытии</label>
-				<input type="text" name="name_kvito" class="form-control" id="exampleInputPermission" placeholder="Разрешение об открытии" value="' . $object->permission . '">
+				<input type="text" name="permission" class="form-control" id="exampleInputPermission" placeholder="Разрешение об открытии" value="' . $object->permission . '">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputRegNumber">Регистрационный номер</label>
@@ -111,7 +111,7 @@ class InternetInterface extends DatabaseConnect
 			</div>
 			<div class="form-group">
 				<label for="exampleInputComposition">Состав АРМ/Сервер</label>
-				<input type="text" name="reg_number" class="form-control" id="exampleInputComposition" placeholder="Состав АРМ/Сервер" value="' . $object->composition . '">
+				<input type="text" name="composition" class="form-control" id="exampleInputComposition" placeholder="Состав АРМ/Сервер" value="' . $object->composition . '">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputOrder">Приказ</label>
@@ -119,7 +119,7 @@ class InternetInterface extends DatabaseConnect
 			</div>
 			<div class="form-group">
 				<label for="exampleInputEmail">Адрес электронной почты</label>
-				<input type="text" name="certificate" class="form-control" id="exampleInputEmail" placeholder="email@email.mil" value="' . $object->email . '">
+				<input type="text" name="email" class="form-control" id="exampleInputEmail" placeholder="email@email.mil" value="' . $object->email . '">
 			</div>
 		';
 	}

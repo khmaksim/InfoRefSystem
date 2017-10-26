@@ -47,7 +47,7 @@
                                 <div class="col-xs-9">
                                     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                         <?php
-                                           echo $objectKiiInterface->displayByIdDepartment();
+                                           echo $objectKiiInterface->displayByIdDepartment(true);
                                         ?>
                                     </table>
                                 </div>

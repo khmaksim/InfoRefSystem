@@ -14,7 +14,7 @@ class ObjectKiiInterface extends DatabaseConnect
 			$sql .= " WHERE id=:id LIMIT 1";
 		} 
 		else if (!empty($id_department)) {
-			$sql .= " WHERE id_department=:id_department LIMIT 1";
+			$sql .= " WHERE id_department=:id_department";
 		}
 		else {
 		}

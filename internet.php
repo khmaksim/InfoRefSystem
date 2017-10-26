@@ -39,7 +39,7 @@
                                         <li class="header">Оргштатная структура</li>
                                         <!-- Optionally, you can add icons to the links -->
                                         <?php
-                                            showDepartmentsNavTree();
+                                            showDepartmentsNavTree(0, True);
                                         ?>
                                       </ul><!-- /.sidebar-menu -->
                                     </section>
