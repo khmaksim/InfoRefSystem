@@ -1,7 +1,7 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $wrapper = new Wrapper($dbo);
+    $objectKii = new ObjectKii($dbo);
     $page = 'objectskii';
 ?>
     <body class="hold-transition skin-blue sidebar-mini fixed">
@@ -20,7 +20,7 @@
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                         <li><a href="/protectioninformation.php">Защита информации от НСД</a></li>
-                        <li><a href="/objectskii.php">Объекты КИИ</a></li>
+                        <li><a href="/objectkii.php">Объекты КИИ</a></li>
                         <li class="active"><?= ($_GET['action'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
                     </ol>
                 </section>
@@ -41,14 +41,15 @@
                                     <input type="hidden" name="action" value="edit" />
                                     <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
                                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" />
+                                    <input type="hidden" name="object" value="ObjectKii" />
                                     <input type="hidden" name="id_department" value="<?= (isset($_GET['id_department'])) ? $_GET['id_department'] : ''; ?>" />
                                     <div class="box-body">
                                         <?php
                                             if ($_GET['action'] == 'edit') {
-                                                echo $wrapper->displayObjectKii($_GET['id']);
+                                                echo $objectKii->display($_GET['id']);
                                             }
                                             else
-                                                echo $wrapper->displayObjectKii();
+                                                echo $objectKii->display();
                                         ?>
                                     </div>
                                     <div class="box-footer">

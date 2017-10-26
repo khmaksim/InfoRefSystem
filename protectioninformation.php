@@ -56,7 +56,7 @@
                                         <ul class="nav nav-pills nav-stacked">
                                             <li class="disabled"><a href="#">Подразделения по ЗИ</a></li>
                                             <li class="disabled"><a href="#">Объекты информатизации</a></li>
-                                            <li><a href="./objectskii.php">Объекты КИИ</a></li>
+                                            <li><a href="./objectkii.php">Объекты КИИ</a></li>
                                             <li class="disabled"><a href="#">Паспорт</a></li>
                                             <li class="disabled"><a href="#">СЭД</a></li>
                                             <li class="disabled"><a href="#">ЗС СПД</a></li>

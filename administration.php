@@ -1,4 +1,5 @@
 <?php
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     $page = 'phonelist';
 ?>
@@ -73,36 +74,6 @@
                                                     <a href="/user.php">Пользователи</a>
                                                 </li>
                                                 <?php
-                                                    }
-                                                ?>
-                                                <?php
-                                                    if ($arAccessRight['omu'] > 0) {
-                                                ?>
-                                                <li>
-                                                    <a href="/departments.php">Подразделения</a>
-                                                </li>
-                                                <?php
-                                                    }
-                                                ?>
-                                                <?php
-                                                    if ($arAccessRight['incoming'] > 0) {
-                                                ?>
-                                                <li>
-                                                    <a href="/incoming.php">Учет входящих несекретных документов</a>
-                                                </li>
-                                                <?php
-                                                    }
-                                                ?>
-                                                <?php
-                                                    if ($arAccessRight['telephone'] > 0) {
-                                                ?>
-                                                <li>
-                                                    <a href="/phonelist.php">Телефонный справочник подразделений</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/phonelistperson.php">Телефонный справочник людей</a>
-                                                </li>
-                                                 <?php
                                                     }
                                                 ?>
                                             </ul><!-- /.control-sidebar-menu -->

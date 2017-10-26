@@ -23,13 +23,12 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
 
 
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/leftcolumn.inc.php';
         ?>
 
             <!-- Content Wrapper. Contains page content -->
@@ -88,15 +87,9 @@
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
 
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
-            <!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
 
         <!-- REQUIRED JS SCRIPTS -->

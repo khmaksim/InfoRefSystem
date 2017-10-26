@@ -1,18 +1,12 @@
 <?php
-	// session_start();
-	
-	// include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/config/db-cred.inc.php';
 	include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
 	
-	// foreach ($C as $name => $val)	{
-	// 	define($name, $val);
-	// }
-
+	$header = 'Location: /'. strtolower($_POST['object']) .'.php';
 	$actions = array(
 		'edit' => array(
-			'object' => 'Wrapper',
+			'object' => $_POST['object'],
 			'method' => 'processForm',
-			'header' => 'Location: /objectskii.php'
+			'header' => $header
 		)
 	);
 	if ($_POST['token']==$_SESSION['token'] && isset($actions[$_POST['action']])) {
@@ -28,15 +22,7 @@
 		}
 	}
 	else {
-		header("Location: /objectskii.php");
+		header($header);
 		exit;
 	}
-
-	// function __autoload($class_name)
-	// {
-	// 	$filename = $_SERVER['DOCUMENT_ROOT'] . '/sys/class/class.'	. strtolower($class_name) . '.inc.php';
-	// 	if (file_exists($filename)) {
-	// 		include_once $filename;
-	// 	}
-	// }
 ?>

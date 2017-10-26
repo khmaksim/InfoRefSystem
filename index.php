@@ -60,6 +60,11 @@
                                     <a href="/personnelwork.php"><h4 class="text-center">Кадровая работа</h4></a>
                                 </div>
                             </div>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <a href="/incoming.php"><h4 class="text-center">Документооборот</h4></a>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-4">
                              <div class="panel panel-default">

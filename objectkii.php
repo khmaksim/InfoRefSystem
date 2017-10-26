@@ -1,7 +1,7 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $wrapper = new Wrapper($dbo);
+    $objectKii = new ObjectKii($dbo);
     $title = 'Объекты КИИ';
 ?>
     <body class="hold-transition skin-blue sidebar-mini fixed">
@@ -47,7 +47,7 @@
                                 <div class="col-xs-9">
                                     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                         <?php
-                                           echo $wrapper->displayObjectsKii();
+                                           echo $objectKii->displayByIdDepartment();
                                         ?>
                                     </table>
                                 </div>
@@ -98,13 +98,13 @@
             function addObjectKii()
             {
                 if (SelectedIdDepartment != null)
-                    document.location = "/objectskii_edit.php?action=add&id_department=" + SelectedIdDepartment;
+                    document.location = "/objectkii_edit.php?action=add&id_department=" + SelectedIdDepartment;
             }  
             function ConfirmDelete(id)
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./delete.php?id=" + ObjectId;
+                    document.location = "./delete.php?object=ObjectKii&id=" + ObjectId;
                 }
             }
         /*]]>*/
