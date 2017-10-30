@@ -7,24 +7,19 @@ class ObjectKiiInterface extends DatabaseConnect
 		parent::__construct($dbo);
 	}
 
-	private function _loadData($id=NULL, $id_department=NULL)
+	private function _loadData($id=NULL, $id_departments=NULL)
 	{
 		$sql = "SELECT * FROM object_kii";
 		if (!empty($id)) {
 			$sql .= " WHERE id=:id LIMIT 1";
 		} 
-		else if (!empty($id_department)) {
-			$sql .= " WHERE id_department=:id_department";
-		}
-		else {
+		else if (!empty($id_departments)) {
+			$sql .= " WHERE id_department IN (" . implode(",", $id_departments) . ")";
 		}
 		try	{
 			$stmt = $this->db->prepare($sql);
 			if (!empty($id)) {
 				$stmt->bindParam(":id", $id, PDO::PARAM_INT);
-			}
-			else if (!empty($id_department)) {
-				$stmt->bindParam(":id_department", $id_department, PDO::PARAM_INT);
 			}
 			$stmt->execute();
 			$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -36,9 +31,9 @@ class ObjectKiiInterface extends DatabaseConnect
 		}
 	}
 
-	private function _createObj($id_department=NULL)
+	private function _createObj($id_departments=NULL)
 	{
-		$arr = $this->_loadData(NULL, $id_department);
+		$arr = $this->_loadData(NULL, $id_departments);
 		$objects_kii = array();
 		foreach ($arr as $obj) {
 			try {
@@ -51,7 +46,7 @@ class ObjectKiiInterface extends DatabaseConnect
 		return $objects_kii;
 	}
 
-	public function displayByIdDepartment($id_department=NULL)
+	public function displayByIdDepartment($id_departments=NULL)
 	{		
 		$html = '
 			<thead>
@@ -65,12 +60,12 @@ class ObjectKiiInterface extends DatabaseConnect
 					<th class="col-xs-1 text-center">Удалить</th>
 				</tr>
 			</thead>
-			<tbody id="items"></tbody>
+			<tbody id="items">
 			';
-		$objectskii = $this->_createObj($id_department);
+		$objectskii = $this->_createObj($id_departments);
 		$count = 1;
 		foreach ($objectskii as $object) {
-			$html .= '<tr id="' . $object->id_unit . '">
+			$html .= '<tr>
 							<td>' . $count++ . '</td>
                             <td>' . $object->name_kvito . '</td>
                             <td>' . $object->reg_number . '</td>
@@ -79,7 +74,8 @@ class ObjectKiiInterface extends DatabaseConnect
                             <td class="col-xs-1 text-center"><a href="./objectskii_edit.php?action=edit&id='. $object->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                             <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $object->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>';
-		}
+        }
+        $html .= '</tbody>';
 		return $html;
 	}
 

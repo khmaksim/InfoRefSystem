@@ -7,24 +7,19 @@ class InternetInterface extends DatabaseConnect
 		parent::__construct($dbo);
 	}
 
-	private function _loadData($id=NULL, $id_department=NULL)
+	private function _loadData($id=NULL, $id_departments=NULL)
 	{
 		$sql = "SELECT * FROM internet";
 		if (!empty($id)) {
 			$sql .= " WHERE id=:id LIMIT 1";
 		} 
-		else if (!empty($id_department)) {
-			$sql .= " WHERE id_department=:id_department";
-		}
-		else {
+		else if (!empty($id_departments)) {
+			$sql .= " WHERE id_department IN (" . implode(",", $id_departments) . ")";
 		}
 		try	{
 			$stmt = $this->db->prepare($sql);
 			if (!empty($id)) {
 				$stmt->bindParam(":id", $id, PDO::PARAM_INT);
-			}
-			else if (!empty($id_department)) {
-				$stmt->bindParam(":id_department", $id_department, PDO::PARAM_INT);
 			}
 			$stmt->execute();
 			$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -36,9 +31,9 @@ class InternetInterface extends DatabaseConnect
 		}
 	}
 
-	private function _createObj($id_department=NULL)
+	private function _createObj($id_departments=NULL)
 	{
-		$arr = $this->_loadData(NULL, $id_department);
+		$arr = $this->_loadData(NULL, $id_departments);
 		$internet = array();
 		foreach ($arr as $obj) {
 			try {
@@ -51,7 +46,7 @@ class InternetInterface extends DatabaseConnect
 		return $internet;
 	}
 
-	public function displayByIdDepartment($id_department=NULL)
+	public function displayByIdDepartment($id_departments=NULL)
 	{		
 		$html = '
 			<thead>
@@ -67,9 +62,9 @@ class InternetInterface extends DatabaseConnect
 					<th class="col-xs-1 text-center">Удалить</th>
 				</tr>
 			</thead>
-			<tbody id="items"></tbody>
+			<tbody id="items">
 			';
-		$objects = $this->_createObj($id_department);
+		$objects = $this->_createObj($id_departments);
 		$count = 1;
 		foreach ($objects as $object) {
 			$html .= '<tr id="' . $object->id_unit . '">
@@ -84,6 +79,7 @@ class InternetInterface extends DatabaseConnect
                             <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $object->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>';
 		}
+		$html .= '</tbody>';
 		return $html;
 	}
 

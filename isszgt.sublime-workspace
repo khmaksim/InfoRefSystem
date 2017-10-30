@@ -4,6 +4,78 @@
 		"selected_items":
 		[
 			[
+				"arr",
+				"array_map"
+			],
+			[
+				"pre",
+				"prepare"
+			],
+			[
+				"prti",
+				"print"
+			],
+			[
+				"obje",
+				"objectskii"
+			],
+			[
+				"ob",
+				"objectskii"
+			],
+			[
+				"pri",
+				"print_r"
+			],
+			[
+				"ex",
+				"example"
+			],
+			[
+				"prit",
+				"printf"
+			],
+			[
+				"objects_",
+				"objects_kii"
+			],
+			[
+				"de",
+				"department"
+			],
+			[
+				"strr",
+				"str_replace"
+			],
+			[
+				"com",
+				"composition"
+			],
+			[
+				"loca",
+				"location"
+			],
+			[
+				"or",
+				"order"
+			],
+			[
+				"s",
+				"stmt"
+			],
+			[
+				"id",
+				"id_department"
+			],
+			[
+				"se",
+				"sel_id_unit"
+			],
+			[
+				"pr",
+				"print_r"
+			],
+			[
 				"_load",
 				"_loadObjectkiiData"
 			],
@@ -28,10 +100,6 @@
 				"uploadInfo"
 			],
 			[
-				"id",
-				"id_departments"
-			],
-			[
 				"full",
 				"full_name"
 			],
@@ -54,10 +122,6 @@
 			[
 				"nu",
 				"num_aviation_regiment"
-			],
-			[
-				"ex",
-				"exists"
 			],
 			[
 				"ma",
@@ -108,10 +172,6 @@
 				"offset_y"
 			],
 			[
-				"se",
-				"self"
-			],
-			[
 				"size",
 				"size_part"
 			],
@@ -124,73 +184,80 @@
 	"buffers":
 	[
 		{
-			"file": "protectioninformation.php",
+			"file": "showdepartmentstree.func.php",
 			"settings":
 			{
-				"buffer_size": 5497,
+				"buffer_size": 2973,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "showdepartmentsnavtree.func.php",
+			"settings":
+			{
+				"buffer_size": 2369,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "objectskii.php",
+			"file": "objectkii.php",
 			"settings":
 			{
-				"buffer_size": 3844,
+				"buffer_size": 5628,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "objectskii_edit.php",
+			"file": "internet.php",
 			"settings":
 			{
-				"buffer_size": 5496,
+				"buffer_size": 5610,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "head.inc.php",
+			"file": "display.func.php",
 			"settings":
 			{
-				"buffer_size": 4422,
+				"buffer_size": 214,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "sys/class/class.databaseconnect.inc.php",
+			"file": "sys/class/class.objectkiiinterface.inc.php",
 			"settings":
 			{
-				"buffer_size": 359,
+				"buffer_size": 5456,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "sys/class/class.wrapper.inc.php",
+			"file": "assets/inc/process.inc.php",
 			"settings":
 			{
-				"buffer_size": 4820,
+				"buffer_size": 644,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "sys/class/class.internetinterface.inc.php",
+			"settings":
+			{
+				"buffer_size": 6448,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "sys/class/class.objectkii.inc.php",
+			"file": "internet_edit.php",
 			"settings":
 			{
-				"buffer_size": 567,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "sys/core/init.inc.php",
-			"settings":
-			{
-				"buffer_size": 563,
+				"buffer_size": 4774,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -247,72 +314,119 @@
 	"expanded_folders":
 	[
 		"/C/xampp/htdocs/isszgt",
+		"/C/xampp/htdocs/isszgt/assets",
+		"/C/xampp/htdocs/isszgt/assets/inc",
 		"/C/xampp/htdocs/isszgt/sys",
 		"/C/xampp/htdocs/isszgt/sys/class",
-		"/C/xampp/htdocs/isszgt/sys/config"
+		"/C/xampp/htdocs/isszgt/sys/config",
+		"/C/xampp/htdocs/isszgt/sys/core"
 	],
 	"file_history":
 	[
+		"/C/xampp/htdocs/isszgt/city.func.php",
+		"/C/xampp/htdocs/isszgt/dictionary.php",
+		"/C/xampp/htdocs/isszgt/city.php",
+		"/C/xampp/htdocs/isszgt/assets/inc/process.inc.php",
+		"/C/xampp/htdocs/isszgt/save.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.wrapper.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.objectkiiinterface.inc.php",
+		"/C/xampp/htdocs/isszgt/assets/inc/delete.inc.php",
+		"/C/xampp/htdocs/isszgt/internet_edit.php",
+		"/C/xampp/htdocs/isszgt/internet.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.internetinterface.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.internet.inc.php",
+		"/C/xampp/htdocs/isszgt/display.func.php",
+		"/C/xampp/htdocs/isszgt/objectkii.php",
+		"/C/xampp/htdocs/isszgt/objectkii_edit.php",
+		"/C/xampp/htdocs/isszgt/internet_edit.php.php",
+		"/C/xampp/htdocs/isszgt/internet.php.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.objectkii.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.internetinterface.inc",
+		"/C/xampp/htdocs/isszgt/delete.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.databaseconnect.inc.php",
+		"/C/xampp/htdocs/isszgt/protectioninformation.php",
+		"/C/xampp/htdocs/isszgt/index.php",
+		"/C/xampp/htdocs/isszgt/showphonelisttree.func.php",
+		"/C/xampp/htdocs/isszgt/showdepartmentsnavtree.func.php",
+		"/C/xampp/htdocs/isszgt/showdepartmentstree.func.php",
+		"/C/xampp/htdocs/isszgt/objectskii.php",
+		"/C/xampp/htdocs/isszgt/displayobjectskii.func.php",
+		"/C/xampp/htdocs/isszgt/encryptionwork.php",
+		"/C/xampp/htdocs/isszgt/incoming.php",
+		"/C/xampp/htdocs/isszgt/incoming_edit.php",
+		"/C/xampp/htdocs/isszgt/incoming_file.php",
+		"/C/xampp/htdocs/isszgt/incoming_file_del.php",
+		"/C/xampp/htdocs/isszgt/incoming_file_save.php",
+		"/C/xampp/htdocs/isszgt/incoming_file_view.php",
+		"/C/xampp/htdocs/isszgt/info.php",
+		"/C/xampp/htdocs/isszgt/info_edit.php",
+		"/C/xampp/htdocs/isszgt/user_edit.php",
+		"/C/xampp/htdocs/isszgt/administration.php",
+		"/C/xampp/htdocs/isszgt/technique_edit.php",
+		"/C/xampp/htdocs/isszgt/technique.php",
+		"/C/xampp/htdocs/isszgt/technicalprotectedinformation.php",
+		"/C/xampp/htdocs/isszgt/researchwork.php",
+		"/C/xampp/htdocs/isszgt/secrecy.php",
+		"/C/xampp/htdocs/isszgt/person_view_list.php",
+		"/C/xampp/htdocs/isszgt/personnelwork.php",
+		"/C/xampp/htdocs/isszgt/phone_list.php",
+		"/T/8ЦП/запись на прием/report1.txt",
+		"/T/8ЦП/Все/mcbc/2007/Income/Win/Data/IncomeData.html",
+		"/C/xampp/htdocs/isszgt/sys/class/wrapper.inc.php",
+		"/C/xampp/htdocs/isszgt/departments_view.php",
+		"/C/xampp/htdocs/isszgt/displayobjectkii.func.php",
+		"/C/xampp/htdocs/isszgt/sys/core/init.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/config/db-cred.inc.php",
+		"/C/xampp/htdocs/isszgt/objectskii_edit.php",
+		"/C/xampp/htdocs/isszgt/unit.php",
+		"/C/xampp/htdocs/isszgt/structure.php",
+		"/C/xampp/htdocs/isszgt/departments.php",
+		"/C/xampp/htdocs/isszgt/departments_edit.php",
+		"/C/xampp/htdocs/isszgt/phpinfo.php",
+		"/C/xampp/htdocs/isszgt/phonelist.php",
+		"/C/xampp/htdocs/isszgt/phonelistperson.php",
+		"/C/xampp/htdocs/isszgt/unit_edit.php",
+		"/C/xampp/htdocs/isszgt/user.php",
+		"/C/xampp/htdocs/isszgt/person.php",
+		"/C/xampp/htdocs/isszgt/person_edit.php",
+		"/C/xampp/htdocs/isszgt/person_view.php",
+		"/D/db_full_2017-10-22.sql",
+		"/C/xampp/htdocs/isszgt/assert/inc/process.inc.php",
+		"/C/xampp/htdocs/isszgt/head.inc.php",
+		"/C/xampp/htdocs/isszgt/dictionary_edit.php",
+		"/C/xampp/htdocs/isszgt/documents_edit.php",
+		"/C/xampp/htdocs/isszgt/documents.php",
+		"/C/xampp/htdocs/isszgt/accesstype_edit.php",
+		"/C/xampp/htdocs/isszgt/city_edit.php",
 		"/C/xampp/htdocs/isszgt/public/assert/inc/process.inc.php",
 		"/C/xampp/htdocs/isszgt/db.func.php",
-		"/C/xampp/htdocs/isszgt/sys/config/db-cred.inc.php",
-		"/C/xampp/htdocs/isszgt/index.php",
-		"/C/xampp/htdocs/isszgt/save.php",
 		"/C/xampp/htdocs/isszgt/technique.func.php",
 		"/C/xampp/htdocs/isszgt/date.func.php",
 		"/C/xampp/htdocs/isszgt/edit.php",
 		"/C/xampp/htdocs/isszgt/view_data.php",
-		"/C/xampp/htdocs/isszgt/objectskii.php",
 		"/C/xampp/htdocs/isszgt/medaltype.func.php",
 		"/C/xampp/htdocs/isszgt/militaryrank.func.php",
 		"/C/xampp/htdocs/isszgt/militaryrank.php",
 		"/C/xampp/htdocs/isszgt/emailtype.func.php",
 		"/C/xampp/htdocs/isszgt/emailtype_edit.php",
-		"/C/xampp/htdocs/isszgt/objectskii_edit.php",
-		"/C/xampp/htdocs/isszgt/protectioninformation.php",
-		"/C/xampp/htdocs/isszgt/dictionary_edit.php",
-		"/C/xampp/htdocs/isszgt/documents.php",
-		"/C/xampp/htdocs/isszgt/documents_edit.php",
-		"/C/xampp/htdocs/isszgt/dictionary.php",
 		"/C/xampp/htdocs/isszgt/documents.func.php",
 		"/C/xampp/htdocs/isszgt/documents.inc.php",
 		"/C/xampp/htdocs/isszgt/getusertitlebyid.func.php",
 		"/C/xampp/htdocs/isszgt/download.php",
-		"/C/xampp/htdocs/isszgt/researchwork.php",
-		"/C/xampp/htdocs/isszgt/user_edit.php",
-		"/C/xampp/htdocs/isszgt/personnelwork.php",
-		"/C/xampp/htdocs/isszgt/secrecy.php",
-		"/C/xampp/htdocs/isszgt/technicalprotectedinformation.php",
-		"/C/xampp/htdocs/isszgt/encryptionwork.php",
-		"/C/xampp/htdocs/isszgt/person_edit.php",
 		"/C/xampp/htdocs/isszgt/showdocument.func.php",
 		"/C/xampp/htdocs/isszgt/phonetype.func.php",
 		"/C/xampp/htdocs/isszgt/phonetype_edit.php",
-		"/C/xampp/htdocs/isszgt/person.php",
-		"/C/xampp/htdocs/isszgt/head.inc.php",
-		"/C/xampp/htdocs/isszgt/unit_edit.php",
-		"/C/xampp/htdocs/isszgt/departments.php",
-		"/C/xampp/htdocs/isszgt/departments_edit.php",
 		"/C/xampp/htdocs/isszgt/person.func.php",
 		"/C/xampp/htdocs/isszgt/dist/css/AdminLTE.css",
 		"/C/xampp/htdocs/isszgt/dist/css/skins/skin-blue.min.css",
-		"/C/xampp/htdocs/isszgt/administration.php",
 		"/C/xampp/htdocs/isszgt/emailtype.php",
-		"/C/xampp/htdocs/isszgt/showdepartmentsnavtree.func.php",
 		"/C/xampp/htdocs/isszgt/dist/css/font-awesome.css",
-		"/C/xampp/htdocs/isszgt/structure.php",
-		"/C/xampp/htdocs/isszgt/technique.php",
-		"/C/xampp/htdocs/isszgt/technique_edit.php",
-		"/C/xampp/htdocs/isszgt/unit.php",
 		"/C/xampp/htdocs/isszgt/login.php",
 		"/C/xampp/htdocs/isszgt/lib/login.php",
 		"/C/xampp/htdocs/isszgt/phonenumbertype_edit.php",
 		"/C/xampp/htdocs/isszgt/departments.func.php",
 		"/C/xampp/htdocs/isszgt/getpersonbyid.func.php",
 		"/C/xampp/htdocs/isszgt/gettechniquebyid.func.php",
-		"/C/xampp/htdocs/isszgt/city_edit.php",
-		"/C/xampp/htdocs/isszgt/city.php",
-		"/C/xampp/htdocs/isszgt/city.func.php",
 		"/C/xampp/htdocs/isszgt/interpassporttype.func.php",
 		"/C/xampp/htdocs/isszgt/interpassporttype.php",
 		"/C/xampp/htdocs/isszgt/interpassporttype_edit.php",
@@ -333,54 +447,10 @@
 		"/C/xampp/htdocs/isszgt/addresstype_edit.php",
 		"/C/xampp/htdocs/isszgt/addresstype.func.php",
 		"/C/xampp/htdocs/isszgt/accesstype.func.php",
-		"/C/xampp/htdocs/isszgt/accesstype_edit.php",
 		"/C/xampp/htdocs/isszgt/mainheader.inc.php",
-		"/C/xampp/htdocs/isszgt/phonelist.php",
-		"/C/xampp/htdocs/isszgt/showphonelisttree.func.php",
-		"/C/xampp/htdocs/isszgt/phonelistperson.php",
 		"/C/xampp/htdocs/isszgt/getdepartmentsbyid.func.php",
-		"/C/xampp/htdocs/isszgt/user.php",
-		"/C/xampp/htdocs/isszgt/phone_list.php",
 		"/C/xampp/htdocs/isszgt/getactivearray.func.php",
-		"/C/xampp/htdocs/isszgt/controlsidebar.inc.php",
-		"/C/xampp/htdocs/isszgt/leftcolumn.inc.php",
-		"/C/xampp/htdocs/isszgt/showdepartmentstree.func.php",
-		"/C/xampp/htdocs/isszgt/lib/auth.php",
-		"/C/xampp/php/tests/parseDir/phpinfo.php",
-		"/C/xampp/php/php.ini",
-		"/C/xampp/apache/logs/error.log",
-		"/c/xampp/php/logs/php_error_log",
-		"/C/xampp/htdocs/isszgt/dist/css/skins/skin-blue.css",
-		"/C/xampp/htdocs/isszgt/dist/css/custom-user.css",
-		"/C/xampp/htdocs/isszgt/dist/css/skins/skin-black.min.css",
-		"/C/xampp/htdocs/isszgt/getuserprevloginbyid.func.php",
-		"/C/xampp/htdocs/isszgt/getemailtypebyid.func.php",
-		"/C/xampp/htdocs/isszgt/dist/css/AdminLTE.min.css",
-		"/C/xampp/htdocs/isszgt/_icon.php",
-		"/D/projects/django/center/center/templates/index.html",
-		"/C/xampp/apache/conf/httpd.conf",
-		"/C/xampp/apache/logs/access.log",
-		"//OTD3SRV/Documents$/m.khorlo/Desktop/isszgt",
-		"/C/xampp/apache/conf/extra/httpd-vhosts.conf",
-		"/C/xampp/readme_en.txt",
-		"/D/обнова 01.08.2017/обнова 01.08.2017/mainheader.inc.php",
-		"/D/обнова 01.08.2017/обнова 01.08.2017/index.php",
-		"/D/обнова 01.08.2017/обнова 01.08.2017/head.inc.php",
-		"/D/isszgt/getaccessrightbyid.func.php",
-		"/D/projects/python/recur/recur.py",
-		"/D/projects/django/airs/static/Highcharts-4.2.3/examples/arearange/index.htm",
-		"/D/projects/django/airs/static/Highcharts-4.2.3/examples/treemap-with-levels/index.htm",
-		"/D/projects/django/airs/static/Highcharts-4.2.3/examples/waterfall/index.htm",
-		"/D/projects/python/ranking/mainwindow.py",
-		"/D/projects/python/ranking/matrix.txt",
-		"/D/projects/python/ranking/mainwindow.ui",
-		"/D/projects/python/ranking/main.py",
-		"/D/projects/django/airs/static/Highcharts-4.2.3/examples/3d-column-interactive/index.htm",
-		"/D/projects/django/airs/static/Highcharts-4.2.3/index.htm",
-		"/D/projects/django/airs/static/Highcharts-4.2.3/examples/3d-column-interactive/index_test.htm",
-		"/D/projects/django/airs/.gitignore",
-		"/D/projects/django/airs/.idea/workspace.xml",
-		"/C/Python34/Lib/venv/__main__.py"
+		"/C/xampp/htdocs/isszgt/controlsidebar.inc.php"
 	],
 	"find":
 	{
@@ -404,6 +474,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"example",
+			"\n        ",
+			"\n            ",
+			"prin",
+			"_loadObjectKiiData",
+			"_loadObjectKiiById",
 			"photo",
 			"   <li class=\"list-group-item\">Cras justo odio</li>\n                    <li class=\"list-group-item\">Dapibus ac facilisis in</li>\n                    <li class=\"list-group-item\">Morbi leo risus</li>\n                    <li class=\"list-group-item\">Porta ac consectetur ac</li>\n                    <li class=\"list-group-item\">Vestibulum at eros</li>\n                  </ul>",
 			"<i class=\"fa fa-table bg-red\"></i> ",
@@ -539,54 +615,54 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 6,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "protectioninformation.php",
+					"file": "showdepartmentstree.func.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5497,
+						"buffer_size": 2973,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								76,
-								76
+								202,
+								214
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 2,
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "objectskii.php",
+					"file": "showdepartmentsnavtree.func.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3844,
+						"buffer_size": 2369,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								173,
-								173
+								646,
+								648
 							]
 						],
 						"settings":
@@ -604,19 +680,19 @@
 				},
 				{
 					"buffer": 2,
-					"file": "objectskii_edit.php",
+					"file": "objectkii.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5496,
+						"buffer_size": 5628,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2949,
-								2956
+								4523,
+								5024
 							]
 						],
 						"settings":
@@ -626,27 +702,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 720.0,
+						"translation.y": 990.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "head.inc.php",
+					"file": "internet.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4422,
+						"buffer_size": 5610,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								488,
-								488
+								5495,
+								5495
 							]
 						],
 						"settings":
@@ -656,84 +732,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 495.0,
+						"translation.y": 525.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "sys/class/class.databaseconnect.inc.php",
+					"file": "display.func.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 359,
+						"buffer_size": 214,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								160,
-								221
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "sys/class/class.wrapper.inc.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4820,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1895,
-								1895
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 798.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "sys/class/class.objectkii.inc.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 567,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								562,
-								562
+								165,
+								186
 							]
 						],
 						"settings":
@@ -748,31 +767,120 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "sys/core/init.inc.php",
+					"buffer": 5,
+					"file": "sys/class/class.objectkiiinterface.inc.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 563,
+						"buffer_size": 5456,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								34,
-								34
+								417,
+								417
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1755.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "assets/inc/process.inc.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 644,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								511,
+								517
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "sys/class/class.internetinterface.inc.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6448,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4558,
+								4569
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1713.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "internet_edit.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4774,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2560,
+								2573
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 120.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]

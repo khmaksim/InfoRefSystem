@@ -39,7 +39,7 @@
                                         <li class="header">Оргштатная структура</li>
                                         <!-- Optionally, you can add icons to the links -->
                                         <?php
-                                            showDepartmentsNavTree();
+                                            showDepartmentsNavTree(0, True);
                                         ?>
                                       </ul><!-- /.sidebar-menu -->
                                     </section>
@@ -47,7 +47,7 @@
                                 <div class="col-xs-9">
                                     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                         <?php
-                                           echo $objectKiiInterface->displayByIdDepartment(true);
+                                           echo $objectKiiInterface->displayByIdDepartment();
                                         ?>
                                     </table>
                                 </div>
@@ -88,11 +88,16 @@
             //     setInterval(function() {$("#items").load("/objectskii.func.php");}, 5000);
             // });
             $(document).ready(function() {
-                SelectedIdDepartment = $("li.treeview > a").first().attr("href").match(/\d+/);
+                SelectedIdDepartment = $("li.treeview > a").first().attr("href").match(/\d+/)[0];
 
                 $("li.treeview > a").click(function() {
-                    SelectedIdDepartment = $(this).attr("href").match(/\d+/);
-                    $("table").load("/display.func.php?object=ObjectKiiInterface&id_department=" + SelectedIdDepartment);
+                    SelectedIdDepartment = $(this).attr("href").match(/\d+/)[0];
+                    $request = "/display.func.php?object=ObjectKiiInterface&department[]="+$(this).attr("href").match(/\d+/)[0];
+
+                    $.each($(this).next().find("a"), function() {
+                        $request += "&department[]="+$(this).attr("href").match(/\d+/)[0];
+                    })
+                    $("#example").load($request);
                 });
             });
             function addObjectKii()

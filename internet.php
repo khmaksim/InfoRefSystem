@@ -91,8 +91,13 @@
                 SelectedIdDepartment = $("li.treeview > a").first().attr("href").match(/\d+/);
 
                 $("li.treeview > a").click(function() {
-                    SelectedIdDepartment = $(this).attr("href").match(/\d+/);
-                    $("table").load("/display.func.php?object=InternetInterface&id_department=" + SelectedIdDepartment);
+                    SelectedIdDepartment = $(this).attr("href").match(/\d+/)[0];
+                    $request = "/display.func.php?object=InternetInterface&department[]="+$(this).attr("href").match(/\d+/)[0];
+
+                    $.each($(this).next().find("a"), function() {
+                        $request += "&department[]="+$(this).attr("href").match(/\d+/)[0];
+                    })
+                    $("#example").load($request);
                 });
             });
             function addObject()
