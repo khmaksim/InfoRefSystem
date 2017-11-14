@@ -54,8 +54,8 @@
                                 <div class="box-body">
                                     <div class="col-xs-2">
                                         <ul class="nav nav-pills nav-stacked">
-                                            <li><a href="#">Индексы изделий</a></li>
-                                            <li><a href="#">Сопровождаемые окры</a></li>
+                                            <li><a href="./product.php">Индексы изделий</a></li>
+                                            <li class="disabled"><a href="#">Сопровождаемые окры</a></li>
                                         </ul>
                                     </div>
                                 </div><!-- /.box-body -->

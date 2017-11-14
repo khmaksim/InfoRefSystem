@@ -1,5 +1,5 @@
 <?php
-class DatabaseConnect {
+abstract class DatabaseConnect {
 	protected $db;
 
 	protected function __construct($db=NULL)

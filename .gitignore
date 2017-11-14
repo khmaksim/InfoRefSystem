@@ -3,3 +3,4 @@ face/*
 bootstrap/*
 plugins/*
 documents/*
+*.sublime-*
