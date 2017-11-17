@@ -70,7 +70,7 @@ class ProductInterface extends BaseInterface
 		else {	
 			$id = preg_replace('/[^0-9]/', '', $id);
 			$product = $this->_loadById("Product", $id);
-			// $image = '<img src="' . $product->image_file_name . '" border="0" alt="" class="img-thumbnail" /><br />';
+			$image = '<img src="' . $product->image_file_name . '" border="0" alt="" class="img-thumbnail" /><br />';
 		}
 		
 		return '
@@ -86,10 +86,11 @@ class ProductInterface extends BaseInterface
 				<label for="inputDescription">Описание</label>
 				<input type="text" name="description" class="form-control" id="inputDescription" placeholder="Описание" value="' . $product->description . '">
 			</div>
-			<div class="form-group">' . $image . '
+			<div class="form-group">
 				<label for="inputImageFile">Изображение</label>
 				<input type="file" name="image-file" id="inputImageFile">
 				<p class="help-block">Размер файла не более 2 Мб.</p>
+				<div class="col-md-1">' . $image . '</div>
 			</div>
 		';
 	}
@@ -106,7 +107,7 @@ class ProductInterface extends BaseInterface
 		}
 		else {
 			$id = (int) $_POST['id'];
-			$sql = "UPDATE public.product SET index=?, cipher=?, description=? WHERE id=$id";
+			$sql = "UPDATE public.product SET index=:index, cipher=:cipher, description=:description WHERE id=$id";
 		}
 		try
 		{
