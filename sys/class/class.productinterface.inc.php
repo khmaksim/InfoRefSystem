@@ -30,6 +30,8 @@ class ProductInterface extends BaseInterface
 				<tr>
 					<th class="col-xs-1">№</th>
 					<th>Индекс</th>
+					<th>Шифр</th>
+					<th class="col-xs-1 text-center">Печать</th>
 					<th class="col-xs-1 text-center">Редактировать</th>
 					<th class="col-xs-1 text-center">Удалить</th>
 				</tr>
@@ -42,12 +44,13 @@ class ProductInterface extends BaseInterface
 			$html .= '<tr>
 							<td>' . $count++ . '</td>
                             <td><a data-toggle="collapse" href="#' . $obj->id . '">' . $obj->index . '</a></td>
+                            <td>' . $obj->cipher . '</a></td>
+                            <td class="col-xs-1 text-center"><a href="./product_view_print.php?id='. $obj->id .'" class="button btn-info btn-sm" target="_blank"><span class="glyphicon glyphicon-print"></span></a></td>
                             <td class="col-xs-1 text-center"><a href="./product_edit.php?action=edit&id='. $obj->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                             <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $obj->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
                         <tr id="' . $obj->id . '" class="panel-collapse collapse">
-                        	<td colspan="2">
-                        		<p><b>Шифр: </b>' . $obj->cipher . '</p>
+                        	<td colspan="4">
                         		<p><b>Описание: </b>' . $obj->description . '</p>
                         	</td>
                         	<td colspan="2">
@@ -167,6 +170,31 @@ class ProductInterface extends BaseInterface
 		catch (Exception $e) {
 			return $e->getMessage();
 		}
+	}
+
+	public function view_print($id=NULL)
+	{
+		if (empty($id) || $id == NULL)
+			$product = new Product();
+		else {	
+			$id = preg_replace('/[^0-9]/', '', $id);
+			$product = $this->_loadById("Product", $id);
+		}
+		return '
+				<div class="row">
+					<big>
+					<div class="col-xs-6 col-xs-offset-4 col-md-4 col-md-offset-4 col-lg-3 col-lg-offset-5">Изделие <b>' . $product->index . '</b>, шифр <b>' . $product->cipher . '</b></div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-md-12 col-lg-12">' . $product->description . '</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10">
+						<img src="' . $product->image_file_name . '" alt="' . $product->index . '" class="img-thumbnail" width=100% height=100%>
+					</div>
+					</big>
+				</div>
+				';
 	}
 }
 
