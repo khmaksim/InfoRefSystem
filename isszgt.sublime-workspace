@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"row",
+				"rowIndex"
+			],
+			[
+				"get",
+				"getElementsByName"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
 				"arr",
 				"array_map"
 			],
@@ -202,18 +214,19 @@
 			}
 		},
 		{
-			"file": "sys/class/class.baseinterface.inc.php",
+			"file": "sys/class/class.productinterface.inc.php",
 			"settings":
 			{
-				"buffer_size": 655,
+				"buffer_size": 6996,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "sys/class/class.productinterface.inc.php",
+			"file": "product.php",
 			"settings":
 			{
-				"buffer_size": 5840,
+				"buffer_size": 5984,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -279,12 +292,13 @@
 	],
 	"file_history":
 	[
+		"/D/projects/django/center/static/js/my_js.js",
+		"/C/xampp/htdocs/isszgt/product_edit.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.baseinterface.inc.php",
 		"/C/xampp/htdocs/isszgt/sys/class/class.databaseconnect.inc.php",
 		"/C/xampp/htdocs/isszgt/product.php",
 		"/C/xampp/htdocs/isszgt/sys/class/class.objectkiiinterface.inc.php",
-		"/C/xampp/htdocs/isszgt/product_edit.php",
 		"/C/xampp/htdocs/isszgt/documents_edit.php",
-		"/C/xampp/htdocs/isszgt/sys/class/class.baseinterface.inc.php",
 		"/C/xampp/htdocs/isszgt/save.php",
 		"/C/xampp/htdocs/isszgt/db.func.php",
 		"/C/xampp/htdocs/isszgt/user_edit.php",
@@ -405,8 +419,7 @@
 		"/C/xampp/htdocs/isszgt/role.func.php",
 		"/C/xampp/htdocs/isszgt/addresstype.php",
 		"/C/xampp/htdocs/isszgt/accesstype.php",
-		"/C/xampp/htdocs/isszgt/addresstype_edit.php",
-		"/C/xampp/htdocs/isszgt/addresstype.func.php"
+		"/C/xampp/htdocs/isszgt/addresstype_edit.php"
 	],
 	"find":
 	{
@@ -430,6 +443,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			".style.visibility = \"hidden\";",
 			"_loadProductById",
 			"\"Pro",
 			"_loadB",
@@ -581,7 +595,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -639,53 +653,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "sys/class/class.baseinterface.inc.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 655,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								451,
-								467
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "sys/class/class.productinterface.inc.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5840,
+						"buffer_size": 6996,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5758,
-								5758
+								3615,
+								3615
 							]
 						],
 						"settings":
@@ -694,10 +679,40 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2070.0,
+						"translation.y": 990.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "product.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5984,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4544,
+								4544
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1068.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]

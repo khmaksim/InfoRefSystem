@@ -41,7 +41,7 @@ $title = 'Индексы изделий';
                             </div><!-- /.box-header -->
                             <div class="box-body">
                                 <div class="col-xs-12">
-                                    <table id="product_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                    <table id="product_table" class="table table-hover table-bordered" cellspacing="0" width="100%">
                                         <?php
                                             echo $productInterface->display();
                                         ?>
