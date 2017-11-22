@@ -1,8 +1,8 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-$productInterface = new ProductInterface($dbo);
-$title = 'Индексы изделий';
+$scientificResearchDesignWorkInterface = new ScientificResearchDesignWorkInterface($dbo);
+$title = 'Сопровождаемые НИОКР';
 ?>
 <body class="hold-transition skin-blue sidebar-mini fixed">
     <div class="wrapper">
@@ -43,7 +43,7 @@ $title = 'Индексы изделий';
                                 <div class="col-xs-12">
                                     <table id="product_table" class="table table-hover table-bordered" cellspacing="0" width="100%">
                                         <?php
-                                            echo $productInterface->display();
+                                            echo $scientificResearchDesignWorkInterface->display();
                                         ?>
                                     </table>
                                 </div>
@@ -53,7 +53,7 @@ $title = 'Индексы изделий';
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <p class="text-right"><a href="./product_edit.php?action=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                        <p class="text-right"><a href="./scientificresearchdesignwork_edit.php?action=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                     </div><!-- /.col -->
                 </div>
         </section><!-- /.content -->
@@ -82,7 +82,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
                 {
                     var ObjectId = id;
                     if(confirm("Вы действительно хотите удалить запись?")) {
-                        document.location = "./assets/inc/delete.inc.php?object=ProductInterface&id=" + ObjectId;
+                        document.location = "./assets/inc/delete.inc.php?object=ScientificResearchDesignWorkInterface&id=" + ObjectId;
                     }
                 }
                 function filterSearch(text) {

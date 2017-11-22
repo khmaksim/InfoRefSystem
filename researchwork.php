@@ -54,8 +54,9 @@
                                 <div class="box-body">
                                     <div class="col-xs-2">
                                         <ul class="nav nav-pills nav-stacked">
-                                            <li><a href="./product.php">Индексы изделий</a></li>
-                                            <li class="disabled"><a href="#">Сопровождаемые окры</a></li>
+                                            <li><a href="/product.php">Индексы изделий</a></li>
+                                            <li class="disabled"><a href="#">Сопровождаемые НИОКР</a></li>
+                                            <li><a href="/enterprise.php">Предприятия</a></li>
                                         </ul>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -69,11 +70,7 @@
             </div><!-- /.content-wrapper -->
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
-            <!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
 
         <!-- REQUIRED JS SCRIPTS -->
