@@ -532,9 +532,6 @@
                                                             incoming = '" . getIntValueAccessRight($incomingView, $incomingEdit, $incomingRemove) . "'
                                                             ";
                                                     $res = $dbconn->query($sql);
-                                                    if ($mysqli->errno) {
-                                                        die('Error (' . $mysqli->errno . ') ' . $mysqli->error . " " . $sql);
-                                                    } 
                                                     break;
                 // Удалем картинку если она есть
                 case 'delUser':        if (file_exists('/face/' . $id . '.' . $photo['file_ext']))
@@ -543,9 +540,6 @@
                                                     unlink('../face/' . $id . '_thumb.' . $photo['file_ext']);
                                         $sql = "DELETE FROM public.access_right WHERE user_id = '" . $id . "'";
                                         $res = $dbconn->query($sql);
-                                        if ($mysqli->errno) {
-                                            die('Error (' . $mysqli->errno . ') ' . $mysqli->error . " " . $sql);
-                                        }
                                         break;
                  case 'addDocument': 
                  case 'editDocument':  
