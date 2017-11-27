@@ -32,6 +32,7 @@ class EnterpriseInterface extends BaseInterface
 					<th>Название</th>
 					<th>Место дислокации</th>
 					<th>Руководитель</th>
+					<th>Должность</th>
 					<th class="col-xs-1 text-center">Редактировать</th>
 					<th class="col-xs-1 text-center">Удалить</th>
 				</tr>
@@ -46,6 +47,7 @@ class EnterpriseInterface extends BaseInterface
                             <td>' . $obj->name . '</td>
                             <td>' . $obj->location . '</td>
                             <td>' . $obj->head . '</td>
+                            <td>' . $obj->post . '</td>
                             <td class="col-xs-1 text-center"><a href="./enterprise_edit.php?action=edit&id='. $obj->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                             <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $obj->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>';
@@ -77,6 +79,10 @@ class EnterpriseInterface extends BaseInterface
 				<label for="inputHead">Руководитель</label>
 				<input type="text" name="head" class="form-control" id="inputHead" placeholder="Руководитель" value="' . $enterprise->head . '">
 			</div>
+			<div class="form-group">
+				<label for="inputPost">Должность</label>
+				<input type="text" name="post" class="form-control" id="inputPost" placeholder="Должность" value="' . $enterprise->post . '">
+			</div>
 		';
 	}
 
@@ -85,14 +91,15 @@ class EnterpriseInterface extends BaseInterface
 		$name = htmlentities($_POST['name'], ENT_QUOTES);
 		$location = htmlentities($_POST['location'], ENT_QUOTES);
 		$head = htmlentities($_POST['head'], ENT_QUOTES);
+		$post = htmlentities($_POST['post'], ENT_QUOTES);
 		$id = NULL;
 
 		if (empty($_POST['id'])) {
-			$sql = "INSERT INTO public.enterprise (name, location, head) VALUES (:name, :location, :head)";
+			$sql = "INSERT INTO public.enterprise (name, location, head, post) VALUES (:name, :location, :head, :post)";
 		}
 		else {
 			$id = (int) $_POST['id'];
-			$sql = "UPDATE public.enterprise SET name=:name, location=:location, head=:head WHERE id=$id";
+			$sql = "UPDATE public.enterprise SET name=:name, location=:location, head=:head, post=:post WHERE id=$id";
 		}
 		try
 		{
@@ -100,6 +107,7 @@ class EnterpriseInterface extends BaseInterface
 			$stmt->bindParam(":name", $name, PDO::PARAM_STR);
 			$stmt->bindParam(":location", $location, PDO::PARAM_STR);
 			$stmt->bindParam(":head", $head, PDO::PARAM_STR);
+			$stmt->bindParam(":post", $post, PDO::PARAM_STR);
 			$stmt->execute();
 			$stmt->closeCursor();
             return TRUE;
