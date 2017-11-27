@@ -19,14 +19,14 @@
                 <ol class="breadcrumb">
                     <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                     <li><a href="/researchwork.php">Научно-исследовательская работа</a></li>
-                    <li><a href="/scientificresearchdesignwork.php">Перечень</a></li>
+                    <li><a href="/scientificresearchdesignwork.php">Сопровождаемые НИОКР</a></li>
                     <li class="active"><?= ($_GET['action'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
                 </ol>
             </section>
             <!-- Main content -->
             <section class="content">
                 <?php
-                $alertMessage = 'Укажите год!';
+                $alertMessage = 'Укажите индекс изделия!';
                 ?>
                 <!-- Your Page Content Here -->
                 <div class="row">
@@ -50,7 +50,7 @@
                                     ?>
                                 </div>
                                 <div class="box-footer">
-                                    <a href="/scientificresearchdesignwork.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                    <a href="/product.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                 </div>
                             </form>
                         </div>
@@ -84,16 +84,6 @@
                     } else {
                         alert('<?= $alertMessage ?>');
                     }
-                }
-                function validateYear(input)
-                {
-                    if (input.value != "") {
-                        if (!(/^\d{1,4}$/.test(input.value))) {
-                            input.focus();
-                            return false;
-                        }
-                    }
-                    return true;
                 }
                 /*]]>*/
             </script>

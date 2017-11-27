@@ -1,6 +1,6 @@
 <?php
 
-class ProductInterface extends BaseInterface 
+class ControlScientificResearchDesignWorkInterface extends BaseInterface 
 {
 	protected function _loadData($id=NULL)
 	{
@@ -123,7 +123,7 @@ class ProductInterface extends BaseInterface
 
             if (sizeof($_FILES) && !$_FILES['image-file']['error'] && $_FILES['image-file']['size'] < 1024 * 2 * 1024) {
                 $uploadInfo = $_FILES['image-file'];
-                $fileName = 'uploaded_files/product/' . $id;
+                $fileName = 'img/product/' . $id;
                 switch ($uploadInfo['type']) {
                 	case 'image/jpeg':
                 	$fileName .= '.jpg';

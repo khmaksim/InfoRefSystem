@@ -4,26 +4,6 @@
     $page = 'structure';
     $section = 'Научно-исследовательская работа';
 ?>
-  <!--
-  BODY TAG OPTIONS:
-  =================
-  Apply one or more of the following classes to get the
-  desired effect
-  |---------------------------------------------------------|
-  | SKINS         | skin-blue                               |
-  |               | skin-black                              |
-  |               | skin-purple                             |
-  |               | skin-yellow                             |
-  |               | skin-red                                |
-  |               | skin-green                              |
-  |---------------------------------------------------------|
-  |LAYOUT OPTIONS | fixed                                   |
-  |               | layout-boxed                            |
-  |               | layout-top-nav                          |
-  |               | sidebar-collapse                        |
-  |               | sidebar-mini                            |
-  |---------------------------------------------------------|
-  -->
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
         <?php
@@ -55,7 +35,8 @@
                                     <div class="col-xs-2">
                                         <ul class="nav nav-pills nav-stacked">
                                             <li><a href="/product.php">Индексы изделий</a></li>
-                                            <li class="disabled"><a href="#">Сопровождаемые НИОКР</a></li>
+                                            <li><a href="/scientificresearchdesignwork.php">Перечень</a></li>
+                                            <li class="disabled"><a href="#">Документы по НИОКР</a></li>
                                             <li><a href="/enterprise.php">Предприятия</a></li>
                                         </ul>
                                     </div>

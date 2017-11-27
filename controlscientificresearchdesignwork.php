@@ -2,7 +2,7 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
 $scientificResearchDesignWorkInterface = new ScientificResearchDesignWorkInterface($dbo);
-$title = 'Перечень';
+$title = 'Сопровождаемые НИОКР';
 ?>
 <body class="hold-transition skin-blue sidebar-mini fixed">
     <div class="wrapper">
@@ -25,6 +25,14 @@ $title = 'Перечень';
             <!-- Main content -->
             <section class="content">
                   <!-- Your Page Content Here -->
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputSearch" class="col-xs-1 control-label">Поиск</label>
+                        <div class="col-md-3">
+                              <input type="text" class="form-control search" id="inputSearch" placeholder="Индекс или шифр изделия" onkeyup="filterSearch(this.value)">
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="box">
@@ -76,7 +84,29 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
                     if(confirm("Вы действительно хотите удалить запись?")) {
                         document.location = "./assets/inc/delete.inc.php?object=ScientificResearchDesignWorkInterface&id=" + ObjectId;
                     }
-                }                
+                }
+                function filterSearch(text) {
+                    var table = document.getElementById("items");
+                    var rows = table.getElementsByTagName("tr");
+                    var nums = rows.length;
+                    var i = 0;
+                    var n = 1;
+                    while (i < nums) {
+                        var rowIndex = rows[i];
+                        var cols = rowIndex.getElementsByTagName("td");
+                        if (cols[1].innerText.indexOf(text) >= 0 || cols[2].innerText.indexOf(text) >= 0) {
+                            rows[i].style.display = "";
+                            rows[i+1].style.display = "";
+                            cols[0].innerText = n;
+                            n += 1;
+                        }
+                        else {
+                            rows[i].style.display = "none";
+                            rows[i+1].style.display = "none";
+                        }
+                        i += 2;
+                    }
+                }
                 /*]]>*/
             </script>
     </body>
