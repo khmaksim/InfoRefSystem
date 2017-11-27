@@ -4,3 +4,4 @@ bootstrap/*
 plugins/*
 documents/*
 *.sublime-*
+uploaded_files/*
