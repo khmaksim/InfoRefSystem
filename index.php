@@ -3,27 +3,8 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     $page = 'index';
     $arUser = getUserById($_SESSION['user_id']);
+    print_r("expression");
 ?>
-  <!--
-  BODY TAG OPTIONS:
-  =================
-  Apply one or more of the following classes to get the
-  desired effect
-  |---------------------------------------------------------|
-  | SKINS         | skin-blue                               |
-  |               | skin-black                              |
-  |               | skin-purple                             |
-  |               | skin-yellow                             |
-  |               | skin-red                                |
-  |               | skin-green                              |
-  |---------------------------------------------------------|
-  |LAYOUT OPTIONS | fixed                                   |
-  |               | layout-boxed                            |
-  |               | layout-top-nav                          |
-  |               | sidebar-collapse                        |
-  |               | sidebar-mini                            |
-  |---------------------------------------------------------|
-  -->
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
         <?php
@@ -39,10 +20,6 @@
                 </section>
                 <!-- Main content -->
                 <section class="content">
-                    <?php
-                        // получение прав доступа на ПМ пользователя
-                        $arAccessRight = getAccessRightById($_SESSION['user_id']);
-                    ?>
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="panel panel-default">
@@ -82,9 +59,6 @@
                                     <a href="/researchwork.php"><h4 class="text-center">Научно-исследовательская работа</h4></a>
                                 </div>
                             </div>
-                            <?php
-                                if ($arAccessRight['admin'] == 7) {
-                            ?>
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <a href="/administration.php">
@@ -92,9 +66,6 @@
                                     </a>
                                 </div>
                             </div>
-                            <?php
-                                }
-                            ?>
                         </div>
                         <div class="col-lg-4">
                             <div class="panel panel-default">
@@ -104,9 +75,6 @@
                                     </a>
                                 </div>
                             </div>
-                            <?php
-                                if ($arAccessRight['telephone'] > 0) {
-                            ?>
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <a href="/phonelist.php">
@@ -114,9 +82,6 @@
                                     </a>
                                 </div>
                             </div>
-                            <?php 
-                                } 
-                            ?>
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <a href="/structure.php">

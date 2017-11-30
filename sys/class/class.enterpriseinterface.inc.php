@@ -75,15 +75,20 @@ class EnterpriseInterface extends BaseInterface
 				<label for="inputLocation">Место дислокации</label>
 				<input type="text" name="location" class="form-control" id="inputLocation" placeholder="Место дислокации" value="' . $enterprise->location . '">
 			</div>
-			<div class="form-group">
-				<label for="inputHead">Руководитель</label>
-				<input type="text" name="head" class="form-control" id="inputHead" placeholder="Руководитель" value="' . $enterprise->head . '">
-			</div>
-			<div class="form-group">
-				<label for="inputPost">Должность</label>
-				<input type="text" name="post" class="form-control" id="inputPost" placeholder="Должность" value="' . $enterprise->post . '">
-			</div>
-		';
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="inputHead">Руководитель</label>
+						<input type="text" name="head" class="form-control" id="inputHead" placeholder="Руководитель" value="' . $enterprise->head . '">
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="form-group">
+						<label for="inputPost">Должность</label>
+						<input type="text" name="post" class="form-control" id="inputPost" placeholder="Должность" value="' . $enterprise->post . '">
+					</div>
+				</div>
+			</div>';
 	}
 
 	public function processForm()

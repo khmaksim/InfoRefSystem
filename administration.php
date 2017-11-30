@@ -3,32 +3,11 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     $page = 'phonelist';
 ?>
-  <!--
-  BODY TAG OPTIONS:
-  =================
-  Apply one or more of the following classes to get the
-  desired effect
-  |---------------------------------------------------------|
-  | SKINS         | skin-blue                               |
-  |               | skin-black                              |
-  |               | skin-purple                             |
-  |               | skin-yellow                             |
-  |               | skin-red                                |
-  |               | skin-green                              |
-  |---------------------------------------------------------|
-  |LAYOUT OPTIONS | fixed                                   |
-  |               | layout-boxed                            |
-  |               | layout-top-nav                          |
-  |               | sidebar-collapse                        |
-  |               | sidebar-mini                            |
-  |---------------------------------------------------------|
-  -->
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -56,72 +35,35 @@
                                 <div class="box-body">
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs">
-                                        <li class="active"><a href="#admin" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> Учетная информация</a></li>
-                                        <li><a href="#dictionary" data-toggle="tab"><i class="fa fa-book"></i> Словари</a></li>
+                                        <li class="active"><a href="#account" data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Учетные записи</a></li>
+                                        <li><a href="#access_right" data-toggle="tab"><span class="glyphicon glyphicon-lock"></span> Права доступа</a></li>
+                                        <li><a href="#dictionary" data-toggle="tab"><span class="glyphicon glyphicon-book"></span> Словари</a></li>
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="admin">
-                                            <?php
-                                                // получение прав доступа на ПМ пользователя
-                                                $arAccessRight = getAccessRightById($_SESSION['user_id']);
-                                            ?>
+                                        <div class="tab-pane active" id="account">
                                             <ul class="nav nav-pills nav-stacked">
-                                                <?php
-                                                    if ($arAccessRight['admin'] > 0) {
-                                                ?>
-                                                <li>
-                                                    <a href="/user.php">Пользователи</a>
-                                                </li>
-                                                <?php
-                                                    }
-                                                ?>
-                                            </ul><!-- /.control-sidebar-menu -->
+                                                <li><a href="/user.php">Пользователи</a></li>
+                                                <li><a href="/group.php">Группы</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="tab-pane active" id="access_right">
+                                            <ul class="nav nav-pills nav-stacked">
+                                                <li><a href="/role.php">Роли доступа</a></li>
+                                            </ul>
                                         </div>
                                         <div class="tab-pane" id="dictionary">
                                             <ul class="nav nav-pills nav-stacked">
-                                                <?php
-                                                    if ($arAccessRight['admin'] > 0) {
-                                                ?>
-                                                <li>
-                                                    <a href="/dictionary.php?name=role">Роли безопасности</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/dictionary.php?name=militaryrank">Воинские звания</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/dictionary.php?name=militaryposition">Должности</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/dictionary.php?name=phonetype">Типы телефонной связи</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/dictionary.php?name=phonenumbertype">Типы телефонных номеров</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="/dictionary.php?name=medaltype">Типы наград</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/dictionary.php?name=interpassporttype">Типы заграничных паспортов</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/dictionary.php?name=accesstype">Формы допуска</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/dictionary.php?name=city">Города</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="/dictionary.php?name=addresstype">Типы адресов</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="/dictionary.php?name=emailtype">Типы email</a>
-                                                </li>
-                                                 <?php
-                                                    }
-                                                ?>
+                                                <li><a href="/dictionary.php?name=militaryrank">Воинские звания</a></li>
+                                                <li><a href="/dictionary.php?name=militaryposition">Должности</a></li>
+                                                <li><a href="/dictionary.php?name=phonetype">Типы телефонной связи</a></li>
+                                                <li><a href="/dictionary.php?name=phonenumbertype">Типы телефонных номеров</a></li>
+                                                <li><a href="/dictionary.php?name=medaltype">Типы наград</a></li>
+                                                <li><a href="/dictionary.php?name=interpassporttype">Типы заграничных паспортов</a></li>
+                                                <li><a href="/dictionary.php?name=accesstype">Формы допуска</a></li>
+                                                <li><a href="/dictionary.php?name=city">Города</a></li>
+                                                <li><a href="/dictionary.php?name=addresstype">Типы адресов</a></li>
+                                                <li><a href="/dictionary.php?name=emailtype">Типы email</a></li>
                                             </ul><!-- /.control-sidebar-menu -->
                                         </div>
                                     </div>
@@ -134,15 +76,9 @@
             </div><!-- /.content-wrapper -->
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
-            include_once $_SERVER['DOCUMENT_ROOT'] . '/controlsidebar.inc.php';
         ?>
-            <!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
-
         <!-- REQUIRED JS SCRIPTS -->
-
         <!-- jQuery 2.1.4 -->
         <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->

@@ -3,26 +3,26 @@
 class ControlScientificResearchDesignWork extends DatabaseConnect 
 {
 	public $id;	
-	public $index;	
-	public $cipher;
-	public $description;
-	public $image_file_name;
+	public $date;	
+	public $incomingNumber;
+	public $name;
+	public $result;
 	
 	public function __construct($product=NULL)
 	{
 		if (is_array($product)) {
 			$this->id = $product['id'];
-			$this->index = $product['index'];
-			$this->cipher = $product['cipher'];
-			$this->description = $product['description'];
-			$this->image_file_name = $product['image_file_name'];
+			$this->date = $product['date'];
+			$this->incomingNumber = $product['incoming_number'];
+			$this->name = $product['name'];
+			$this->result = $product['result'];
 		}
 		else {
 			$this->id = "";
-			$this->index = "";
-			$this->cipher = "";
-			$this->description = "";
-			$this->image_file_name = "";
+			$this->date = "";
+			$this->incomingNumber = "";
+			$this->name = "";
+			$this->result = "";
 		}
 	}
 }

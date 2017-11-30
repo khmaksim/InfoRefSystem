@@ -4,7 +4,7 @@ class ControlScientificResearchDesignWorkInterface extends BaseInterface
 {
 	protected function _loadData($id=NULL)
 	{
-		$sql = "SELECT * FROM product";
+		$sql = "SELECT * FROM control_scientific_research_design_work";
 		if (!empty($id)) {
 			$sql .= " WHERE id=:id LIMIT 1";
 		} 
@@ -29,8 +29,10 @@ class ControlScientificResearchDesignWorkInterface extends BaseInterface
 			<thead>
 				<tr>
 					<th class="col-xs-1">№</th>
-					<th>Индекс</th>
-					<th>Шифр</th>
+					<th>Дата (вх. №)</th>
+					<th>Название</th>
+					<th>Исполнитель</th>
+					<th>Результат рассмотрения</th>
 					<th class="col-xs-1 text-center">Печать</th>
 					<th class="col-xs-1 text-center">Редактировать</th>
 					<th class="col-xs-1 text-center">Удалить</th>
@@ -43,19 +45,13 @@ class ControlScientificResearchDesignWorkInterface extends BaseInterface
 		foreach ($objects as $obj) {
 			$html .= '<tr>
 							<td>' . $count++ . '</td>
-                            <td><a data-toggle="collapse" href="#' . $obj->id . '">' . $obj->index . '</a></td>
-                            <td>' . $obj->cipher . '</a></td>
-                            <td class="col-xs-1 text-center"><a href="./product_view_print.php?id='. $obj->id .'" class="button btn-info btn-sm" target="_blank"><span class="glyphicon glyphicon-print"></span></a></td>
-                            <td class="col-xs-1 text-center"><a href="./product_edit.php?action=edit&id='. $obj->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="col-xs-1 text-center"><a href="#" class="button btn-info btn-sm" target="_blank"><span class="glyphicon glyphicon-print"></span></a></td>
+                            <td class="col-xs-1 text-center"><a href="./controlscientificresearchdesignwork_edit.php?action=edit&id='. $obj->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                             <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $obj->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
-                        </tr>
-                        <tr id="' . $obj->id . '" class="panel-collapse collapse">
-                        	<td colspan="4">
-                        		<p><b>Описание: </b>' . $obj->description . '</p>
-                        	</td>
-                        	<td colspan="2">
-                        		<img src="' . $obj->image_file_name . '" alt="' . $obj->index . '" class="img-rounded" width=100% height=100%>
-                        	</td>
                         </tr>';
         }
         $html .= '</tbody>';
@@ -66,80 +62,60 @@ class ControlScientificResearchDesignWorkInterface extends BaseInterface
 	{
 		$image = '';
 		if (empty($id) || $id == NULL)
-			$product = new Product();
+			$obj = new ControlScientificResearchDesignWork();
 		else {	
 			$id = preg_replace('/[^0-9]/', '', $id);
-			$product = $this->_loadById("Product", $id);
-			$image = '<img src="' . $product->image_file_name . '" border="0" alt="" class="img-thumbnail" /><br />';
+			$obj = $this->_loadById("ControlScientificResearchDesignWork", $id);
 		}
 		
 		return '
 			<div class="form-group">
-				<label for="inputIndex">Индекс</label>
-				<input type="text" name="index" class="form-control" id="inputIndex" placeholder="Индекс" value="' . $product->index . '" required autofocus>
+				<label for="inputDate">Дата</label>
+				<input type="text" name="date" class="form-control" id="inputDate" placeholder="Дата" value="' . $obj->date . '" required autofocus>
 			</div>
 			<div class="form-group">
-				<label for="inputCipher">Шифр</label>
-				<input type="text" name="cipher" class="form-control" id="inputCipher" placeholder="Шифр" value="' . $product->cipher . '">
+				<label for="inputIncomingNumber">Дата</label>
+				<input type="text" name="incoming_number" class="form-control" id="inputIncomingNumber" placeholder="Входящий номер" value="' . $obj->incomingNumber . '" required autofocus>
 			</div>
 			<div class="form-group">
-				<label for="inputDescription">Описание</label>
-				<input type="text" name="description" class="form-control" id="inputDescription" placeholder="Описание" value="' . $product->description . '">
+				<label for="inputName">Название</label>
+				<input type="text" name="name" class="form-control" id="inputName" placeholder="Название" value="' . $obj->name . '">
 			</div>
 			<div class="form-group">
-				<label for="inputImageFile">Изображение</label>
-				<input type="file" name="image-file" id="inputImageFile">
-				<p class="help-block">Размер файла не более 2 Мб.</p>
-				<div class="col-md-1">' . $image . '</div>
+				<label for="inputName">Название</label>
+				<input type="text" name="name" class="form-control" id="inputName" placeholder="Название" value="' . $obj->name . '">
+			</div>
+			<div class="form-group">
+				<label for="inputResult">Результат рассмотрения</label>
+				<input type="text" name="result" class="form-control" id="inputResult" placeholder="Результат рассмотрения" value="' . $obj->result . '">
 			</div>
 		';
 	}
 
 	public function processForm()
 	{
-		$index = htmlentities($_POST['index'], ENT_QUOTES);
-		$cipher = htmlentities($_POST['cipher'], ENT_QUOTES);
-		$description = htmlentities($_POST['description'], ENT_QUOTES);
+		$date = htmlentities($_POST['date'], ENT_QUOTES);
+		$incomingNumber = htmlentities($_POST['incoming_number'], ENT_QUOTES);
+		$name = htmlentities($_POST['name'], ENT_QUOTES);
+		$result = htmlentities($_POST['result'], ENT_QUOTES);
 		$id = NULL;
 
 		if (empty($_POST['id'])) {
-			$sql = "INSERT INTO public.product (index, cipher, description) VALUES (:index, :cipher, :description) RETURNING id";
+			$sql = "INSERT INTO public.product (date, incoming_number, name, result) VALUES (:date, :incoming_number, :name, :result)";
 		}
 		else {
 			$id = (int) $_POST['id'];
-			$sql = "UPDATE public.product SET index=:index, cipher=:cipher, description=:description WHERE id=$id";
+			$sql = "UPDATE public.product SET date=:date, incoming_number=:incoming_number, name=:name, result=:result WHERE id=$id";
 		}
 		try
 		{
 			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":index", $index, PDO::PARAM_STR);
-			$stmt->bindParam(":cipher", $cipher, PDO::PARAM_STR);
-			$stmt->bindParam(":description", $description, PDO::PARAM_STR);
+			$stmt->bindParam(":date", $date, PDO::PARAM_STR);
+			$stmt->bindParam(":incoming_number", $incomingNumber, PDO::PARAM_STR);
+			$stmt->bindParam(":name", $name, PDO::PARAM_STR);
+			$stmt->bindParam(":result", $result, PDO::PARAM_STR);
 			$stmt->execute();
 			$stmt->closeCursor();
-
-			if ($id == NULL)
-				$id = $this->db->lastInsertId('product_id_seq');
-
-            if (sizeof($_FILES) && !$_FILES['image-file']['error'] && $_FILES['image-file']['size'] < 1024 * 2 * 1024) {
-                $uploadInfo = $_FILES['image-file'];
-                $fileName = 'img/product/' . $id;
-                switch ($uploadInfo['type']) {
-                	case 'image/jpeg':
-                	$fileName .= '.jpg';
-                	break;
-                	case 'image/png':
-                	$fileName .= '.png';
-                	break;
-                	default:
-                	exit;
-                }
-                $fileName = iconv('utf-8', 'windows-1251', $fileName);
-                if (!move_uploaded_file($uploadInfo['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $fileName))
-                	echo 'Не удалось осуществить сохранение файла';
-
-                $this->db->query("UPDATE public.product SET image_file_name = '" . $fileName . "' WHERE id = " . $id);
-            }
             return TRUE;
 		}
 		catch (Exception $e) {

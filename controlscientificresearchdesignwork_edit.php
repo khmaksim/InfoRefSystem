@@ -1,8 +1,8 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $scientificResearchDesignWorkInterface = new ScientificResearchDesignWorkInterface($dbo);
-    $page = 'scientificResearchDesignWork';
+    $controlScientificResearchDesignWorkInterface = new ControlScientificResearchDesignWorkInterface($dbo);
+    $page = 'controlScientificResearchDesignWork';
 ?>
 <body class="hold-transition skin-blue sidebar-mini fixed">
     <div class="wrapper">
@@ -19,7 +19,7 @@
                 <ol class="breadcrumb">
                     <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                     <li><a href="/researchwork.php">Научно-исследовательская работа</a></li>
-                    <li><a href="/scientificresearchdesignwork.php">Сопровождаемые НИОКР</a></li>
+                    <li><a href="/controlscientificresearchdesignwork.php">Контроль документов по НИОКР</a></li>
                     <li class="active"><?= ($_GET['action'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
                 </ol>
             </section>
@@ -46,7 +46,7 @@
                                         $id = NULL;
                                         if ($_GET['action'] == 'edit')
                                             $id = $_GET['id'];
-                                        echo $scientificResearchDesignWorkInterface->displayById($id);
+                                        echo $controlScientificResearchDesignWorkInterface->displayById($id);
                                     ?>
                                 </div>
                                 <div class="box-footer">

@@ -9,11 +9,8 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/gettechniquebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserprevloginbyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserrolebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getroletitlebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getusertitlebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getaccessrightbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getrolebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getinfobyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getinfoblockbyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getmilitaryrankbyid.func.php';
@@ -25,7 +22,6 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getemailtypebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getmedaltypebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getinterpassporttypebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getaccesstypebyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getdepartmentsbyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/showdepartmentsnavtree.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/showphonelisttree.func.php';

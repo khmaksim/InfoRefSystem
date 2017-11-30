@@ -74,17 +74,23 @@ class ProductInterface extends BaseInterface
 		}
 		
 		return '
-			<div class="form-group">
-				<label for="inputIndex">Индекс</label>
-				<input type="text" name="index" class="form-control" id="inputIndex" placeholder="Индекс" value="' . $product->index . '" required autofocus>
-			</div>
-			<div class="form-group">
-				<label for="inputCipher">Шифр</label>
-				<input type="text" name="cipher" class="form-control" id="inputCipher" placeholder="Шифр" value="' . $product->cipher . '">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="inputIndex">Индекс</label>
+						<input type="text" name="index" class="form-control" id="inputIndex" placeholder="Индекс" value="' . $product->index . '" required autofocus>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="inputCipher">Шифр</label>
+						<input type="text" name="cipher" class="form-control" id="inputCipher" placeholder="Шифр" value="' . $product->cipher . '">
+					</div>
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="inputDescription">Описание</label>
-				<input type="text" name="description" class="form-control" id="inputDescription" placeholder="Описание" value="' . $product->description . '">
+				<textarea class="form-control" rows="3 name="description" id="inputDescription" placeholder="Описание" value="' . $product->description . '"></textarea>
 			</div>
 			<div class="form-group">
 				<label for="inputImageFile">Изображение</label>

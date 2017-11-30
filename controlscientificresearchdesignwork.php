@@ -1,8 +1,8 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-$scientificResearchDesignWorkInterface = new ScientificResearchDesignWorkInterface($dbo);
-$title = 'Сопровождаемые НИОКР';
+$controlScientificResearchDesignWorkInterface = new ControlScientificResearchDesignWorkInterface($dbo);
+$title = 'Контроль документов по НИОКР';
 ?>
 <body class="hold-transition skin-blue sidebar-mini fixed">
     <div class="wrapper">
@@ -43,7 +43,7 @@ $title = 'Сопровождаемые НИОКР';
                                 <div class="col-xs-12">
                                     <table id="product_table" class="table table-hover table-bordered" cellspacing="0" width="100%">
                                         <?php
-                                            echo $scientificResearchDesignWorkInterface->display();
+                                            echo $controlScientificResearchDesignWorkInterface->display();
                                         ?>
                                     </table>
                                 </div>
@@ -53,7 +53,7 @@ $title = 'Сопровождаемые НИОКР';
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <p class="text-right"><a href="./scientificresearchdesignwork_edit.php?action=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                        <p class="text-right"><a href="./controlscientificresearchdesignwork_edit.php?action=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                     </div><!-- /.col -->
                 </div>
         </section><!-- /.content -->

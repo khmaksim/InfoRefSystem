@@ -61,9 +61,13 @@ class ScientificResearchDesignWorkInterface extends BaseInterface
 		}
 		
 		return '
-			<div class="form-group">
-				<label for="inputYear">Год</label>
-				<input type="number" min="2000" max="2099" name="year" class="form-control" id="inputYear" oninput="validateYear(this)" placeholder="Год" value="' . $obj->year . '" required autofocus>
+			<div class="row">
+				<div class="col-md-1">
+					<div class="form-group">
+						<label for="inputYear">Год</label>
+						<input type="text" min="2000" max="2099" name="year" class="form-control" id="inputYear" oninput="validateYear(this)" placeholder="Год" value="' . $obj->year . '" required autofocus>
+					</div>
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="inputFile">' . ($obj->file_name  !=  '' ? '<a href="download.php?file=' . $obj->file_name . '" target="_blank">Файл</a><br />' : 'Файл') . '</label>

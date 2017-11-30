@@ -36,7 +36,7 @@
                                         <ul class="nav nav-pills nav-stacked">
                                             <li><a href="/product.php">Индексы изделий</a></li>
                                             <li><a href="/scientificresearchdesignwork.php">Перечень</a></li>
-                                            <li class="disabled"><a href="#">Документы по НИОКР</a></li>
+                                            <li><a href="/controlscientificresearchdesignwork.php">Контроль документов по НИОКР</a></li>
                                             <li><a href="/enterprise.php">Предприятия</a></li>
                                         </ul>
                                     </div>
