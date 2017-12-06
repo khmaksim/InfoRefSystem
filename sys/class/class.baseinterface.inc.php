@@ -1,6 +1,6 @@
 <?php
 
-class BaseInterface extends DatabaseConnect 
+abstract class BaseInterface extends DatabaseConnect 
 {
 	public function __construct($dbo=NULL)
 	{

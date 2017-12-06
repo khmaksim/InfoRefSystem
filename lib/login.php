@@ -47,7 +47,6 @@
                         $dbconn->query("DELETE FROM public.antibrutforce WHERE user_name = '" . $username . "'");
                         // Фиксируем вход пользователя
                         $dbconn->query("INSERT INTO public.user_login(user_id, success, ldate) VALUES(" . getUserIdByName($username) . ", true, '" . date('Y-m-d H:i:s e') . "')");
-
                     }
                 // Пользователя с таким именем в БД нет
                 } else {

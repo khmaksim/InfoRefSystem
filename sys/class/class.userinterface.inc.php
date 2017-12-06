@@ -9,7 +9,7 @@ class RoleInterface extends DatabaseConnect
 
 	private function _loadData($id=NULL)
 	{
-		$sql = "SELECT * FROM access_right.role";
+		$sql = "SELECT * FROM public.user";
 		if (!empty($id)) {
 			$sql .= " WHERE id=:id LIMIT 1";
 		} 

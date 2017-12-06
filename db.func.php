@@ -22,8 +22,3 @@
             print "Error!: " . $e->getMessage() . "<br />";
         }
     }
-
-    function DisconnectDatabase()
-    {
-
-    }

@@ -18,7 +18,8 @@
                     $res = $res->fetchAll();
                     // Пароль совпал
                     if ($res[0]['passwd'] == md5($userpwd)) {
-                        $_SESSION['user_id'] = $res[0]['id'];
+                        // $_SESSION['user_id'] = $res[0]['id'];
+                        
                         return true;
                     // Пароль не подошел
               		} else {
