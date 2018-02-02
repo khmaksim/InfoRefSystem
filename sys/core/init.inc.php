@@ -1,29 +1,18 @@
 <?php
-
+date_default_timezone_set('Europe/Moscow');
+// Установка директорий поиска включения файлов
+set_include_path(get_include_path() . PATH_SEPARATOR . "C:/Apache24/htdocs/isszgt/");
+// Включение автозагрузки файлов
 spl_autoload_register();
-// Запуск механизма сессий
-session_start();
 
 if (!isset($_SESSION['token'])) {
 	$_SESSION['token'] = sha1(uniqid(mt_rand(), TRUE));
 }
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/config/db-cred.inc.php';
-
-foreach ($C as $name => $val) {
-	define($name, $val);
-}
-
-$dsn = "pgsql:host=". DB_HOST .";port=". DB_PORT .";dbname=". DB_NAME;
-$reg = \base\ApplicationRegistry::instance();
-$reg->setDsn($dsn);
-// $dbo = new PDO($dsn, DB_USER, DB_PASS);
-
-function __autoload($class) {
-	$filename = $_SERVER['DOCUMENT_ROOT'] . '/sys/class/class.' . $class . '.inc.php';
-	if (file_exists($filename)) {
-		include_once $filename;
-	}
-}
-
+// function autoload($class) {
+// 	$filename = $_SERVER['DOCUMENT_ROOT'] . '/sys/class/class.' . $class . '.inc.php';
+// 	if (file_exists($filename)) {
+// 		include_once $filename;
+// 	}
+// }
 ?>

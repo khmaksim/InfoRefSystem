@@ -1,18 +1,20 @@
 <?php
-
 namespace mapper;
 
-abstract class Mapper {
+abstract class Mapper implements \domain\Finder {
 	protected static $PDO;
 	
 	function __construct() {
 		if (!isset(self::$PDO)) {
 			$dsn = \base\ApplicationRegistry::getDSN();
+			$userName = \base\ApplicationRegistry::getUsername();
+			$passrd = \base\ApplicationRegistry::getPasswd();
+
 			if (is_null($dsn)) {
-				// throw new \base\AppException("DSN не определен");
+				throw new \Exception("DSN not defined");
 			}
 			try {
-				self::$PDO = new \PDO($dsn, DB_USER, DB_PASS);
+				self::$PDO = new \PDO($dsn, $userName, $passrd);
 				// self::$PDO->setAttribute(\PDO::ATTR_ERRМODE, \PDO::ERRМODE_EXCEPTION);
 			}
 			catch(\PDOException $e) {
@@ -37,19 +39,26 @@ abstract class Mapper {
 		$object = $this->createObject($array);
 		return $object;
 	}
+
+	function findAll() {
+        $this->selectAllStmt()->execute(array());
+        return $this->getCollection($this->selectAllStmt()->fetchAll(\PDO::FETCH_ASSOC));
+    }
 	
 	function createObject($array) {
 		$obj = $this->doCreateObject($array);
 		return $obj;
 	}
 	
-	function insert(\isszgt\domain\DomainObject $obj){
+	function insert(\domain\DomainObject $obj){
 		$this->doInsert($obj);
 	}
-	abstract function update(\isszgt\domain\DomainObject $object);
+
+	abstract function update(\domain\DomainObject $object);
 	protected abstract function doCreateObject(array $array);
-	protected abstract function doInsert(\isszgt\domain\DomainObject $object);
+	protected abstract function doInsert(\domain\DomainObject $object);
 	protected abstract function selectStmt();
+	protected abstract function selectAllStmt();
 }
 
 ?>

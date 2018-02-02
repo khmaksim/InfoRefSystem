@@ -1,11 +1,12 @@
 <?php
 
-namespace isszgt\base;
+namespace base;
 
 class SessionRegistry extends Registry {
 	private static $instance = null;
 
 	private function __construct() {
+		// Запуск механизма сессий
 		session_start();
 	}
 	
@@ -27,12 +28,12 @@ class SessionRegistry extends Registry {
 		$_SESSION[__CLASS__][$key] = $val;
 	}
 
-	function setDSN($dsn) {
-		self::instance()->set("dsn", $dsn);
+	static function setIdUser($id_user) {
+		self::instance()->set('id_user', $id_user);
 	}
-	
-	function getDSN() {
-		return self::instance()->get("dsn");
+
+	static function getIdUser() {
+		return self::instance()->get('id_user');
 	}
 }
 

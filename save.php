@@ -457,16 +457,7 @@
                                                                 WHERE
                                                                     code = '" . $code . "'";
             break;
-        case 'addDocument':
-            $sql = "INSERT INTO public.document (name, section) VALUES ('" . $name . "', '" . $section . "') RETURNING id";
-            break;
-        case 'editDocument':
-            $sql = "UPDATE public.document SET name = '" . $name . "', section = '" . $section . "' WHERE id = '" . $id . "'";
-            break;
-        case 'delDocument':  $sql = "DELETE FROM public.document WHERE id = '" . $id . "'";
-            break;
-
-
+        
 
         default:    echo '<pre>';
                     print_r($_POST);
@@ -541,50 +532,6 @@
                                         $sql = "DELETE FROM public.access_right WHERE user_id = '" . $id . "'";
                                         $res = $dbconn->query($sql);
                                         break;
-                 case 'addDocument': 
-                 case 'editDocument':  
-                    if (isset($id) && $id != '') {
-                        $document_id = $id;
-                    } else {
-                        $res = $res->fetch();
-                        $document_id = $res['id'];
-                    }
-                    if (sizeof($_FILES) && !$_FILES['document-file']['error'] && $_FILES['document-file']['size'] < 1024 * 2 * 1024) {
-                        $uploadInfo = $_FILES['document-file'];
-                        $fileName = $_SERVER['DOCUMENT_ROOT'] . 'documents/' . $document_id;
-
-                        switch ($uploadInfo['type']) {
-                            case 'image/jpeg':
-                                $fileName .= '.jpg';
-                                break;
-                            case 'image/png':
-                                $fileName .= '.png';
-                                break;
-                            case 'application/msword':
-                                $fileName .= '.doc';
-                                break;
-                            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                                $fileName .= '.docx';
-                                break;
-                            case 'application/pdf':
-                                $fileName .= '.pdf';
-                                break;
-                            default:
-                                exit;
-                        }
-                        $fileName = iconv('utf-8', 'windows-1251', $fileName);
-                        if (!move_uploaded_file($uploadInfo['tmp_name'], $fileName)) {
-                            echo 'Не удалось осуществить сохранение файла';
-                        }
-                        $dbconn->query("UPDATE public.document SET file_name = '" . $fileName . "' WHERE id = " . $document_id);
-                    }
-                    break;
-                // Удалем документ если он есть
-                case 'delDocument':        
-                    echo $fileName;
-                    if (file_exists($_SERVER['DOCUMENT_ROOT'] . 'documents/' . $fileName))
-                        unlink($_SERVER['DOCUMENT_ROOT'] . 'documents/' . $fileName);
-                    break;
                 // Загружаем картинку если она есть
                 case 'addPerson': case 'editPerson':    if (isset($id) && $id != '') {
                                                             $person_id = $id;

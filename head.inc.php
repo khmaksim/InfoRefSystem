@@ -1,42 +1,39 @@
 <?php
     header('Content-type: text/html; charset=utf-8');
     
-    // Механизм авторизации
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/auth.php';
-    // Функции БД и настройки соединения
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/db.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getusernumloginbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/gettechniquebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserprevloginbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserrolebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getusertitlebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getinfobyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getinfoblockbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getmilitaryrankbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getmilitarypositionbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getphonetypebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getphonenumbertypebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getcitybyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getaddresstypebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getemailtypebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getmedaltypebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getinterpassporttypebyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getdepartmentsbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/showdepartmentsnavtree.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/showphonelisttree.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/havechilde.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getunitbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getactivearray.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getpersonbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/getincomingbyid.func.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/date.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getusernumloginbyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/gettechniquebyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserprevloginbyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserrolebyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getusertitlebyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserbyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getinfobyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getinfoblockbyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getmilitaryrankbyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getmilitarypositionbyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getphonetypebyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getphonenumbertypebyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getcitybyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getaddresstypebyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getemailtypebyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getmedaltypebyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getinterpassporttypebyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getdepartmentsbyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/showdepartmentsnavtree.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/showphonelisttree.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/havechilde.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getunitbyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getactivearray.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getpersonbyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getincomingbyid.func.php';
+    // include_once $_SERVER['DOCUMENT_ROOT'] . '/date.func.php';
 
-    // Проверка авторизации
-    if ( !AuthUser() )
-        header('Location: /login.php');
-    ConnectDatabase();
-    $arUser = getUserById($_SESSION['user_id']);
+    // // Проверка авторизации
+    // if (!AuthUser())
+    //     header('Location: /?cmd=login');
+    
+    // if (isset($_SESSION['user_id']))
+    //     $arUser = getUserById($_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html>

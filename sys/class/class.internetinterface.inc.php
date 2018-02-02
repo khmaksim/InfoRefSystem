@@ -48,22 +48,6 @@ class InternetInterface extends DatabaseConnect
 
 	public function displayByIdDepartment($id_departments=NULL)
 	{		
-		$html = '
-			<thead>
-				<tr>
-					<th class="col-xs-1">№</th>
-					<th>Место дислокации</th>
-					<th>Разрешение об открытии</th>
-					<th>Регистрационный №</th>
-					<th>Состав АРМ/Сервер</th>
-					<th>Приказ</th>
-					<th>Адрес электронной почты</th>
-					<th class="col-xs-1 text-center">Редактировать</th>
-					<th class="col-xs-1 text-center">Удалить</th>
-				</tr>
-			</thead>
-			<tbody id="items">
-			';
 		$objects = $this->_createObj($id_departments);
 		$count = 1;
 		foreach ($objects as $object) {

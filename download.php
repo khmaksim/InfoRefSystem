@@ -1,5 +1,5 @@
 <?php 
-$fileName = $_GET['file'];
+$fileName = $document->file_name;
 
 switch (pathinfo($fileName)['extension']) {
 	case 'jpeg':

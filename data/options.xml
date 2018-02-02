@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<options>
+	<dsn>pgsql:host=localhost;port=5432;dbname=isys-db</dsn>
+	<db_username>postgres</db_username>
+	<db_passwd>12345</db_passwd>
+	<control>
+		<view>main</view>
+		<view status="CMD_OK">main</view>
+		<view status="CMD_DEFAULT">main</view>
+		<!-- <view status="CMD_ERROR">error</view> -->
+		
+		<command name="Login">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>main</view>
+			</status>
+		</command>
+		
+		<command name="Secrecy">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>secrecy</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="EncryptionWork">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>encryptionwork</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="PersonnelWork">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>personnelwork</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="Incoming">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>incoming</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="ProtectionInformation">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>protectioninformation</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="TechnicalProtectedInformation">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>technicalprotectedinformation</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="ResearchWork">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>researchwork</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="Administration">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>administration</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="User">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>user</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="Document">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>document</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddDocument">
+			<view>document_edit</view>
+			<status value="CMD_OK">
+				<forward>Document</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>document_edit</view>
+			</status>
+		</command>
+
+		<command name="EditDocument">
+			<view>document_edit</view>
+			<status value="CMD_OK">
+				<forward>Document</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>document_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteDocument">
+			<view>document</view>
+			<status value="CMD_OK">
+				<forward>Document</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>Document</view>
+			</status>
+		</command>
+
+		<command name="TelephoneDirectory">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>telephonedirectory</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="TelephoneDirectoryDepartment">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>telephonedirectorydepartment</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="Structure">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>structure</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="ObjectKii">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>objectkii</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddObjectKii">
+			<view>objectkii_edit</view>
+			<!-- <status value="CMD_OK">
+				<view>addobjectkii</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status> -->
+		</command>
+
+		<command name="Internet">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>internet</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+	<!-- 	<command name="ListVenues">
+			<view>listvenues</view>
+		</command>
+		
+		<command name="QuickAddVenue">
+			<classroot name="AddVenue"/>
+			<view>quickadd</view>
+		</command>
+		
+		<command name="AddVenue">
+			<view>addvenue</view>
+			<status value="CMD_OK">
+				<forward>AddSpace</forward>
+			</status>
+		</command>
+		
+		<command name="AddSpace">
+			<view>addspace</view>
+			<status value="CMD_OK">
+				<forward>ListVenues</forward>
+			</status>
+		</command> -->
+	</control >
+</options>

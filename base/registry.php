@@ -1,5 +1,4 @@
 <?php
-
 namespace base;
 
 abstract class Registry {

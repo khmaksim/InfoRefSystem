@@ -1,9 +1,10 @@
 <?php
+namespace domain;
 
 abstract class DomainObject {
-	private $ id;
+	private $id;
 	
-	function construct($id=null) {
+	function __construct($id=null) {
 		$this->id = $id;
 	}
 	
@@ -11,8 +12,11 @@ abstract class DomainObject {
 		return $this->id;
 	}
 
-	static function getCollection($type) {
-		return array(); 		// Заглушка
+	static function getCollection($type=null) {
+		if (is_null($type)) {
+			return HelperFactory::getCollection(get_called_class()); 	
+		}
+		return HelperFactory::getCollection($type); 
 	}
 
 	function collection() {

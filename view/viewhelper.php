@@ -1,10 +1,9 @@
 <?php
-
-namespace isszgt\view;
+namespace view;
 
 class ViewHelper {
 	static function getRequest() {
-		return \isszgt\base\ApplicationRegistry::getRequest();
+		return \base\RequestRegistry::getRequest();
 	}	
 }
 

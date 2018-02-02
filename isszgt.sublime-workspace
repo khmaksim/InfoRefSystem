@@ -4,6 +4,38 @@
 		"selected_items":
 		[
 			[
+				"prit",
+				"print_r"
+			],
+			[
+				"error",
+				"error_reporting"
+			],
+			[
+				"ini",
+				"ini_set"
+			],
+			[
+				"spl_a",
+				"spl_autoload_register"
+			],
+			[
+				"User",
+				"UserMapper"
+			],
+			[
+				"ad",
+				"adate"
+			],
+			[
+				"ti",
+				"title"
+			],
+			[
+				"ac",
+				"active"
+			],
+			[
 				"En",
 				"enterprise"
 			],
@@ -46,10 +78,6 @@
 			[
 				"ex",
 				"example"
-			],
-			[
-				"prit",
-				"printf"
 			],
 			[
 				"objects_",
@@ -200,10 +228,57 @@
 	"buffers":
 	[
 		{
-			"file": "administration.php",
+			"file": "mapper/usermapper.php",
 			"settings":
 			{
-				"buffer_size": 9545,
+				"buffer_size": 1508,
+				"encoding": "UTF-8",
+				"line_ending": "Windows",
+				"name": "<?php"
+			}
+		},
+		{
+			"file": "mapper/mapper.php",
+			"settings":
+			{
+				"buffer_size": 1212,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "mapper/usercollection.php",
+			"settings":
+			{
+				"buffer_size": 134,
+				"encoding": "UTF-8",
+				"line_ending": "Windows",
+				"name": "<?php"
+			}
+		},
+		{
+			"file": "mapper/collection.php",
+			"settings":
+			{
+				"buffer_size": 1464,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "domain/user.php",
+			"settings":
+			{
+				"buffer_size": 1460,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "lib/login.php",
+			"settings":
+			{
+				"buffer_size": 5977,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -212,16 +287,7 @@
 			"file": "login.php",
 			"settings":
 			{
-				"buffer_size": 3433,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "user_edit.php",
-			"settings":
-			{
-				"buffer_size": 17723,
+				"buffer_size": 3250,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -278,37 +344,77 @@
 	"expanded_folders":
 	[
 		"/C/xampp/htdocs/isszgt",
-		"/C/xampp/htdocs/isszgt/assets",
 		"/C/xampp/htdocs/isszgt/assets/inc",
+		"/C/xampp/htdocs/isszgt/base",
+		"/C/xampp/htdocs/isszgt/domain",
 		"/C/xampp/htdocs/isszgt/lib",
+		"/C/xampp/htdocs/isszgt/mapper",
 		"/C/xampp/htdocs/isszgt/sys",
-		"/C/xampp/htdocs/isszgt/sys/class",
 		"/C/xampp/htdocs/isszgt/sys/config",
-		"/C/xampp/htdocs/isszgt/sys/core"
+		"/C/xampp/htdocs/isszgt/sys/core",
+		"/C/xampp/htdocs/isszgt/view"
 	],
 	"file_history":
 	[
+		"//PC001/Users/�������/AppData/Local/Adobe/AcroCef/DC/Acrobat/Cookie/Cookies-journal",
+		"//PC001/Users/�������/AppData/Local/Adobe/AcroCef/DC/Acrobat/Cookie/Cookies",
+		"/C/xampp/htdocs/isszgt/user.php",
+		"/C/xampp/htdocs/isszgt/lib/auth.php",
+		"/C/xampp/htdocs/isszgt/sys/core/init.inc.php",
+		"/C/xampp/htdocs/isszgt/base/registry.php",
+		"/C/xampp/htdocs/isszgt/base/applicationregistry.php",
+		"/C/xampp/htdocs/isszgt/mainheader.inc.php",
+		"/C/xampp/htdocs/isszgt/mapper/mapper.php",
+		"/C/xampp/htdocs/isszgt/mapper/collection.php",
+		"/C/xampp/htdocs/isszgt/head.inc.php",
+		"/C/xampp/htdocs/isszgt/index.php",
+		"/C/xampp/htdocs/isszgt/db.func.php",
+		"/C/xampp/htdocs/isszgt/documents.inc.php",
+		"/C/xampp/htdocs/isszgt/view/viewhelper.php",
+		"/C/xampp/htdocs/isszgt/base/sessionregistry.php",
+		"/C/xampp/htdocs/isszgt/domain/domainobject.php",
+		"/C/xampp/htdocs/isszgt/base/requestregistry.php",
+		"/D/dist/ExecutionControl/database/createscript.sql",
+		"/C/xampp/htdocs/isszgt/sys/class/class.databaseconnect.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.baseinterface.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.user.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/domainobject.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.userinterface.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.role.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.roleinterface.inc.php",
+		"/C/xampp/htdocs/isszgt/role.php",
+		"/C/xampp/htdocs/isszgt/role_edit.php",
+		"/C/xampp/htdocs/isszgt/administration.php",
+		"/C/xampp/htdocs/isszgt/getaccesstypebyid.func.php",
+		"/C/xampp/htdocs/isszgt/getaccessrightbyid.func.php",
+		"/C/xampp/htdocs/isszgt/getroleusertitlebyid.func.php",
+		"/C/xampp/htdocs/isszgt/getroletitlebyid.func.php",
+		"/C/xampp/htdocs/isszgt/getrolebyid.func.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.productinterface.inc.php",
+		"/C/xampp/htdocs/isszgt/objectkii_edit.php",
+		"/C/xampp/htdocs/isszgt/objectkii.php",
+		"/C/xampp/htdocs/isszgt/controlscientificresearchdesignwork_edit.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.controlscientificresearchdesignworkinterface.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.controlscientificresearchdesignwork.inc.php",
+		"/C/xampp/htdocs/isszgt/controlscientificresearchdesignwork.php",
+		"/C/xampp/htdocs/isszgt/sys/class/access_right.xml",
+		"/C/xampp/htdocs/isszgt/sys/class/class.scientificresearchdesignworkinterface.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.enterpriseinterface.inc.php",
+		"/C/xampp/htdocs/isszgt/sys/class/class.enterprise.inc.php",
+		"/C/xampp/htdocs/isszgt/product_edit.php",
+		"/C/xampp/htdocs/isszgt/login.php",
+		"/C/xampp/htdocs/isszgt/user_edit.php",
+		"/C/xampp/htdocs/isszgt/researchwork.php",
 		"/C/xampp/htdocs/isszgt/scientificresearchdesignwork_edit.php",
 		"/C/xampp/htdocs/isszgt/scientificresearchdesignwork.php",
 		"/C/xampp/htdocs/isszgt/sys/class/class.scientificresearchdesignwork.inc.php",
-		"/C/xampp/htdocs/isszgt/sys/class/class.scientificresearchdesignworkinterface.inc.php",
 		"/C/xampp/htdocs/isszgt/save.php",
-		"/C/xampp/htdocs/isszgt/sys/class/class.productinterface.inc.php",
-		"/C/xampp/htdocs/isszgt/researchwork.php",
-		"/C/xampp/htdocs/isszgt/documents.inc.php",
 		"/C/xampp/htdocs/isszgt/documents.php",
 		"/C/xampp/htdocs/isszgt/dictionary.php",
 		"/C/xampp/htdocs/isszgt/dictionary_edit.php",
 		"/C/xampp/htdocs/isszgt/documents_edit.php",
-		"/C/xampp/htdocs/isszgt/head.inc.php",
-		"/C/xampp/htdocs/isszgt/sys/class/class.controlscientificresearchdesignworkinterface.inc.php",
-		"/C/xampp/htdocs/isszgt/sys/class/class.controlscientificresearchdesignwork.inc.php",
 		"/C/xampp/htdocs/isszgt/enterprise_edit.php",
-		"/C/xampp/htdocs/isszgt/controlscientificresearchdesignwork_edit.php",
-		"/C/xampp/htdocs/isszgt/controlscientificresearchdesignwork.php",
 		"/C/xampp/htdocs/isszgt/enterprise.php",
-		"/C/xampp/htdocs/isszgt/sys/class/class.enterprise.inc.php",
-		"/C/xampp/htdocs/isszgt/sys/class/class.enterpriseinterface.inc.php",
 		"/C/xampp/htdocs/isszgt/backup/create_backup.bat",
 		"/C/xampp/htdocs/isszgt/backup/20171122.backup",
 		"/C/xampp/htdocs/isszgt/backup/20171122_115610.backup",
@@ -316,19 +422,13 @@
 		"/C/xampp/htdocs/isszgt/sys/class/class.product.inc.php",
 		"/C/xampp/htdocs/isszgt/product.php",
 		"/D/projects/django/center/static/js/my_js.js",
-		"/C/xampp/htdocs/isszgt/product_edit.php",
-		"/C/xampp/htdocs/isszgt/sys/class/class.baseinterface.inc.php",
-		"/C/xampp/htdocs/isszgt/sys/class/class.databaseconnect.inc.php",
 		"/C/xampp/htdocs/isszgt/sys/class/class.objectkiiinterface.inc.php",
-		"/C/xampp/htdocs/isszgt/db.func.php",
-		"/C/xampp/htdocs/isszgt/user_edit.php",
 		"/C/xampp/htdocs/isszgt/info.php",
 		"/C/xampp/htdocs/isszgt/internet_edit.php",
 		"/C/xampp/htdocs/isszgt/internet.php",
 		"/C/xampp/htdocs/isszgt/showdepartmentstree.func.php",
 		"/C/xampp/htdocs/isszgt/showdepartmentsnavtree.func.php",
 		"/C/xampp/htdocs/isszgt/display.func.php",
-		"/C/xampp/htdocs/isszgt/objectkii.php",
 		"/C/xampp/htdocs/isszgt/sys/class/class.internetinterface.inc.php",
 		"/D/projects/Qt/QMLTest/qtquickcontrols2.conf",
 		"/D/projects/center/center/urls.py",
@@ -337,14 +437,12 @@
 		"/C/xampp/htdocs/isszgt/sys/class/class.wrapper.inc.php",
 		"/C/xampp/htdocs/isszgt/assets/inc/delete.inc.php",
 		"/C/xampp/htdocs/isszgt/sys/class/class.internet.inc.php",
-		"/C/xampp/htdocs/isszgt/objectkii_edit.php",
 		"/C/xampp/htdocs/isszgt/internet_edit.php.php",
 		"/C/xampp/htdocs/isszgt/internet.php.php",
 		"/C/xampp/htdocs/isszgt/sys/class/class.objectkii.inc.php",
 		"/C/xampp/htdocs/isszgt/sys/class/class.internetinterface.inc",
 		"/C/xampp/htdocs/isszgt/delete.php",
 		"/C/xampp/htdocs/isszgt/protectioninformation.php",
-		"/C/xampp/htdocs/isszgt/index.php",
 		"/C/xampp/htdocs/isszgt/showphonelisttree.func.php",
 		"/C/xampp/htdocs/isszgt/objectskii.php",
 		"/C/xampp/htdocs/isszgt/displayobjectskii.func.php",
@@ -356,7 +454,6 @@
 		"/C/xampp/htdocs/isszgt/incoming_file_save.php",
 		"/C/xampp/htdocs/isszgt/incoming_file_view.php",
 		"/C/xampp/htdocs/isszgt/info_edit.php",
-		"/C/xampp/htdocs/isszgt/administration.php",
 		"/C/xampp/htdocs/isszgt/technique_edit.php",
 		"/C/xampp/htdocs/isszgt/technique.php",
 		"/C/xampp/htdocs/isszgt/technicalprotectedinformation.php",
@@ -369,7 +466,6 @@
 		"/C/xampp/htdocs/isszgt/sys/class/wrapper.inc.php",
 		"/C/xampp/htdocs/isszgt/departments_view.php",
 		"/C/xampp/htdocs/isszgt/displayobjectkii.func.php",
-		"/C/xampp/htdocs/isszgt/sys/core/init.inc.php",
 		"/C/xampp/htdocs/isszgt/sys/config/db-cred.inc.php",
 		"/C/xampp/htdocs/isszgt/objectskii_edit.php",
 		"/C/xampp/htdocs/isszgt/unit.php",
@@ -380,7 +476,6 @@
 		"/C/xampp/htdocs/isszgt/phonelist.php",
 		"/C/xampp/htdocs/isszgt/phonelistperson.php",
 		"/C/xampp/htdocs/isszgt/unit_edit.php",
-		"/C/xampp/htdocs/isszgt/user.php",
 		"/C/xampp/htdocs/isszgt/person.php",
 		"/C/xampp/htdocs/isszgt/person_edit.php",
 		"/C/xampp/htdocs/isszgt/person_view.php",
@@ -388,34 +483,7 @@
 		"/C/xampp/htdocs/isszgt/assert/inc/process.inc.php",
 		"/C/xampp/htdocs/isszgt/accesstype_edit.php",
 		"/C/xampp/htdocs/isszgt/city_edit.php",
-		"/C/xampp/htdocs/isszgt/public/assert/inc/process.inc.php",
-		"/C/xampp/htdocs/isszgt/technique.func.php",
-		"/C/xampp/htdocs/isszgt/date.func.php",
-		"/C/xampp/htdocs/isszgt/edit.php",
-		"/C/xampp/htdocs/isszgt/view_data.php",
-		"/C/xampp/htdocs/isszgt/medaltype.func.php",
-		"/C/xampp/htdocs/isszgt/militaryrank.func.php",
-		"/C/xampp/htdocs/isszgt/militaryrank.php",
-		"/C/xampp/htdocs/isszgt/emailtype.func.php",
-		"/C/xampp/htdocs/isszgt/emailtype_edit.php",
-		"/C/xampp/htdocs/isszgt/documents.func.php",
-		"/C/xampp/htdocs/isszgt/getusertitlebyid.func.php",
-		"/C/xampp/htdocs/isszgt/download.php",
-		"/C/xampp/htdocs/isszgt/showdocument.func.php",
-		"/C/xampp/htdocs/isszgt/phonetype.func.php",
-		"/C/xampp/htdocs/isszgt/phonetype_edit.php",
-		"/C/xampp/htdocs/isszgt/person.func.php",
-		"/C/xampp/htdocs/isszgt/dist/css/AdminLTE.css",
-		"/C/xampp/htdocs/isszgt/dist/css/skins/skin-blue.min.css",
-		"/C/xampp/htdocs/isszgt/emailtype.php",
-		"/C/xampp/htdocs/isszgt/dist/css/font-awesome.css",
-		"/C/xampp/htdocs/isszgt/login.php",
-		"/C/xampp/htdocs/isszgt/lib/login.php",
-		"/C/xampp/htdocs/isszgt/phonenumbertype_edit.php",
-		"/C/xampp/htdocs/isszgt/departments.func.php",
-		"/C/xampp/htdocs/isszgt/getpersonbyid.func.php",
-		"/C/xampp/htdocs/isszgt/gettechniquebyid.func.php",
-		"/C/xampp/htdocs/isszgt/interpassporttype.func.php"
+		"/C/xampp/htdocs/isszgt/public/assert/inc/process.inc.php"
 	],
 	"find":
 	{
@@ -439,6 +507,18 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"connect",
+			" ",
+			"object",
+			" = ",
+			"this",
+			" ",
+			"rntirne",
+			" ",
+			"public ",
+			"\t\n",
+			"_loadById",
+			"_loadObjectKiiById",
 			"_loadById",
 			".style.visibility = \"hidden\";",
 			"_loadProductById",
@@ -554,13 +634,7 @@
 			"span",
 			"main-sidebar",
 			"400",
-			"print",
-			"View",
-			"header",
-			"items",
-			"shutdown",
-			"connect",
-			"socket"
+			"print"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -568,6 +642,12 @@
 		"regex": false,
 		"replace_history":
 		[
+			"",
+			"array",
+			"(",
+			"obj",
+			"",
+			"mtime",
 			"",
 			" ",
 			"",
@@ -592,34 +672,33 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "administration.php",
+					"file": "mapper/usermapper.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9545,
+						"buffer_size": 1508,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								497,
+								511
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"auto_name": "<?php",
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 525.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -627,49 +706,135 @@
 				},
 				{
 					"buffer": 1,
-					"file": "login.php",
+					"file": "mapper/mapper.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3433,
+						"buffer_size": 1212,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								841,
+								855
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 405.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "user_edit.php",
+					"file": "mapper/usercollection.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17723,
+						"buffer_size": 134,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								12416,
-								12425
+								17,
+								17
+							]
+						],
+						"settings":
+						{
+							"auto_name": "<?php",
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "mapper/collection.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1464,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1004,
+								1010
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "domain/user.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1460,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1028,
+								1028
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "lib/login.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5977,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								956,
+								956
 							]
 						],
 						"settings":
@@ -679,10 +844,40 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 120.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "login.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3250,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1619,
+								1619
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
