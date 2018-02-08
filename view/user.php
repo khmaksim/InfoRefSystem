@@ -67,12 +67,10 @@
                                                             <td>' . ($user->active ? 'Нет' : 'Да') . '</td>
                                                             <td>' . DateFromENtoRU(mb_substr($user->adate, 0, 10), '-') . '</td>
                                                             <td>' . DateFromENtoRU(mb_substr($user->bdate, 0, 10), '-') . '</td>';
-                                                    if ($user->editable == true)
-                                                        echo '<td class="col-md-1 text-center"><a href="/?cmd=EditUser&id=' . $user->id . '" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                                    echo '<td class="col-md-1 text-center"><a href="/?cmd=EditUser&id=' . $user->id . '" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                                             <td class="col-md-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete(' . $user->id . ');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>';
-                                                    else 
-                                                        echo '<td class="col-md-1 text-center"><a class="button btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                                                            <td class="col-md-1 text-center"><a class="button btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td></tr>';
+                                                    // echo '<td class="col-md-1 text-center"><a class="button btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                                    //         <td class="col-md-1 text-center"><a class="button btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td></tr>';
                                                 }
                                             }
                                         ?>
@@ -109,13 +107,11 @@
              fixed layout. -->
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
-            $(document).ready(function(){
-            });
             function ConfirmDelete(id)
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./save.php?id="+ObjectId+"&act=delUser";
+                    document.location = "./?cmd=DeleteUser&id="+ObjectId;
                 }
             }
         /*]]>*/

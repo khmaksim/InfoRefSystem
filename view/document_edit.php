@@ -38,8 +38,8 @@
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
                                 <form name="editform" role="form" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="act" value="<?= $_GET['act']; ?>Document" />
-                                    <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
+                                    <!-- <input type="hidden" name="act" value="<?= $_GET['act']; ?>Document" /> -->
+                                    <!-- <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" /> -->
                                     <div class="box-body">
                                         <div class="form-group">
                                             <label for="exampleInputDocuments">Наименование документа</label>

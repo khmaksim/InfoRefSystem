@@ -106,6 +106,36 @@
 			</status>
 		</command>
 
+		<command name="AddUser">
+			<view>user_edit</view>
+			<status value="CMD_OK">
+				<forward>User</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>user_edit</view>
+			</status>
+		</command>
+
+		<command name="EditUser">
+			<view>user_edit</view>
+			<status value="CMD_OK">
+				<forward>User</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>user_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteUser">
+			<view>user</view>
+			<status value="CMD_OK">
+				<forward>User</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>User</view>
+			</status>
+		</command>
+
 		<command name="Document">
 			<view>login</view>
 			<status value="CMD_OK">

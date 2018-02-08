@@ -2,8 +2,6 @@
     header('Content-type: text/html; charset=utf-8');
     // Запуск механизма сессий
     session_start();
-    // Механизм авторизации
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/lib/auth.php';
     // Функции БД и настройки соединения
     include_once $_SERVER['DOCUMENT_ROOT'] . '/db.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/date.func.php';
@@ -343,39 +341,6 @@
                             break;
 
 
-        case 'addUser':  
-                           $sql = "INSERT INTO public.user (
-                                    active,
-                                    title,
-                                    bdate,
-                                    adate,
-                                    name,
-                                    passwd
-                                                )
-                                                VALUES (
-                                                    '" . $active . "',
-                                                    '" . $title . "',
-                                                    '" . DateFromRUtoEN($bdate) . " 00:00:00 Europe/Moscow',
-                                                    '" . DateFromRUtoEN($adate) . " 00:00:00 Europe/Moscow',
-                                                    '" . $name . "',
-                                                    '" . md5($passwd) . "'
-                                                ) RETURNING id";
-                            break;
-
-        case 'editUser':
-            if (!isset($active)) $active = 'false';
-            $sql = "UPDATE public.user SET active = '" . $active . "',
-                                                            title = '" . $title . "',
-                                                            bdate = '" . DateFromRUtoEN($bdate) . " 00:00:00 Europe/Moscow',
-                                                            adate = '" . DateFromRUtoEN($adate) . " 00:00:00 Europe/Moscow',
-                                                            name = '" . $name . "'" . (($passwd != '') ? ", 
-                                                            passwd = '" . md5($passwd) . "' " : '') . "
-                                                            WHERE id = '" . $id . "'";
-                            break;
-
-        case 'delUser':  $sql = "DELETE FROM public.user WHERE id = '" . $id . "'";
-                            break;
-
         case 'addInfo':
             if (!isset($active)) $active = 'false'; 
             $sql = "INSERT INTO public.info (
@@ -489,49 +454,25 @@
         // Если изменения в БД прошли нормально, делаем пост-обновления
         if ($res) {
             switch ($act) {
-                // Загружаем картинку если она есть
-                case 'addUser': case 'editUser':  
-                    if (isset($id) && $id != '') {
-                        $user_id = $id;
-                    } else {
-                        $res = $res->fetch();
-                        $user_id = $res['id'];
-                    }
-                    if (sizeof($_FILES) && !$_FILES['face']['error']) {
-                                                                        // если есть старые картинки то удаляем их
-                                                                        $file_ext = mb_strtolower(mb_substr($_FILES['face']['name'], mb_strpos($_FILES['face']['name'], '.', (mb_strlen($_FILES['face']['name'], 'utf-8') - 4), 'utf-8') + 1, (mb_strlen($_FILES['face']['name'], 'utf-8') - mb_strpos($_FILES['face']['name'], '.', 0, 'utf-8')), 'utf-8'), 'utf-8');
-                                                                        copy($_FILES['face']['tmp_name'], "./face/" . $user_id . "." . $file_ext);
-                                                                        resizeImage('face', 100, 100, $user_id, $file_ext, $user_id . '_thumb');
-
-                                                                        $dbconn->query("UPDATE public.user SET img_ext = '" . $file_ext . "' WHERE id = " . $user_id);
-                                                                    }
-                                                    // insert/update access right
-                                                    $sql = "INSERT INTO public.access_right (user_id, admin, omu, kadr, telephone, incoming) 
-                                                            VALUES (
-                                                                '" . $user_id . "',
-                                                                '" . getIntValueAccessRight($adminView, $adminEdit, $adminRemove) . "',
-                                                                '" . getIntValueAccessRight($omuView, $omuEdit, $omuRemove) . "',
-                                                                '" . getIntValueAccessRight($kadrView, $kadrEdit, $kadrRemove) . "',
-                                                                '" . getIntValueAccessRight($telephoneView, $telephoneEdit, $telephoneRemove) . "',
-                                                                '" . getIntValueAccessRight($incomingView, $incomingEdit, $incomingRemove) . "'
-                                                            ) 
-                                                            ON CONFLICT (user_id) 
-                                                            DO UPDATE SET admin = '" . getIntValueAccessRight($adminView, $adminEdit, $adminRemove) . "', 
-                                                            omu = '" . getIntValueAccessRight($omuView, $omuEdit, $omuRemove) . "', 
-                                                            kadr = '" . getIntValueAccessRight($kadrView, $kadrEdit, $kadrRemove) . "', 
-                                                            telephone = '" . getIntValueAccessRight($telephoneView, $telephoneEdit, $telephoneRemove) . "', 
-                                                            incoming = '" . getIntValueAccessRight($incomingView, $incomingEdit, $incomingRemove) . "'
-                                                            ";
-                                                    $res = $dbconn->query($sql);
-                                                    break;
-                // Удалем картинку если она есть
-                case 'delUser':        if (file_exists('/face/' . $id . '.' . $photo['file_ext']))
-                                                    unlink('../face/' . $id . '.' . $photo['file_ext']);
-                                                if (file_exists('../face/' . $id . '_thumb.' . $photo['file_ext']))
-                                                    unlink('../face/' . $id . '_thumb.' . $photo['file_ext']);
-                                        $sql = "DELETE FROM public.access_right WHERE user_id = '" . $id . "'";
-                                        $res = $dbconn->query($sql);
-                                        break;
+                                                    // // insert/update access right
+                                                    // $sql = "INSERT INTO public.access_right (user_id, admin, omu, kadr, telephone, incoming) 
+                                                    //         VALUES (
+                                                    //             '" . $user_id . "',
+                                                    //             '" . getIntValueAccessRight($adminView, $adminEdit, $adminRemove) . "',
+                                                    //             '" . getIntValueAccessRight($omuView, $omuEdit, $omuRemove) . "',
+                                                    //             '" . getIntValueAccessRight($kadrView, $kadrEdit, $kadrRemove) . "',
+                                                    //             '" . getIntValueAccessRight($telephoneView, $telephoneEdit, $telephoneRemove) . "',
+                                                    //             '" . getIntValueAccessRight($incomingView, $incomingEdit, $incomingRemove) . "'
+                                                    //         ) 
+                                                    //         ON CONFLICT (user_id) 
+                                                    //         DO UPDATE SET admin = '" . getIntValueAccessRight($adminView, $adminEdit, $adminRemove) . "', 
+                                                    //         omu = '" . getIntValueAccessRight($omuView, $omuEdit, $omuRemove) . "', 
+                                                    //         kadr = '" . getIntValueAccessRight($kadrView, $kadrEdit, $kadrRemove) . "', 
+                                                    //         telephone = '" . getIntValueAccessRight($telephoneView, $telephoneEdit, $telephoneRemove) . "', 
+                                                    //         incoming = '" . getIntValueAccessRight($incomingView, $incomingEdit, $incomingRemove) . "'
+                                                    //         ";
+                                                    // $res = $dbconn->query($sql);
+                                                    // break;
                 // Загружаем картинку если она есть
                 case 'addPerson': case 'editPerson':    if (isset($id) && $id != '') {
                                                             $person_id = $id;

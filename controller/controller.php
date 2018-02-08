@@ -22,7 +22,7 @@ class Controller {
 
 		$user = $manager->auth();
 		if (!is_null($user))
-			$request->setProperty('user', $user);
+			$request->setProperty('authorized_user', $user);
 		else
 			$request->setProperty('cmd', 'Login');
 

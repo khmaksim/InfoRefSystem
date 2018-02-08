@@ -1,6 +1,7 @@
 ﻿<?php
+    require_once ("view/ViewHelper.php") ;
     $request = \view\ViewHelper::getRequest();
-    $user = $request->getProperty('user');
+    $authorized_user = $request->getProperty('authorized_user');
 ?>
 <!-- Main Header -->
 <header class="main-header">
@@ -17,19 +18,19 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
                             <?php 
-                                $path_face = $_SERVER['DOCUMENT_ROOT'] . '/upload/face/' . $user->id . "_thumb." . $user->img_ext;
+                                $path_face = './upload/face/' . $authorized_user->id . "_thumb." . $authorized_user->img_ext;
                             ?>
                             <img src=<?php print $path_face ?> class="user-image" alt="User Image">
                               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs"><?php print $user->title ?></span>
+                            <span class="hidden-xs"><?php print $authorized_user->title ?></span>
                         </a>
                         <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                             <li class="user-header">
                                 <img src=<?php print $path_face ?> class="img-circle" alt="User Image">
                                 <p>
-                                    <?php print $user->title ?>
-                                    <small><?php print $user->role ?></small>
+                                    <?php print $authorized_user->title ?>
+                                    <small><?php print $authorized_user->role ?></small>
                                 </p>
                             </li>
                             <li class="user-footer">

@@ -14,7 +14,7 @@ class AccessManager {
 
         foreach ($gen as $user) {
             if ($user && $user->name == $username) {
-                if ($user->getPasswd() == md5($passwd)) {                
+                if ($user->passwd == md5($passwd)) {                
                     $user->success_login = true;
                 }
                 if (!$this->checkBan($user)) {
@@ -45,7 +45,7 @@ class AccessManager {
 	}
 
     function checkBan($user) {
-        $ban_day = $user->getBanBeforeDay();        // день снятия запрета
+        $ban_day = $user->ban_before_day;        // день снятия запрета
 
         if ($user->success_login) {
             if (is_null($ban_day) && is_null($user->num_login))

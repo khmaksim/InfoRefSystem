@@ -26,7 +26,7 @@ class Login extends Command {
 				return self::statuses('CMD_ERROR');
 			}
 			else {
-				$request->setProperty('user', $user);
+				$request->setProperty('authorized_user', $user);
 
 				$session->setIdUser($user->id);
 				return self::statuses('CMD_OK');

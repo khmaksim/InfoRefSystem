@@ -1,10 +1,10 @@
 <?php          
-    function resizeImage($scope, $max_width, $max_height, $source_file_name, $file_ext, $destination_file_name = false) {
+    function resizeImage($source_path, $max_width, $max_height, $source_file_name, $file_ext, $destination_file_name = false) {
         $max_width = ($max_width == 0) ? 10000 : $max_width;
         $max_height = ($max_height == 0) ? 10000 : $max_height;
 
-        $source_img = './' . $scope . '/' . $source_file_name . '.' . $file_ext;
-        $destination_img = ($destination_file_name) ? './' . $scope . '/' . $destination_file_name . '.' . $file_ext : $source_img;
+        $source_img = './' . $source_path . $source_file_name . '.' . $file_ext;
+        $destination_img = ($destination_file_name) ? './' . $source_path . $destination_file_name . '.' . $file_ext : $source_img;
 
         $getimg_w_h = GetImageSize($source_img);
         $x_ratio = $max_width / $getimg_w_h[0];
