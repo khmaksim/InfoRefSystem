@@ -42,7 +42,7 @@ class PersonMapper extends Mapper implements \domain\UserFinder {
 		$values = array($object->firstname, $object->lastname, $object->patronymic, $object->military, $object->personalnumber, $object->birthday, $object->id_accesslevel, $object->id_unit, $object->id_department, $object->editable, $object->id_militaryrank, $object->img_ext, $object->address, $object->id_city, $object->note);
 		$this->insertStmt->execute($values);
 		$id = self::$PDO->lastInsertId();
-		$object->setId($id);
+		$object->id = $id;
 	}
 
 	function update(\domain\DomainObject $object) {

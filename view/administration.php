@@ -53,8 +53,8 @@
                                         </div>
                                         <div class="tab-pane" id="dictionary">
                                             <ul class="nav nav-pills nav-stacked">
-                                                <li><a href="/dictionary.php?name=militaryrank">Воинские звания</a></li>
-                                                <li><a href="/dictionary.php?name=militaryposition">Должности</a></li>
+                                                <li><a href="/?cmd=MilitaryRank">Воинские звания</a></li>
+                                                <li><a href="/?cmd=Position">Должности</a></li>
                                                 <li><a href="/dictionary.php?name=phonetype">Типы телефонной связи</a></li>
                                                 <li><a href="/dictionary.php?name=phonenumbertype">Типы телефонных номеров</a></li>
                                                 <li><a href="/dictionary.php?name=medaltype">Типы наград</a></li>

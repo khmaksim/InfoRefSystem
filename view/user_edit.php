@@ -102,7 +102,7 @@
                                     </div><!-- /.box-body -->
 
                                     <div class="box-footer">
-                                        <a href="/user.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                        <a href="./?cmd=User" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                     </div>
                                 </form>
                             </div>

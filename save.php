@@ -1,9 +1,5 @@
 <?php
-    header('Content-type: text/html; charset=utf-8');
-    // Запуск механизма сессий
-    session_start();
     // Функции БД и настройки соединения
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/db.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/date.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getusernumloginbyid.func.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserprevloginbyid.func.php';
@@ -57,38 +53,6 @@
                             break;
 
         case 'delAccesstype':  $sql = "DELETE FROM public.taccesstype WHERE id = '" . $id . "'";
-                            break;
-
-        case 'addMilitaryrank':  $sql = "INSERT INTO public.tmilitaryrank (
-                                                    name
-                                                )
-                                                VALUES (
-                                                    '" . $name . "'
-                                                )";
-                            break;
-
-        case 'editMilitaryrank': $sql = "UPDATE public.tmilitaryrank SET name = '" . $name . "'
-                                                                WHERE
-                                                                    id = '" . $id . "'";
-                            break;
-
-        case 'delMilitaryrank':  $sql = "DELETE FROM public.tmilitaryrank WHERE id = '" . $id . "'";
-                            break;
-
-        case 'addMilitaryposition':  $sql = "INSERT INTO public.tmilitaryposition (
-                                                    name
-                                                )
-                                                VALUES (
-                                                    '" . $name . "'
-                                                )";
-                            break;
-
-        case 'editMilitaryposition': $sql = "UPDATE public.tmilitaryposition SET name = '" . $name . "'
-                                                                WHERE
-                                                                    id = '" . $id . "'";
-                            break;
-
-        case 'delMilitaryposition':  $sql = "DELETE FROM public.tmilitaryposition WHERE id = '" . $id . "'";
                             break;
 
         case 'addPhonetype':  $sql = "INSERT INTO public.tphonetype (

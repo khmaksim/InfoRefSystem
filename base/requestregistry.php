@@ -75,6 +75,22 @@ class RequestRegistry extends Registry {
 		return $inst->get("DepartmentMapper");
 	}
 
+	static function getMilitaryRankMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("MilitaryRankMapper"))) {
+			$inst->set('MilitaryRankMapper', new \mapper\MilitaryRankMapper());
+		}
+		return $inst->get("MilitaryRankMapper");
+	}
+
+	static function getPositionMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("PositionMapper"))) {
+			$inst->set('PositionMapper', new \mapper\PositionMapper());
+		}
+		return $inst->get("PositionMapper");
+	}
+
 	static function getAccessManager() {
 		$inst = self::instance();
 		if (is_null($inst->get('AccessManager'))) {

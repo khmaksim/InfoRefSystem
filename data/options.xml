@@ -136,6 +136,86 @@
 			</status>
 		</command>
 
+		<command name="MilitaryRank">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>militaryrank</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddMilitaryRank">
+			<view>militaryrank_edit</view>
+			<status value="CMD_OK">
+				<forward>MilitaryRank</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>militaryrank_edit</view>
+			</status>
+		</command>
+
+		<command name="EditMilitaryRank">
+			<view>militaryrank_edit</view>
+			<status value="CMD_OK">
+				<forward>MilitaryRank</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>militaryrank_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteMilitaryRank">
+			<view>user</view>
+			<status value="CMD_OK">
+				<forward>MilitaryRank</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>MilitaryRank</view>
+			</status>
+		</command>
+
+		<command name="Position">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>position</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddPosition">
+			<view>position_edit</view>
+			<status value="CMD_OK">
+				<forward>Position</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>position_edit</view>
+			</status>
+		</command>
+
+		<command name="EditPosition">
+			<view>position_edit</view>
+			<status value="CMD_OK">
+				<forward>Position</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>position_edit</view>
+			</status>
+		</command>
+
+		<command name="DeletePosition">
+			<view>position</view>
+			<status value="CMD_OK">
+				<forward>Position</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>position</view>
+			</status>
+		</command>
+
 		<command name="Document">
 			<view>login</view>
 			<status value="CMD_OK">

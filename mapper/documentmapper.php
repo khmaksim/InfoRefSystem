@@ -5,7 +5,7 @@ class DocumentMapper extends Mapper implements \domain\UserFinder {
 	function __construct() {
 		parent::__construct();
 		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM document WHERE deleted IS NULL");
-		$this->selectStmt = self::$PDO->prepare("SELECT * FROM document WHERE id = ?");
+		$this->selectStmt = self::$PDO->prepare("SELECT * FROM document WHERE id = ? AND deleted IS NULL");
 		$this->selectBySectionStmt = self::$PDO->prepare("SELECT * FROM document WHERE section = ?");
 		$this->updateStmt = self::$PDO->prepare("UPDATE document SET name=?, section=?, file_name=? WHERE id=?");
 		$this->insertStmt = self::$PDO->prepare("INSERT INTO document (name, section, file_name) VALUES (?, ?, ?)");
