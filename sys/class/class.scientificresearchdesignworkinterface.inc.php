@@ -23,59 +23,8 @@ class ScientificResearchDesignWorkInterface extends BaseInterface
 		}
 	}
 
-	public function display()
-	{		
-		$html = '
-			<thead>
-				<tr>
-					<th class="col-xs-1">№</th>
-					<th>Перечень НИОКР</th>
-					<th class="col-xs-1 text-center">Редактировать</th>
-					<th class="col-xs-1 text-center">Удалить</th>
-				</tr>
-			</thead>
-			<tbody id="items">
-			';
-		$objects = $this->_createObject("ScientificResearchDesignWork");
-		$count = 1;
-		foreach ($objects as $obj) {
-			$html .= '<tr>
-							<td>' . $count++ . '</td>
-                            <td><a href="download.php?file=' . $obj->file_name . '" target="_blank">' . $obj->year . '</a></td>
-                            <td class="col-xs-1 text-center"><a href="./scientificresearchdesignwork_edit.php?action=edit&id='. $obj->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                            <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $obj->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
-                        </tr>';
-        }
-        $html .= '</tbody>';
-		return $html;
-	}
-
-	public function displayById($id=NULL)
-	{
-		$image = '';
-		if (empty($id) || $id == NULL)
-			$obj = new ScientificResearchDesignWork();
-		else {	
-			$id = preg_replace('/[^0-9]/', '', $id);
-			$obj = $this->_loadById("ScientificResearchDesignWork", $id);
-		}
-		
-		return '
-			<div class="row">
-				<div class="col-md-1">
-					<div class="form-group">
-						<label for="inputYear">Год</label>
-						<input type="text" min="2000" max="2099" name="year" class="form-control" id="inputYear" oninput="validateYear(this)" placeholder="Год" value="' . $obj->year . '" required autofocus>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputFile">' . ($obj->file_name  !=  '' ? '<a href="download.php?file=' . $obj->file_name . '" target="_blank">Файл</a><br />' : 'Файл') . '</label>
-				<input type="file" name="document-file" id="inputFile">
-				<p class="help-block">Размер файла не более 2 Мб.</p>
-			</div>';
-	}
-
+	
+	
 	public function processForm()
 	{
 		$year = htmlentities($_POST['year'], ENT_QUOTES);

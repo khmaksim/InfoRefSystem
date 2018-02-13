@@ -91,6 +91,78 @@ class RequestRegistry extends Registry {
 		return $inst->get("PositionMapper");
 	}
 
+	static function getMedalTypeMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("MedalTypeMapper"))) {
+			$inst->set('MedalTypeMapper', new \mapper\MedalTypeMapper());
+		}
+		return $inst->get("MedalTypeMapper");
+	}
+
+	static function getInterpassportTypeMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("InterpassportTypeMapper"))) {
+			$inst->set('InterpassportTypeMapper', new \mapper\InterpassportTypeMapper());
+		}
+		return $inst->get("InterpassportTypeMapper");
+	}
+
+	static function getAccessTypeMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("AccessTypeMapper"))) {
+			$inst->set('AccessTypeMapper', new \mapper\AccessTypeMapper());
+		}
+		return $inst->get("AccessTypeMapper");
+	}
+
+	static function getCityMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("CityMapper"))) {
+			$inst->set('CityMapper', new \mapper\CityMapper());
+		}
+		return $inst->get("CityMapper");
+	}
+
+	static function getAddressTypeMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("AddressTypeMapper"))) {
+			$inst->set('AddressTypeMapper', new \mapper\AddressTypeMapper());
+		}
+		return $inst->get("AddressTypeMapper");
+	}
+
+	static function getEmailTypeMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("EmailTypeMapper"))) {
+			$inst->set('EmailTypeMapper', new \mapper\EmailTypeMapper());
+		}
+		return $inst->get("EmailTypeMapper");
+	}
+
+	static function getPhoneTypeMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("PhoneTypeMapper"))) {
+			$inst->set('PhoneTypeMapper', new \mapper\PhoneTypeMapper());
+		}
+		return $inst->get("PhoneTypeMapper");
+	}
+
+	static function getPhonenumberTypeMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("PhonenumberTypeMapper"))) {
+			$inst->set('PhonenumberTypeMapper', new \mapper\PhonenumberTypeMapper());
+		}
+		return $inst->get("PhonenumberTypeMapper");
+	}
+
+	static function getScientificWorkMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("ScientificWorkMapper"))) {
+			$inst->set('ScientificWorkMapper', new \mapper\ScientificWorkMapper());
+		}
+		return $inst->get("ScientificWorkMapper");
+	}
+
 	static function getAccessManager() {
 		$inst = self::instance();
 		if (is_null($inst->get('AccessManager'))) {

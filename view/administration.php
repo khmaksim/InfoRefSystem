@@ -55,14 +55,14 @@
                                             <ul class="nav nav-pills nav-stacked">
                                                 <li><a href="/?cmd=MilitaryRank">Воинские звания</a></li>
                                                 <li><a href="/?cmd=Position">Должности</a></li>
-                                                <li><a href="/dictionary.php?name=phonetype">Типы телефонной связи</a></li>
-                                                <li><a href="/dictionary.php?name=phonenumbertype">Типы телефонных номеров</a></li>
-                                                <li><a href="/dictionary.php?name=medaltype">Типы наград</a></li>
-                                                <li><a href="/dictionary.php?name=interpassporttype">Типы заграничных паспортов</a></li>
-                                                <li><a href="/dictionary.php?name=accesstype">Формы допуска</a></li>
-                                                <li><a href="/dictionary.php?name=city">Города</a></li>
-                                                <li><a href="/dictionary.php?name=addresstype">Типы адресов</a></li>
-                                                <li><a href="/dictionary.php?name=emailtype">Типы email</a></li>
+                                                <li><a href="/?cmd=PhoneType">Типы телефонной связи</a></li>
+                                                <li><a href="/?cmd=PhonenumberType">Типы телефонных номеров</a></li>
+                                                <li><a href="/?cmd=MedalType">Типы наград</a></li>
+                                                <li><a href="/?cmd=InterpassportType">Типы заграничных паспортов</a></li>
+                                                <li><a href="/?cmd=AccessType">Формы допуска</a></li>
+                                                <li><a href="/?cmd=City">Города</a></li>
+                                                <li><a href="/?cmd=AddressType">Типы адресов</a></li>
+                                                <li><a href="/?cmd=EmailType">Типы email</a></li>
                                             </ul><!-- /.control-sidebar-menu -->
                                         </div>
                                     </div>

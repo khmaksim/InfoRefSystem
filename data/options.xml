@@ -216,6 +216,326 @@
 			</status>
 		</command>
 
+		<command name="MedalType">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>medaltype</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddMedalType">
+			<view>medaltype_edit</view>
+			<status value="CMD_OK">
+				<forward>MedalType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>medaltype_edit</view>
+			</status>
+		</command>
+
+		<command name="EditMedalType">
+			<view>medaltype_edit</view>
+			<status value="CMD_OK">
+				<forward>MedalType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>medaltype_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteMedalType">
+			<view>medaltype</view>
+			<status value="CMD_OK">
+				<forward>MedalType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>medaltype</view>
+			</status>
+		</command>
+
+		<command name="InterpassportType">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>interpassporttype</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddInterpassportType">
+			<view>interpassporttype_edit</view>
+			<status value="CMD_OK">
+				<forward>InterpassportType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>interpassporttype_edit</view>
+			</status>
+		</command>
+
+		<command name="EditInterpassportType">
+			<view>interpassporttype_edit</view>
+			<status value="CMD_OK">
+				<forward>InterpassportType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>interpassporttype_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteInterpassportType">
+			<view>interpassporttype</view>
+			<status value="CMD_OK">
+				<forward>InterpassportType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>interpassporttype</view>
+			</status>
+		</command>
+
+		<command name="AccessType">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>accesstype</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddAccessType">
+			<view>accesstype_edit</view>
+			<status value="CMD_OK">
+				<forward>AccessType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>accesstype_edit</view>
+			</status>
+		</command>
+
+		<command name="EditAccessType">
+			<view>accesstype_edit</view>
+			<status value="CMD_OK">
+				<forward>AccessType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>accesstype_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteAccessType">
+			<view>accesstype</view>
+			<status value="CMD_OK">
+				<forward>AccessType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>accesstype</view>
+			</status>
+		</command>
+
+		<command name="City">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>city</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddCity">
+			<view>city_edit</view>
+			<status value="CMD_OK">
+				<forward>City</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>city_edit</view>
+			</status>
+		</command>
+
+		<command name="EditCity">
+			<view>city_edit</view>
+			<status value="CMD_OK">
+				<forward>City</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>city_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteCity">
+			<view>city</view>
+			<status value="CMD_OK">
+				<forward>City</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>city</view>
+			</status>
+		</command>
+
+		<command name="AddressType">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>addresstype</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddAddressType">
+			<view>addresstype_edit</view>
+			<status value="CMD_OK">
+				<forward>AddressType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>addresstype_edit</view>
+			</status>
+		</command>
+
+		<command name="EditAddressType">
+			<view>addresstype_edit</view>
+			<status value="CMD_OK">
+				<forward>AddressType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>addresstype_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteAddressType">
+			<view>addresstype</view>
+			<status value="CMD_OK">
+				<forward>AddressType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>addresstype</view>
+			</status>
+		</command>
+
+		<command name="EmailType">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>emailtype</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddEmailType">
+			<view>emailtype_edit</view>
+			<status value="CMD_OK">
+				<forward>EmailType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>emailtype_edit</view>
+			</status>
+		</command>
+
+		<command name="EditEmailType">
+			<view>emailtype_edit</view>
+			<status value="CMD_OK">
+				<forward>EmailType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>emailtype_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteEmailType">
+			<view>emailtype</view>
+			<status value="CMD_OK">
+				<forward>EmailType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>emailtype</view>
+			</status>
+		</command>
+
+		<command name="PhoneType">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>phonetype</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddPhoneType">
+			<view>phonetype_edit</view>
+			<status value="CMD_OK">
+				<forward>PhoneType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>phonetype_edit</view>
+			</status>
+		</command>
+
+		<command name="EditPhoneType">
+			<view>phonetype_edit</view>
+			<status value="CMD_OK">
+				<forward>PhoneType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>phonetype_edit</view>
+			</status>
+		</command>
+
+		<command name="DeletePhoneType">
+			<view>phonetype</view>
+			<status value="CMD_OK">
+				<forward>PhoneType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>phonetype</view>
+			</status>
+		</command>
+
+		<command name="PhonenumberType">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>phonenumbertype</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddPhonenumberType">
+			<view>phonenumbertype_edit</view>
+			<status value="CMD_OK">
+				<forward>PhonenumberType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>phonenumbertype_edit</view>
+			</status>
+		</command>
+
+		<command name="EditPhonenumberType">
+			<view>phonenumbertype_edit</view>
+			<status value="CMD_OK">
+				<forward>PhonenumberType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>phonenumbertype_edit</view>
+			</status>
+		</command>
+
+		<command name="DeletePhonenumberType">
+			<view>phonenumbertype</view>
+			<status value="CMD_OK">
+				<forward>PhonenumberType</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>phonenumbertype</view>
+			</status>
+		</command>
+
 		<command name="Document">
 			<view>login</view>
 			<status value="CMD_OK">

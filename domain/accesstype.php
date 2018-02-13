@@ -1,7 +1,7 @@
 <?php
 namespace domain;
 
-class MilitaryRank extends DomainObject {
+class AccessType extends DomainObject {
 	public $id;	
 	public $name;	
 

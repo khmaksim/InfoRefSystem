@@ -2,9 +2,9 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     require_once ("view/ViewHelper.php");
     $request = \view\ViewHelper::getRequest();
-    $edit_object_kii = $request->getProperty('object_kii');
+    $edit_address_type = $request->getProperty('address_type');
     $action = $request->getProperty('cmd');
-    $action_name = ($action == 'AddObjectKii') ? 'Добавление' : 'Редактирование';
+    $action_name = ($action == 'AddAddressType') ? 'Добавление' : 'Редактирование';
 ?>
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
@@ -20,15 +20,15 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-                        <li><a href="/?cmd=ProtectionInformation">Защита информации от НСД</a></li>
-                        <li><a href="/?cmd=ObjectKii">Объекты КИИ</a></li>
+                        <li><a href="/?cmd=Administration">Администрирование</a></li>
+                        <li><a href="/?cmd=AddressType">Типы адресов</a></li>
                         <li class="active"><?php echo $action_name; ?></li>
                     </ol>
                 </section>
                 <!-- Main content -->
                 <section class="content">
                 <?php
-                    $alertMessage = 'Укажите наименование КВИТО!';
+                    $alertMessage = 'Укажите наименование типа адреса!';
                 ?>
                 <!-- Your Page Content Here -->
                     <div class="row">
@@ -39,19 +39,16 @@
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
                                 <form name="editform" role="form" method="post" enctype="multipart/form-data">
-                                    <!-- <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
-                                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" /> -->
+                                    <!-- <input type="hidden" name="act" value="<?= $_GET['act']; ?>Addresstype" />
+                                    <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" /> -->
                                     <div class="box-body">
-                                        <?php
-                                            if ($_GET['action'] == 'edit') {
-                                                echo $objectKiiInterface->display($_GET['id']);
-                                            }
-                                            else
-                                                echo $objectKiiInterface->display();
-                                        ?>
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="inputName">Наименование</label>
+                                            <input type="text" name="name" class="form-control" id="inputName" placeholder="Наименование типа адреса"<?= ($action == 'EditAddressType') ? ' value="' . $edit_address_type->name . '"' : ''; ?> required autofocus>
+                                        </div>
+                                    </div><!-- /.box-body -->
                                     <div class="box-footer">
-                                        <a href="/objectskii.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                        <a href="/?cmd=AddressType" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                     </div>
                                 </form>
                             </div>
@@ -63,9 +60,7 @@
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
         </div><!-- ./wrapper -->
-
         <!-- REQUIRED JS SCRIPTS -->
-
         <!-- jQuery 2.1.4 -->
         <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
@@ -90,3 +85,4 @@
         </script>
     </body>
 </html>
+
