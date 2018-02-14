@@ -39,25 +39,23 @@
                             </div><!-- /.box-header -->
                             <!-- form start -->
                             <form name="editform" role="form" method="post" enctype="multipart/form-data">
-                                <!-- <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
-                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" /> -->
+                                <!-- <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" /> -->
                                 <div class="box-body">
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <div class="form-group">
-                                                <label for="inputYear">Год</label>
-                                                <input type="text" min="2000" max="2099" name="year" class="form-control" id="inputYear" oninput="validateYear(this)" placeholder="Год"<?= ($action == 'EditScientificWork') ? ' value="' . $edit_scientific_work->year . '"' : ''; ?> required autofocus>
-                                            </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label for="inputYear">Год</label>
+                                            <!-- <input type="text" name="year" class="form-control" id="inputYear" onkeyup="return validateYear(this)" placeholder="Год"<?= ($action == 'EditScientificWork') ? ' value="' . $edit_scientific_work->year . '"' : ''; ?> required autofocus> -->
+                                            <input type="number" min="2010" max="2100" name="year" class="form-control" id="inputYear" placeholder="Год"<?= ($action == 'EditScientificWork') ? ' value="' . $edit_scientific_work->year . '"' : ''; ?> required autofocus>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputFile"><?= ($action == 'EditScientificWork') ? '' . $edit_scientific_work->file_name  . '<a href="download.php?file=' . $edit_scientific_work->file_name . '" target="_blank">Файл</a>' ? ''; ?><br />' : 'Файл') . '</label>
+                                        <label for="inputFile"><?= ($action == 'EditScientificWork') ? '<a href="/?cmd=Download&file=' . $edit_scientific_work->file_name . '" target="_blank">Файл</a>' : 'Файл'; ?></label>
                                         <input type="file" name="document-file" id="inputFile">
                                         <p class="help-block">Размер файла не более 2 Мб.</p>
                                     </div>
                                     </div>
                                 <div class="box-footer">
-                                    <a href="/scientificresearchdesignwork.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                    <a href="/?cmd=ScientificWork" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                 </div>
                             </form>
                         </div>
@@ -90,16 +88,18 @@
                         alert('<?= $alertMessage ?>');
                     }
                 }
-                function validateYear(input)
-                {
-                    if (input.value != "") {
-                        if (!(/^\d{1,4}$/.test(input.value))) {
-                            input.focus();
-                            return false;
-                        }
-                    }
-                    return true;
-                }
+                // function validateYear(input)
+                // {
+                //     if (input.value != "") {
+                //         if (!(/^\d{1,3}$/.test(input.value))) {
+                //             input.focus();
+                //             var value = input.value;
+                //             input.value = value.substr(0, value.length - 1);
+                //             return false;
+                //         }
+                //     }
+                //     return true;
+                // }
                 /*]]>*/
             </script>
         </body>

@@ -31,10 +31,10 @@
                                 <div class="box-body">
                                     <div class="col-xs-2">
                                         <ul class="nav nav-pills nav-stacked">
-                                            <li><a href="/product.php">Индексы изделий</a></li>
-                                            <li><a href="/scientificresearchdesignwork.php">Перечень</a></li>
-                                            <li><a href="/controlscientificresearchdesignwork.php">Контроль документов по НИОКР</a></li>
-                                            <li><a href="/enterprise.php">Предприятия</a></li>
+                                            <li><a href="/?cmd=Product">Индексы изделий</a></li>
+                                            <li><a href="/?cmd=ScientificWork">Перечень</a></li>
+                                            <li><a href="/?cmd=ControlScientificResearchDesignWork">Контроль документов по НИОКР</a></li>
+                                            <li><a href="/?cmd=Enterprise">Предприятия</a></li>
                                         </ul>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -42,7 +42,7 @@
                         </div><!-- /.col -->
                     </div>
                     <?php
-                        include_once $_SERVER['DOCUMENT_ROOT'] . '/documents.inc.php';
+                        include_once $_SERVER['DOCUMENT_ROOT'] . '/document.inc.php';
                     ?>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->

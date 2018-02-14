@@ -9,15 +9,6 @@
     // include_once $_SERVER['DOCUMENT_ROOT'] . '/getuserbyid.func.php';
     // include_once $_SERVER['DOCUMENT_ROOT'] . '/getinfobyid.func.php';
     // include_once $_SERVER['DOCUMENT_ROOT'] . '/getinfoblockbyid.func.php';
-    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getmilitaryrankbyid.func.php';
-    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getmilitarypositionbyid.func.php';
-    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getphonetypebyid.func.php';
-    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getphonenumbertypebyid.func.php';
-    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getcitybyid.func.php';
-    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getaddresstypebyid.func.php';
-    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getemailtypebyid.func.php';
-    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getmedaltypebyid.func.php';
-    // include_once $_SERVER['DOCUMENT_ROOT'] . '/getinterpassporttypebyid.func.php';
     // include_once $_SERVER['DOCUMENT_ROOT'] . '/getdepartmentsbyid.func.php';
     // include_once $_SERVER['DOCUMENT_ROOT'] . '/showdepartmentsnavtree.func.php';
     // include_once $_SERVER['DOCUMENT_ROOT'] . '/showphonelisttree.func.php';

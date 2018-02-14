@@ -1,7 +1,6 @@
 user/*
-face/*
 bootstrap/*
 plugins/*
-documents/*
 *.sublime-*
-uploaded_files/*
+upload/*
+*.log

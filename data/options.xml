@@ -576,6 +576,46 @@
 			</status>
 		</command>
 
+		<command name="ScientificWork">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>scientificwork</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddScientificWork">
+			<view>scientificwork_edit</view>
+			<status value="CMD_OK">
+				<forward>ScientificWork</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>scientificwork_edit</view>
+			</status>
+		</command>
+
+		<command name="EditScientificWork">
+			<view>scientificwork_edit</view>
+			<status value="CMD_OK">
+				<forward>ScientificWork</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>document_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteScientificWork">
+			<view>scientificwork</view>
+			<status value="CMD_OK">
+				<forward>ScientificWork</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>ScientificWork</view>
+			</status>
+		</command>
+
 		<command name="TelephoneDirectory">
 			<view>login</view>
 			<status value="CMD_OK">
@@ -634,6 +674,16 @@
 			<status value="CMD_ERROR">
 				<view>login</view>
 			</status>
+		</command>
+
+		<command name="Download">
+			<!-- <view>login</view>
+			<status value="CMD_OK">
+				<view>internet</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status> -->
 		</command>
 
 	<!-- 	<command name="ListVenues">

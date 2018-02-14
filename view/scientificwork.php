@@ -18,7 +18,7 @@
                 <ol class="breadcrumb">
                     <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                     <li><a href="/?cmd=ResearchWork">Научно-исследовательская работа</a></li>
-                    <li class="active"><?php echo $title; ?></li>
+                    <li class="active">Перечень</li>
                 </ol>
             </section>
             <!-- Main content -->
@@ -28,7 +28,7 @@
                     <div class="col-lg-12">
                         <div class="box">
                             <div class="box-header">
-                                <h3 class="box-title"><?php echo $title; ?></h3>
+                                <h3 class="box-title">Перечень</h3>
                             </div><!-- /.box-header -->
                             <div class="box-body">
                                 <div class="col-xs-12">
@@ -48,7 +48,7 @@
                                             foreach ($scientific_work_list as $scientific_work) {
                                                $row_html = '<tr>
                                                             <td>' . $count++ . '</td>
-                                                            <td><a href="download.php?file=' . $scientific_work->file_name . '" target="_blank">' . $scientific_work->year . '</a><</td>
+                                                            <td><a href="/?cmd=Download&file=' . $scientific_work->file_name . '" target="_blank">' . $scientific_work->year . '</a></td>
                                                             <td class="col-xs-1 text-center"><a href="./?cmd=EditScientificWork&id='. $scientific_work->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                                             <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $scientific_work->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
                                                         </tr>';
@@ -73,9 +73,7 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
 ?>
 </div><!-- ./wrapper -->
-
 <!-- REQUIRED JS SCRIPTS -->
-
 <!-- jQuery 2.1.4 -->
 <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- Bootstrap 3.3.5 -->

@@ -1,21 +1,29 @@
 <?php
 namespace command;
 
-class AddScientificWork extends Command {
+class EditScientificWork extends Command {
     function doExecute(\controller\Request $request) {
-  		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  			$scientificWorkMapper = \base\RequestRegistry::getScientificWorkMapper();
-			
-			$scientific_work = new \domain\ScientificWork();  			
-  			$scientific_work->year = $request->getProperty('year');
-			
-			$scientificWorkMapper->insert($scientific_work);
-			if (!is_null($scientific_work->id)) {
-                $id_scientific_work = $scientific_work->id;
-              
-                if (sizeof($_FILES) && !$_FILES['document-file']['error'] && $_FILES['document-file']['size'] < 1024 * 2 * 1024) {
-                    $upload_info = $_FILES['document-file'];
-                    $upload_dir_name = $_SERVER['DOCUMENT_ROOT'] . '/upload/scientific_work/';
+    	$scientificWorkMapper = \base\RequestRegistry::getScientificWorkMapper();
+    	
+    	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    		$id = $request->getProperty('id');
+    		if (!is_null($id)) {
+    			$scientific_work = $scientificWorkMapper->find($id);
+    			if (!is_null($scientific_work)) {
+					$request->setProperty('scientific_work', $scientific_work);    				
+    			}
+    		}
+    	}
+  		else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$id = $request->getProperty('id');
+    		if (!is_null($id)) {
+    			$scientific_work = $scientificWorkMapper->find($id);
+
+	  			$scientific_work->year = $request->getProperty('year');
+				
+                if (sizeof($_FILES) && !$_FILES['document_file']['error'] && $_FILES['document_file']['size'] < 1024 * 2 * 1024) {
+                    $upload_info = $_FILES['document_file'];
+                    $upload_dir_name = $_SERVER['DOCUMENT_ROOT'] . '/upload/document/';
                     $file_name = $upload_dir_name.$id_scientific_work;
 
                     switch ($upload_info['type']) {
@@ -47,11 +55,10 @@ class AddScientificWork extends Command {
                     }
                     $scientific_work->file_name = $file_name;
                     $scientificWorkMapper->update($scientific_work);
-				}
+                }
 
 				return self::statuses('CMD_OK');
 			}
-
 			return self::statuses('CMD_ERROR');
   		}
         // return self::statuses('CMD_OK');
