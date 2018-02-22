@@ -1,40 +1,14 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    if (isset($_GET['id']))
-        $arDepartment = getDepartmentsById($_GET['id']);
-    else
-        $arDepartment = array('fullname' => 'Подразделения с таким кодом не существует');
-    $page = 'person';
+    require_once ("view/ViewHelper.php") ;
+    $request = \view\ViewHelper::getRequest();
+    $department = $request->getProperty('department');
 ?>
-  <!--
-  BODY TAG OPTIONS:
-  =================
-  Apply one or more of the following classes to get the
-  desired effect
-  |---------------------------------------------------------|
-  | SKINS         | skin-blue                               |
-  |               | skin-black                              |
-  |               | skin-purple                             |
-  |               | skin-yellow                             |
-  |               | skin-red                                |
-  |               | skin-green                              |
-  |---------------------------------------------------------|
-  |LAYOUT OPTIONS | fixed                                   |
-  |               | layout-boxed                            |
-  |               | layout-top-nav                          |
-  |               | sidebar-collapse                        |
-  |               | sidebar-mini                            |
-  |---------------------------------------------------------|
-  -->
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -44,14 +18,12 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-                        <li><a href="/structure.php">Cтруктура ЧНП ВКС</a></li>
-                        <li class="active">Личный состав - <?= $arDepartment['fullname']; ?></li>
+                        <li><a href="/?cmd=Structure">Cтруктура ЧНП ВКС</a></li>
+                        <li class="active">Личный состав - <?= $department->fullname; ?></li>
                     </ol>
                 </section>
-
                 <!-- Main content -->
                 <section class="content">
-
                 <!-- Your Page Content Here -->
                     <div class="row">
                         <div class="col-xs-12">
@@ -71,34 +43,49 @@
                                                 <th class="col-xs-1">Дата рождения</th>
                                                 <th class="col-xs-1">Должность</th>
                                                 <th class="col-xs-1 text-center">Печать</th>
-                                                <th class="col-xs-1 text-center">Редак-ть</th>
+                                                <th class="col-xs-1 text-center">Редактировать</th>
                                                 <th class="col-xs-1 text-center">Удалить</th>
                                             </tr>
                                         </thead>
+                                        <tbody id="items">
+                                        <?php
+                                            $person_list = $request->getProperty('person_list');
+                                            $count = 0;
+                                            foreach ($person_list as $person) {
+                                                $img = 'Нет';
+                                                if (file_exists('./upload/user/' . $person->id . '_thumb.' . $person->img_ext))
+                                                    $img = '<img src="/upload/user/'. $person->id .'_thumb.'. $person->img_ext .'" border="0" alt="" class="img-circle" />';
 
-                                        <tbody id="items"></tbody>
+                                                echo '<tr><td>'. ++$count .'</td>
+                                                        <td>'. $img .'</td>
+                                                        <td>'. $person->personal_number .'</td>
+                                                        <td>'. $person->getFullName() .'</td>
+                                                        <td></td>
+                                                        <td>'. $person->birthday .'</td>
+                                                        <td></td>
+                                                        <td class="col-xs-1 text-center"><a href="/?cmd=ViewPerson&id='. $person->id .'&id_department='. $department->id .'" target="_blank" class="button btn-warning btn-sm"><span class="glyphicon glyphicon-print"></span></a></td>
+                                                        <td class="col-xs-1 text-center"><a href="/?cmd=EditPerson&id='. $person->id .'&id_department='. $department->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                                        <td class="col-md-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $person->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td></tr>';
+                                            }
+                                        ?>
+                                        </tbody>
                                     </table>
-
                                  </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div><!-- /.col -->
                     </div>
-
                     <div class="row">
                         <div class="col-xs-12">
-                            <p class="text-right"><a href="/person_edit.php?act=add&id_departments=<?= $_GET['id']; ?>" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                            <p class="text-right"><a href="/?cmd=AddPerson&id_department=<?= $department->id; ?>" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                         </div><!-- /.col -->
                     </div>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
         </div><!-- ./wrapper -->
-
         <!-- REQUIRED JS SCRIPTS -->
-
         <!-- jQuery 2.1.4 -->
         <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
@@ -111,16 +98,11 @@
              fixed layout. -->
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
-            $(document).ready(function(){
-      		    $("#items").load("/person.func.php?id=<?= $_GET['id']; ?>");
-                setInterval(function() {$("#items").load("/person.func.php?id=<?= $_GET['id']; ?>");}, 5000);
-            });
-
             function ConfirmDelete(id)
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./save.php?id="+ObjectId+"&act=delPerson";
+                    document.location = "./?cmd=DeletePerson?id="+ObjectId;
                 }
             }
         /*]]>*/

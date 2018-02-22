@@ -7,36 +7,36 @@ class Person extends DomainObject {
 	public $lastname;
 	public $patronymic;
 	public $military;
-	public $personalnumber;
+	public $personal_number;
 	public $birthday;
-	public $id_accesslevel;
+	public $id_access_type;
 	public $id_unit;
-	public $id_department;
-	public $editable;
-	public $id_militaryrank;
+	public $id_military_rank;
 	public $img_ext;
 	public $address;
 	public $id_city;
 	public $note;
 	public $deleted;
 
-	function __construct($id=null, $firstname=null, $lastname=null, $patronymic=null, $military=null, $personalnumber=null, $birthday=null, $id_accesslevel=null, $id_unit=null, $id_department=null, $editable=null, $id_militaryrank=null, $img_ext=null, $address=null, $id_city=null, $note=null) {
+	function __construct($id=null, $firstname=null, $lastname=null, $patronymic=null, $military=null, $personal_number=null, $birthday=null, $id_access_type=null, $id_unit=null, $id_military_rank=null, $img_ext=null, $address=null, $id_city=null, $note=null) {
 		$this->$id = $id;	
 		$this->firstname = $firstname;	
 		$this->lastname = $lastname;
 		$this->patronymic = $patronymic;
 		$this->military = $military;
-		$this->personalnumber = $personalnumber;
+		$this->personal_number = $personal_number;
 		$this->birthday = $birthday;
-		$this->id_accesslevel = $id_accesslevel;
+		$this->id_access_type = $id_access_type;
 		$this->id_unit = $id_unit;
-		$this->id_department = $id_department;
-		$this->editable = $editable;
-		$this->id_militaryrank = $id_militaryrank;
+		$this->id_military_rank = $id_military_rank;
 		$this->img_ext = $img_ext;
 		$this->address = $address;
 		$this->id_city = $id_city;
 		$this->note = $note;
+	}
+
+	function getFullName() {
+		return $this->lastname .' '. $this->firstname .' '. $this->patronymic;  
 	}
 }
 ?>

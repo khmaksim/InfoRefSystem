@@ -187,6 +187,22 @@ class RequestRegistry extends Registry {
 		return $inst->get("UnitMapper");
 	}
 
+	static function getTechniqueMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("TechniqueMapper"))) {
+			$inst->set('TechniqueMapper', new \mapper\TechniqueMapper());
+		}
+		return $inst->get("TechniqueMapper");
+	}
+
+	static function getPersonMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("PersonMapper"))) {
+			$inst->set('PersonMapper', new \mapper\PersonMapper());
+		}
+		return $inst->get("PersonMapper");
+	}
+
 	static function getAccessManager() {
 		$inst = self::instance();
 		if (is_null($inst->get('AccessManager'))) {

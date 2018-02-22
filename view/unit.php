@@ -18,8 +18,8 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-                        <li>Штатное расписание</li>
-                        <li class="active"><?= $department->fullname; ?></li>
+                        <li><a href="/?cmd=Structure">Cтруктура ЧНП ВКС</a></li>
+                        <li class="active">Штатное расписание - <?= $department->fullname; ?></li>
                     </ol>
                 </section>
                 <!-- Main content -->

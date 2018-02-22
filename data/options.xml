@@ -810,6 +810,86 @@
 			</status>
 		</command>
 
+		<command name="Technique">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>technique</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddTechnique">
+			<view>technique_edit</view>
+			<status value="CMD_OK">
+				<forward>Technique</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>technique_edit</view>
+			</status>
+		</command>
+
+		<command name="EditTechnique">
+			<view>technique_edit</view>
+			<status value="CMD_OK">
+				<forward>Technique</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>technique_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteTechnique">
+			<view>technique</view>
+			<status value="CMD_OK">
+				<forward>Technique</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>Technique</view>
+			</status>
+		</command>
+
+		<command name="Person">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>person</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddPerson">
+			<view>person_edit</view>
+			<status value="CMD_OK">
+				<forward>Person</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>person_edit</view>
+			</status>
+		</command>
+
+		<command name="EditPerson">
+			<view>person_edit</view>
+			<status value="CMD_OK">
+				<forward>Person</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>person_edit</view>
+			</status>
+		</command>
+
+		<command name="DeletePerson">
+			<view>person</view>
+			<status value="CMD_OK">
+				<forward>Person</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>Person</view>
+			</status>
+		</command>
+
 		<command name="ObjectKii">
 			<view>login</view>
 			<status value="CMD_OK">

@@ -1,11 +1,11 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    if (isset($_GET['id_departments']))
-        $arDepartment = getDepartmentsById($_GET['id_departments']);
-    else
-        $arDepartment = array();
-    $page = 'technique';
+    require_once ("view/ViewHelper.php");
+    $request = \view\ViewHelper::getRequest();
+    $edit_technique = $request->getProperty('technique');
+    $department = $request->getProperty('department');
+    $action = $request->getProperty('cmd');
+    $action_name = ($action == 'AddTechnique') ? 'Добавление' : 'Редактирование';
 ?>
   <!--
   BODY TAG OPTIONS:
@@ -32,7 +32,6 @@
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -42,58 +41,34 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-                        <li><a href="/structure.php">Cтруктура ЧНП ВКС</a></li>
-                        <li><a href="/technique.php?id=<?= $arDepartment['id']; ?>">Техника - <?= $arDepartment['fullname']; ?></a></li>
-                        <li class="active"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
+                        <li><a href="/?cmd=Structure">Cтруктура ЧНП ВКС</a></li>
+                        <li><a href="/?cmd=Technique&id_department=<?= $department->id; ?>">Техника - <?= $department->fullname; ?></a></li>
+                        <li class="active"><?php echo $action_name; ?></li>
                     </ol>
                 </section>
-
                 <!-- Main content -->
                 <section class="content">
-                <?php
-                    if ($_GET['act'] == 'edit') {
-                        $arTechnique = getTechniqueById($_GET['id']);
-                    }
-                ?>
                 <!-- Your Page Content Here -->
-                <?php
-                    if ($_GET['act'] == 'edit') {
-                ?>
-                    <div class="row">
-                            <div class="col-xs-12">
-                                <p class="text-right">
-                                    <a href="/person_view.php?id=<?= $_GET['id']; ?>&id_departments=<?= $_GET['id_departments']; ?>" target="_blank" type="button" class="btn btn-app"><i class="fa fa-print"></i> Печать</a>
-                                </p>
-                            </div><!-- /.col -->
-                        </div>
-
-                <?php
-                    }
-                ?>
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></h3>
+                                    <h3 class="box-title"><?php echo $action_name; ?></h3>
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
-                                <form name="editform" role="form" action="/save.php" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="act" value="<?= $_GET['act']; ?>Technique" />
-                                    <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
-                                    <input type="hidden" name="id_departments" value="<?= (isset($_GET['id_departments'])) ? $_GET['id_departments'] : ''; ?>" />
+                                <form name="editform" role="form" method="post" enctype="multipart/form-data">
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Полное наименование техники</label>
-                                            <input type="text" name="fullname" class="form-control" id="exampleInputEmail1" placeholder="Полное наименование"<?= ($_GET['act'] == 'edit') ? ' value="' . $arTechnique['fullname'] . '"' : ''; ?> required>
+                                            <label for="inputFullname">Полное наименование техники</label>
+                                            <input type="text" name="fullname" class="form-control" id="inputFullname" placeholder="Полное наименование"<?= ($action == 'EditTechnique') ? ' value="' . $edit_technique->fullname . '"' : ''; ?> required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Сокращенное наименование техники</label>
-                                            <input type="text" name="shortname" class="form-control" id="exampleInputEmail1" placeholder="Сокращенное наименование"<?= ($_GET['act'] == 'edit') ? ' value="' . $arTechnique['shortname'] . '"' : ''; ?> required>
+                                            <label for="inputShortname">Сокращенное наименование техники</label>
+                                            <input type="text" name="shortname" class="form-control" id="inputShortname" placeholder="Сокращенное наименование"<?= ($action == 'EditTechnique') ? ' value="' . $edit_technique->shortname . '"' : ''; ?> required>
                                         </div>
                                     </div><!-- /.box-body -->
-
                                     <div class="box-footer">
-                                        <a href="/technique.php?id=<?= $_GET['id_departments']?>" type="submit" class="btn btn-default">Отмена</a> <a onclick="javascript:checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                        <a href="/?cmd=Technique&id_department=<?= $department->id ?>" type="submit" class="btn btn-default">Отмена</a> <a onclick="javascript:checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                     </div>
                                 </form>
                             </div>
@@ -101,17 +76,11 @@
                     </div>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
-            <!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
-
         <!-- REQUIRED JS SCRIPTS -->
-
         <!-- jQuery 2.1.4 -->
         <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->

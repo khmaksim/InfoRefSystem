@@ -13,7 +13,7 @@ class UnitMapper extends Mapper implements \domain\UserFinder {
 	}
 
 	function getCollection(array $raw) {
-        return new DepartmentCollection($raw, $this);
+        return new UnitCollection($raw, $this);
     }
 
 	protected function doCreateObject(array $array) {
@@ -40,14 +40,14 @@ class UnitMapper extends Mapper implements \domain\UserFinder {
 			throw new Exception("Error argument", 1);
 		}
 			
-		$values = array($object->id, $object->id_department, $object->id_position, $object->tariff_category, $object->id_military_rank, $object->id_access_type, $object->order_number, $object->order_owner, $object->dateorderstart, $object->dateorderend, $object->vacant);
+		$values = array($object->id_department, $object->id_position, $object->tariff_category, $object->id_military_rank, $object->id_access_type, $object->order_number, $object->order_owner, $object->dateorderstart, $object->dateorderend, $object->vacant);
 		$this->insertStmt->execute($values);
 		$id = self::$PDO->lastInsertId();
 		$object->id = $id;
 	}
 
 	function update(\domain\DomainObject $object) {
-		$values = array($object->id, $object->id_department, $object->id_position, $object->tariff_category, $object->id_military_rank, $object->id_access_type, $object->order_number, $object->order_owner, $object->dateorderstart, $object->dateorderend, $object->vacant, $object->id);
+		$values = array($object->id_department, $object->id_position, $object->tariff_category, $object->id_military_rank, $object->id_access_type, $object->order_number, $object->order_owner, $object->dateorderstart, $object->dateorderend, $object->vacant, $object->id);
 		$this->updateStmt->execute($values);
 	}
 
