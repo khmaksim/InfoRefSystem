@@ -1,11 +1,11 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    if (isset($_GET['id_departments']))
-        $arDepartment = getDepartmentsById($_GET['id_departments']);
-    else
-        $arDepartment = array();
-    $page = 'unit';
+    require_once ("view/ViewHelper.php");
+    $request = \view\ViewHelper::getRequest();
+    $edit_unit = $request->getProperty('unit');
+    $department = $request->getProperty('department');
+    $action = $request->getProperty('cmd');
+    $action_name = ($action == 'AddUnit') ? 'Добавление' : 'Редактирование';
 ?>
   <!--
   BODY TAG OPTIONS:
@@ -32,7 +32,6 @@
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -41,111 +40,104 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="/departments.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                        <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                         <li>Штатное расписание</li>
-                        <li><a href="/unit.php?id=<?= $arDepartment['id']; ?>"><?= $arDepartment['fullname']; ?></a></li>
-                        <li class="active"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
+                        <li><a href="/?cmd=Unit&id_department=<?= $department->id ?>"><?= $department->fullname ?></a></li>
+                        <li class="active"><?php echo $action_name; ?></li>
                     </ol>
                 </section>
-
                 <!-- Main content -->
                 <section class="content">
-
-                <?php
-                    if ($_GET['act'] == 'edit') {
-                        $arUnit = getUnitById($_GET['id']);
-                    }
-                ?>
                 <!-- Your Page Content Here -->
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></h3>
+                                    <h3 class="box-title"><?php echo $action_name; ?></h3>
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
-                                <form name="editform" role="form" action="/save.php" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="act" value="<?= $_GET['act']; ?>Unit" />
-                                    <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
-                                    <input type="hidden" name="id_departments" value="<?= (isset($_GET['id_departments'])) ? $_GET['id_departments'] : ''; ?>" />
+                                <form name="editform" role="form" method="post" enctype="multipart/form-data">
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Должность</label>
-                                            <select class="form-control" name="id_militaryposition">
+                                            <label for="inputPosition">Должность</label>
+                                            <select class="form-control" name="position" id="inputPosition">
                                                 <?php
-                                                    $sql = "SELECT * FROM public.tmilitaryposition ORDER BY id";
-                                                    foreach ($dbconn->query($sql) as $row) {
-                                                ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arUnit['id_militaryposition'] == $row['id']) ? ' selected="selected"' : ''; ?>><?= $row['name']; ?></option>
-                                                <?php
+                                                    $position_list = $request->getProperty('position_list');
+                                                    foreach ($position_list as $position) {
+                                                        if ($action == 'EditUnit' && $edit_unit->id_position == $position->id)
+                                                            echo '<option value="' . $position->id . '" selected="selected">' . $position->name . '</option>';
+                                                        else
+                                                            echo '<option value="' . $position->id . '">' . $position->name . '</option>';
                                                     }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Тарифный разряд</label>
-                                            <input type="text" name="tariffcategory" class="form-control" id="exampleInputEmail1" placeholder="Тарифный разряд"<?= ($_GET['act'] == 'edit') ? ' value="' . $arUnit['tariffcategory'] . '"' : ''; ?> required>
+                                            <label for="inputTariffcategory">Тарифный разряд</label>
+                                            <input type="text" name="tariffcategory" class="form-control" id="inputTariffcategory" placeholder="Тарифный разряд"<?= ($action == 'EditUnit') ? ' value="' . $edit_unit->tariff_category . '"' : ''; ?> required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Воинское звание</label>
-                                            <select class="form-control" name="id_militaryrank">
+                                            <label for="inputMilitaryRank">Воинское звание</label>
+                                            <select class="form-control" name="militaryrank" id="inputMilitaryRank">
                                                 <?php
-                                                    $sql = "SELECT * FROM public.tmilitaryrank ORDER BY id";
-                                                    foreach ($dbconn->query($sql) as $row) {
-                                                ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arUnit['id_militaryrank'] == $row['id']) ? ' selected="selected"' : ''; ?>><?= $row['name']; ?></option>
-                                                <?php
+                                                    $military_rank_list = $request->getProperty('military_rank_list');
+                                                    foreach ($military_rank_list as $military_rank) {
+                                                        if ($action == 'EditUnit' && $edit_unit->id_military_rank == $military_rank->id)
+                                                            echo '<option value="' . $military_rank->id . '" selected="selected">' . $military_rank->name . '</option>';
+                                                        else
+                                                            echo '<option value="' . $military_rank->id . '">' . $military_rank->name . '</option>';
                                                     }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Форма допуска</label>
-                                            <select class="form-control" name="id_accesslevel">
-                                                <?php
-                                                    $sql = "SELECT * FROM public.taccesstype ORDER BY id";
-                                                    foreach ($dbconn->query($sql) as $row) {
-                                                ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arUnit['id_accesslevel'] == $row['id']) ? ' selected="selected"' : ''; ?>><?= $row['name']; ?></option>
-                                                <?php
+                                            <label for="inputAccessType">Форма допуска</label>
+                                            <select class="form-control" name="accesslevel" id="inputAccessType">
+                                                 <?php
+                                                    $access_type_list = $request->getProperty('access_type_list');
+                                                    foreach ($access_type_list as $access_type) {
+                                                        if ($action == 'EditUnit' && $edit_unit->id_access_type == $access_type->id)
+                                                            echo '<option value="' . $access_type->id . '" selected="selected">' . $access_type->name . '</option>';
+                                                        else
+                                                            echo '<option value="' . $access_type->id . '">' . $access_type->name . '</option>';
                                                     }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Номер приказа</label>
-                                            <input type="text" name="ordernumber" class="form-control" id="exampleInputEmail1" placeholder="Номер приказа"<?= ($_GET['act'] == 'edit') ? ' value="' . $arUnit['ordernumber'] . '"' : ''; ?>>
+                                            <label for="inputOrderNumber">Номер приказа</label>
+                                            <input type="text" name="ordernumber" class="form-control" id="inputOrderNumber" placeholder="Номер приказа"<?= ($action == 'EditUnit') ? ' value="' . $edit_unit->order_number . '"' : ''; ?>>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Подписан</label>
-                                            <input type="text" name="orderowner" class="form-control" id="exampleInputEmail1" placeholder="Кем подписан приказ"<?= ($_GET['act'] == 'edit') ? ' value="' . $arUnit['orderowner'] . '"' : ''; ?>>
+                                            <label for="inputOrderOwner">Подписан</label>
+                                            <input type="text" name="orderowner" class="form-control" id="inputOrderOwner" placeholder="Кем подписан приказ"<?= ($action == 'EditUnit') ? ' value="' . $edit_unit->order_owner . '"' : ''; ?>>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1">Дата приказа</label>
+                                            <label for="inputDateorderstart">Дата приказа</label>
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" name="dateorderstart" placeholder="Дата приказа (формат 01-01-1979)" class="form-control"<?= ($_GET['act'] == 'edit') ? ' value="' . DateFromENtoRU(mb_substr($arUnit['dateorderstart'], 0, 10), '-') . '"' : ''; ?>>
+                                                <input type="text" name="dateorderstart" placeholder="Дата приказа (формат 01-01-1979)" class="form-control"<?= ($action == 'EditUnit') ? ' value="' . $edit_unit->dateorderstart . '"' : ''; ?>>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1">Упразднена</label>
+                                            <label for="inputDateorderend">Упразднена</label>
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" name="dateorderend" placeholder="Дата когда должность упразднена (формат 01-01-1979)" class="form-control"<?= ($_GET['act'] == 'edit' && mb_substr($arUnit['dateorderend'], 0, 10) != '1970-01-01') ? ' value="' . DateFromENtoRU(mb_substr($arUnit['dateorderend'], 0, 10), '-') . '"' : ''; ?>>
+                                                <input type="text" name="dateorderend" placeholder="Дата когда должность упразднена (формат 01-01-1979)" class="form-control"<?= ($action == 'EditUnit') ? ' value="' . $edit_unit->dateorderend . '"' : ''; ?>>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">Вакантна</label><br />
-                                            <input type="checkbox" name="vacant" value="1"<?= ($_GET['act'] == 'edit' && $arUnit['vacant'] != 'true') ? '' : ' checked="checked"'; ?>>
+                                            <input type="checkbox" name="vacant" value="1"<?= ($action == 'EditUnit' && $edit_unit->vacant != 'true') ? '' : ' checked="checked"'; ?>>
                                         </div>
                                     </div><!-- /.box-body -->
 
                                     <div class="box-footer">
-                                        <a href="/unit.php?id=<?= $_GET['id_departments']?>" type="submit" class="btn btn-default">Отмена</a> <a onclick="javascript:checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                        <a href="/?cmd=Unit&id_department=<?= $department->id ?>" type="submit" class="btn btn-default">Отмена</a> <a onclick="javascript:checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                     </div>
                                 </form>
                             </div>
@@ -153,14 +145,11 @@
                     </div>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
         </div><!-- ./wrapper -->
-
         <!-- REQUIRED JS SCRIPTS -->
-
         <!-- jQuery 2.1.4 -->
         <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
@@ -197,7 +186,6 @@
                     todayHighlight: true
                 });
             });
-
             function checkForm()
             {
                 if (document.editform.tariffcategory.value == '') {

@@ -576,6 +576,50 @@
 			</status>
 		</command>
 
+		<command name="Product">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>product</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddProduct">
+			<view>product_edit</view>
+			<status value="CMD_OK">
+				<forward>Product</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>product_edit</view>
+			</status>
+		</command>
+
+		<command name="EditProduct">
+			<view>product_edit</view>
+			<status value="CMD_OK">
+				<forward>Product</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>product_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteProduct">
+			<view>product</view>
+			<status value="CMD_OK">
+				<forward>Product</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>Product</view>
+			</status>
+		</command>
+
+		<command name="ViewProduct">
+			<view>product_view</view>
+		</command>
+
 		<command name="ScientificWork">
 			<view>login</view>
 			<status value="CMD_OK">
@@ -602,7 +646,7 @@
 				<forward>ScientificWork</forward>
 			</status>
 			<status value="CMD_ERROR">
-				<view>document_edit</view>
+				<view>scientificwork_edit</view>
 			</status>
 		</command>
 
@@ -613,6 +657,46 @@
 			</status>
 			<status value="CMD_ERROR">
 				<view>ScientificWork</view>
+			</status>
+		</command>
+
+		<command name="Enterprise">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>enterprise</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddEnterprise">
+			<view>enterprise_edit</view>
+			<status value="CMD_OK">
+				<forward>Enterprise</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>enterprise_edit</view>
+			</status>
+		</command>
+
+		<command name="EditEnterprise">
+			<view>enterprise_edit</view>
+			<status value="CMD_OK">
+				<forward>Enterprise</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>enterprise_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteEnterprise">
+			<view>enterprise</view>
+			<status value="CMD_OK">
+				<forward>Enterprise</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>Enterprise</view>
 			</status>
 		</command>
 
@@ -646,6 +730,86 @@
 			</status>
 		</command>
 
+		<command name="Department">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>department</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddDepartment">
+			<view>department_edit</view>
+			<status value="CMD_OK">
+				<forward>Department</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>department_edit</view>
+			</status>
+		</command>
+
+		<command name="EditDepartment">
+			<view>department_edit</view>
+			<status value="CMD_OK">
+				<forward>Department</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>department_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteDepartment">
+			<view>department</view>
+			<status value="CMD_OK">
+				<forward>Department</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>Department</view>
+			</status>
+		</command>
+
+		<command name="Unit">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>unit</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddUnit">
+			<view>unit_edit</view>
+			<status value="CMD_OK">
+				<forward>Unit</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>unit_edit</view>
+			</status>
+		</command>
+
+		<command name="EditUnit">
+			<view>unit_edit</view>
+			<status value="CMD_OK">
+				<forward>Unit</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>unit_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteUnit">
+			<view>unit</view>
+			<status value="CMD_OK">
+				<forward>Unit</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>Unit</view>
+			</status>
+		</command>
+
 		<command name="ObjectKii">
 			<view>login</view>
 			<status value="CMD_OK">
@@ -673,6 +837,36 @@
 			</status>
 			<status value="CMD_ERROR">
 				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddInternet">
+			<view>internet_edit</view>
+			<status value="CMD_OK">
+				<forward>Internet</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>internet_edit</view>
+			</status>
+		</command>
+
+		<command name="EditInternet">
+			<view>internet_edit</view>
+			<status value="CMD_OK">
+				<forward>Internet</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>internet_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteInternet">
+			<view>internet</view>
+			<status value="CMD_OK">
+				<forward>Internet</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>Internet</view>
 			</status>
 		</command>
 

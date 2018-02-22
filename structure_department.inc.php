@@ -19,9 +19,9 @@
 
             echo '<li class="tree"><a href="/unit.php?id=' . $department->id . '"><i class="fa fa-angle-right text-yellow"></i> <span>' . $department->fullname . '</span> </a>
                 <ul class="treeview-menu">
-                <li><a href="/unit.php?id=' . $department->id . '"><i class="fa fa-circle-o text-red"></i> <span>Штатное расписание</span></a></li>
-                <li><a href="/person.php?id=' . $department->id . '"><i class="fa fa-circle-o text-red"></i> <span>Личный состав</span></a></li>
-                <li><a href="/technique.php?id=' . $department->id . '"><i class="fa fa-circle-o text-red"></i> <span>Техника</span></a></li>';
+                <li><a href="/?cmd=Unit&id_department=' . $department->id . '"><i class="fa fa-circle-o text-red"></i> <span>Штатное расписание</span></a></li>
+                <li><a href="/?cmd=Person&id_department=' . $department->id . '"><i class="fa fa-circle-o text-red"></i> <span>Личный состав</span></a></li>
+                <li><a href="/?cmd=Technique&id_department=' . $department->id . '"><i class="fa fa-circle-o text-red"></i> <span>Техника</span></a></li>';
                 
             if ($id_parent != $department->parent)
                 $id_parent = $department->parent;

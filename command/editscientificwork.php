@@ -24,7 +24,7 @@ class EditScientificWork extends Command {
                 if (sizeof($_FILES) && !$_FILES['document_file']['error'] && $_FILES['document_file']['size'] < 1024 * 2 * 1024) {
                     $upload_info = $_FILES['document_file'];
                     $upload_dir_name = $_SERVER['DOCUMENT_ROOT'] . '/upload/document/';
-                    $file_name = $upload_dir_name.$id_scientific_work;
+                    $file_name = $upload_dir_name.$id;
 
                     switch ($upload_info['type']) {
                         case 'image/jpeg':

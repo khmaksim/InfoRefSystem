@@ -4,10 +4,12 @@ namespace mapper;
 class InternetMapper extends Mapper implements \domain\UserFinder {
 	function __construct() {
 		parent::__construct();
-		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM internet");
-		$this->selectStmt = self::$PDO->prepare("SELECT  * FROM internet WHERE id = ?");
+		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM internet WHERE deleted IS NULL");
+		$this->selectByDepartmentStmt = self::$PDO->prepare("SELECT * FROM internet WHERE deleted IS NULL AND id_department IN (?)");
+		$this->selectStmt = self::$PDO->prepare("SELECT  * FROM internet WHERE id = ? AND deleted IS NULL");
 		$this->updateStmt = self::$PDO->prepare("UPDATE internet SET location=?, permission=?, reg_number=?, composition=?, order=?, email=?, id_department=? WHERE id=?");
 		$this->insertStmt = self::$PDO->prepare("INSERT INTO internet (location, permission, reg_number, composition, order, email, id_department) VALUES(?, ?, ?, ?, ?, ?, ?)");
+		$this->deleteStmt = self::$PDO->prepare("UPDATE internet SET deleted=now() WHERE id=?");
 	}
 
 	function getCollection(array $raw) {
@@ -38,7 +40,7 @@ class InternetMapper extends Mapper implements \domain\UserFinder {
 	}
 
 	function update(\domain\DomainObject $object) {
-		$values = array($object->location, $object->permission, $object->reg_number, $object->composition, $object->order, $object->email, $object->id_department, $object->getId());
+		$values = array($object->location, $object->permission, $object->reg_number, $object->composition, $object->order, $object->email, $object->id_department, $object->id);
 		$this->updateStmt->execute($values);
 	}
 
@@ -49,6 +51,17 @@ class InternetMapper extends Mapper implements \domain\UserFinder {
 	function selectAllStmt() {
         return $this->selectAllStmt;
     }
+
+    function findByDepatrment($id_departmant_list) {
+    	$values = array($id_departmant_list);
+        $this->selectByDepartmentStmt->execute($values);
+        return $this->getCollection($this->selectByDepartmentStmt()->fetchAll(\PDO::FETCH_ASSOC));
+    }
+
+    function delete(\domain\DomainObject $object) {
+		$values = array($object->id);
+		$this->deleteStmt->execute($values);
+	}
 }
 
 ?>

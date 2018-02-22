@@ -69,7 +69,7 @@
                                                             <td>' . $internet->composition . '</td>
                                                             <td>' . $internet->order . '</td>
                                                             <td>' . $internet->email . '</td>
-                                                            <td class="col-xs-1 text-center"><a href="./objectskii_edit.php?action=edit&id='. $internet->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                                            <td class="col-xs-1 text-center"><a href="./?cmd=EditInternet&id='. $internet->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                                             <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $internet->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
                                                         </tr>';
                                            }
@@ -113,28 +113,28 @@
             //     setInterval(function() {$("#items").load("/objectskii.func.php");}, 5000);
             // });
             $(document).ready(function() {
-                SelectedIdDepartment = $("li.treeview > a").first().attr("href").match(/\d+/);
+                SelectedIdDepartment = $("li.tree > a").first().attr("href").match(/\d+/);
 
-                $("li.treeview > a").click(function() {
+                $("li.tree > a").click(function() {
                     SelectedIdDepartment = $(this).attr("href").match(/\d+/)[0];
-                    $request = "/display.func.php?object=InternetInterface&department[]="+$(this).attr("href").match(/\d+/)[0];
+                    $request = "/?cmd=Internet&department[]="+$(this).attr("href").match(/\d+/)[0];
 
                     $.each($(this).next().find("a"), function() {
                         $request += "&department[]="+$(this).attr("href").match(/\d+/)[0];
                     })
-                    $("#example").load($request);
+                    $().load($request);
                 });
             });
             function addObject()
             {
                 if (SelectedIdDepartment != null)
-                    document.location = "/internet_edit.php?action=add&id_department=" + SelectedIdDepartment;
+                    document.location = "/?cmd=AddInternet&id_department=" + SelectedIdDepartment;
             }  
             function ConfirmDelete(id)
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./assets/inc/delete.inc.php?object=InternetInterface&id=" + ObjectId;
+                    document.location = "./?cmd=DeleteInternet&id=" + ObjectId;
                 }
             }
         /*]]>*/

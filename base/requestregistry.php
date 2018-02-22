@@ -163,6 +163,30 @@ class RequestRegistry extends Registry {
 		return $inst->get("ScientificWorkMapper");
 	}
 
+	static function getProductMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("ProductMapper"))) {
+			$inst->set('ProductMapper', new \mapper\ProductMapper());
+		}
+		return $inst->get("ProductMapper");
+	}
+
+	static function getEnterpriseMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("EnterpriseMapper"))) {
+			$inst->set('EnterpriseMapper', new \mapper\EnterpriseMapper());
+		}
+		return $inst->get("EnterpriseMapper");
+	}
+
+	static function getUnitMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("UnitMapper"))) {
+			$inst->set('UnitMapper', new \mapper\UnitMapper());
+		}
+		return $inst->get("UnitMapper");
+	}
+
 	static function getAccessManager() {
 		$inst = self::instance();
 		if (is_null($inst->get('AccessManager'))) {

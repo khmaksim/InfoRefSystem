@@ -2,9 +2,9 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
     require_once ("view/ViewHelper.php");
     $request = \view\ViewHelper::getRequest();
-    $edit_scientific_work = $request->getProperty('scientific_work');
+    $edit_product = $request->getProperty('product');
     $action = $request->getProperty('cmd');
-    $action_name = ($action == 'AddScientificWork') ? 'Добавление' : 'Редактирование';
+    $action_name = ($action == 'AddProduct') ? 'Добавление' : 'Редактирование';
 ?>
 <body class="hold-transition skin-blue sidebar-mini fixed">
     <div class="wrapper">
@@ -21,14 +21,14 @@
                 <ol class="breadcrumb">
                     <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                     <li><a href="/?cmd=ResearchWork">Научно-исследовательская работа</a></li>
-                    <li><a href="/?cmd=ScientificWork">Перечень</a></li>
+                    <li><a href="/?cmd=Product">Индексы изделий</a></li>
                     <li class="active"><?php echo $action_name; ?></li>
                 </ol>
             </section>
             <!-- Main content -->
             <section class="content">
                 <?php
-                $alertMessage = 'Укажите год!';
+                $alertMessage = 'Укажите индекс изделия!';
                 ?>
                 <!-- Your Page Content Here -->
                 <div class="row">
@@ -41,20 +41,34 @@
                             <form name="editform" role="form" method="post" enctype="multipart/form-data">
                                 <!-- <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" /> -->
                                 <div class="box-body">
-                                    <div class="col-md-1">
+                                    <div class="row">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="inputYear">Год</label>
-                                            <input type="number" min="2010" max="2100" name="year" class="form-control" id="inputYear" placeholder="Год"<?= ($action == 'EditScientificWork') ? ' value="' . $edit_scientific_work->year . '"' : ''; ?> required autofocus>
+                                            <label for="inputIndex">Индекс</label>
+                                            <input type="text" name="index" class="form-control" id="inputIndex" placeholder="Индекс"<?= ($action == 'EditProduct') ? ' value="' . $edit_product->index . '"' : ''; ?> required autofocus>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="inputCipher">Шифр</label>
+                                            <input type="text" name="cipher" class="form-control" id="inputCipher" placeholder="Шифр"<?= ($action == 'EditProduct') ? ' value="' . $edit_product->cipher . '"' : ''; ?>>
+                                        </div>
+                                    </div>
+                                    </div>
                                     <div class="form-group">
-                                        <label for="inputFile"><?= ($action == 'EditScientificWork') ? '<a href="/?cmd=Download&file=' . $edit_scientific_work->file_name . '" target="_blank">Файл</a>' : 'Файл'; ?></label>
-                                        <input type="file" name="document-file" id="inputFile">
+                                        <label for="inputDescription">Описание</label>
+                                        <textarea class="form-control" rows="3" name="description" id="inputDescription" placeholder="Описание"><?= ($action == 'EditProduct') ? '' . 
+                                        $edit_product->description . '' : ''; ?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputImageFile">Изображение</label>
+                                        <input type="file" name="image-file" id="inputImageFile">
                                         <p class="help-block">Размер файла не более 2 Мб.</p>
+                                        <div class="col-md-1"><?= ($action == 'EditProduct') ? '<img src="' . $edit_product->image_file_name . '" border="0" alt="" class="img-thumbnail" /><br />' : ''; ?></div>
                                     </div>
-                                    </div>
+                                </div>
                                 <div class="box-footer">
-                                    <a href="/?cmd=ScientificWork" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                    <a href="/?cmd=Product" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                 </div>
                             </form>
                         </div>
@@ -87,18 +101,6 @@
                         alert('<?= $alertMessage ?>');
                     }
                 }
-                // function validateYear(input)
-                // {
-                //     if (input.value != "") {
-                //         if (!(/^\d{1,3}$/.test(input.value))) {
-                //             input.focus();
-                //             var value = input.value;
-                //             input.value = value.substr(0, value.length - 1);
-                //             return false;
-                //         }
-                //     }
-                //     return true;
-                // }
                 /*]]>*/
             </script>
         </body>

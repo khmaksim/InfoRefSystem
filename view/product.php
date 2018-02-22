@@ -1,8 +1,7 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-$productInterface = new ProductInterface($dbo);
-$title = 'Индексы изделий';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
+    require_once ("view/ViewHelper.php") ;
+    $request = \view\ViewHelper::getRequest();
 ?>
 <body class="hold-transition skin-blue sidebar-mini fixed">
     <div class="wrapper">
@@ -18,8 +17,8 @@ $title = 'Индексы изделий';
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-                    <li><a href="/researchwork.php">Научно-исследовательская работа</a></li>
-                    <li class="active"><?php echo $title; ?></li>
+                    <li><a href="/?cmd=ResearchWork">Научно-исследовательская работа</a></li>
+                    <li class="active">Индексы изделий</li>
                 </ol>
             </section>
             <!-- Main content -->
@@ -37,14 +36,46 @@ $title = 'Индексы изделий';
                     <div class="col-lg-12">
                         <div class="box">
                             <div class="box-header">
-                                <h3 class="box-title"><?php echo $title; ?></h3>
+                                <h3 class="box-title">Индексы изделий</h3>
                             </div><!-- /.box-header -->
                             <div class="box-body">
                                 <div class="col-xs-12">
                                     <table id="product_table" class="table table-hover table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-xs-1">№</th>
+                                                <th>Индекс</th>
+                                                <th>Шифр</th>
+                                                <th class="col-xs-1 text-center">Печать</th>
+                                                <th class="col-xs-1 text-center">Редактировать</th>
+                                                <th class="col-xs-1 text-center">Удалить</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="items">
                                         <?php
-                                            echo $productInterface->display();
+                                            $product_list = $request->getProperty('product_list');
+                                            $count = 1;
+                                            foreach ($product_list as $product) {
+                                               $row_html = '<tr>
+                                                            <td>' . $count++ . '</td>
+                                                            <td><a data-toggle="collapse" href="#' . $product->id . '" data-parent="#items">' . $product->index . '</a></td>
+                                                            <td>' . $product->cipher . '</a></td>
+                                                            <td class="col-xs-1 text-center"><a href="./?cmd=ViewProduct&id='. $product->id .'" class="button btn-info btn-sm" target="_blank"><span class="glyphicon glyphicon-print"></span></a></td>
+                                                            <td class="col-xs-1 text-center"><a href="./?cmd=EditProduct&id='. $product->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                                            <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $product->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                                            </tr>
+                                                            <tr id="' . $product->id . '" class="panel-collapse collapse">
+                                                                <td colspan="4">
+                                                                    <p><b>Описание: </b>' . $product->description . '</p>
+                                                                </td>
+                                                                <td colspan="2">
+                                                                    <img src="' . $product->image_file_name . '" alt="' . $product->index . '" class="img-rounded" width=100% height=100%>
+                                                                </td>
+                                                            </tr>';
+                                                echo $row_html;
+                                            }
                                         ?>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div><!-- /.box-body -->
@@ -53,7 +84,7 @@ $title = 'Индексы изделий';
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <p class="text-right"><a href="./product_edit.php?action=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                        <p class="text-right"><a href="./?cmd=AddProduct" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                     </div><!-- /.col -->
                 </div>
         </section><!-- /.content -->
@@ -82,7 +113,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
                 {
                     var ObjectId = id;
                     if(confirm("Вы действительно хотите удалить запись?")) {
-                        document.location = "./assets/inc/delete.inc.php?object=ProductInterface&id=" + ObjectId;
+                        document.location = "./?cmd=DeleteProduct&id=" + ObjectId;
                     }
                 }
                 function filterSearch(text) {

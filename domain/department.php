@@ -10,9 +10,8 @@ class Department extends DomainObject {
 	public $note;
 	public $parent;
 	public $active;
-	public $editable;
 
-	function __construct($id=null, $fullname=null, $shortname=null, $dep_index=null, $server_addr=null, $note=null, $parent=null, $active=null, $editable=null) {
+	function __construct($id=null, $fullname=null, $shortname=null, $dep_index=null, $server_addr=null, $note=null, $parent=null, $active=null) {
 		$this->id = $id;	
 		$this->fullname = $fullname;	
 		$this->shortname = $shortname;
@@ -21,7 +20,6 @@ class Department extends DomainObject {
 		$this->note = $note;
 		$this->parent = $parent;
 		$this->active = $active;
-		$this->editable = $editable;
 	}
 }
 ?>

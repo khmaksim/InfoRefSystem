@@ -1,21 +1,14 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    if (isset($_GET['id']))
-        $arDepartment = getDepartmentsById($_GET['id']);
-    else
-        $arDepartment = array('fullname' => 'Подразделения с таким кодом не существует');
-    $page = 'unit';
+    require_once ("view/ViewHelper.php") ;
+    $request = \view\ViewHelper::getRequest();
+    $department = $request->getProperty('department');
 ?>
-
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -26,13 +19,11 @@
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                         <li>Штатное расписание</li>
-                        <li class="active"><?= $arDepartment['fullname']; ?></li>
+                        <li class="active"><?= $department->fullname; ?></li>
                     </ol>
                 </section>
-
                 <!-- Main content -->
                 <section class="content">
-
                 <!-- Your Page Content Here -->
                     <div class="row">
                         <div class="col-xs-12">
@@ -57,35 +48,44 @@
                                                 <th class="col-xs-1 text-center">Удалить</th>
                                             </tr>
                                         </thead>
-
-                                        <tbody id="items"></tbody>
+                                        <tbody id="items">
+                                        <?php 
+                                            $unit_list = $request->getProperty('unit_list');
+                                            $count = 0;
+                                            foreach ($unit_list as $unit) {
+                                                echo '<tr>
+                                                        <td>' . ++$count . '</td>
+                                                        <td>' . $unit->position . '</td>
+                                                        <td>' . $unit->military_rank . '</td>
+                                                        <td>' . $unit->tariff_category . '</td>
+                                                        <td>' . $unit->access_type . '</td>
+                                                        <td>' . $unit->order_number . '</td>
+                                                        <td>' . $unit->dateorderstart . '</td>
+                                                        <td>' . $unit->order_owner . '</td>
+                                                        <td>' . $unit->dateorderend . '</td>
+                                                        <td class="col-xs-1 text-center"><a href="/?cmd=EditUnit&id=' . $unit->id . '" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                                        <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete(' . $unit->id . ');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                                    </tr>';
+                                            }
+                                        ?>
+                                        </tbody>
                                     </table>
-
                                  </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div><!-- /.col -->
                     </div>
-                    <?php
-                        $arAccessRight = getAccessRightById($_SESSION['user_id']);
-                    ?>
                     <div class="row">
                         <div class="col-xs-12">
-                            <p class="text-right"><a href="/unit_edit.php?act=add&id_departments=<?= $_GET['id']; ?>" type="button" class="btn btn-primary <?= in_array($arAccessRight['kadr'], array(2, 3, 6, 7)) ? '' : disabled; ?>"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                            <p class="text-right"><a href="/?cmd=AddUnit&id_department=<?= $department->id; ?>" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                         </div><!-- /.col -->
                     </div>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
-            <!-- Add the sidebar's background. This div must be placed
-            immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div><!-- ./wrapper -->
-
         <!-- REQUIRED JS SCRIPTS -->
-
         <!-- jQuery 2.1.4 -->
         <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
@@ -98,16 +98,11 @@
              fixed layout. -->
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
-            $(document).ready(function(){
-      		    $("#items").load("/unit.func.php?id=<?= $_GET['id']; ?>");
-                setInterval(function() {$("#items").load("/unit.func.php?id=<?= $_GET['id']; ?>");}, 5000);
-            });
-
             function ConfirmDelete(id)
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./save.php?id="+ObjectId+"&act=delUnit";
+                    document.location = "./?cmd=DeleteUnit&id="+ObjectId;
                 }
             }
         /*]]>*/

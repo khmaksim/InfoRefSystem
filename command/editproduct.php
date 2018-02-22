@@ -1,31 +1,31 @@
 <?php
 namespace command;
 
-class EditDocument extends Command {
+class EditProduct extends Command {
     function doExecute(\controller\Request $request) {
-    	$documentMapper = \base\RequestRegistry::getDocumentMapper();
+    	$productMapper = \base\RequestRegistry::getProductMapper();
     	
     	if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     		$id = $request->getProperty('id');
     		if (!is_null($id)) {
-    			$document = $documentMapper->find($id);
-    			if (!is_null($document)) {
-					$request->setProperty('document', $document);    				
+    			$product = $productMapper->find($id);
+    			if (!is_null($product)) {
+					$request->setProperty('product', $product);    				
     			}
     		}
     	}
   		else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$id = $request->getProperty('id');
     		if (!is_null($id)) {
-    			$document = $documentMapper->find($id);
-
-	  			$document->name = $request->getProperty('name');
-				$document->section = $request->getProperty('section');
-				$document->document_file = $section = $request->getProperty('document_file');
-
-                if (sizeof($_FILES) && !$_FILES['document_file']['error'] && $_FILES['document_file']['size'] < 1024 * 2 * 1024) {
-                    $upload_info = $_FILES['document_file'];
-                    $upload_dir_name = $_SERVER['DOCUMENT_ROOT'] . '/upload/document/';
+    			$product = $productMapper->find($id);
+                
+	  			$product->index = $request->getProperty('index');
+                $product->cipher = $request->getProperty('cipher');
+                $product->description = $request->getProperty('description');
+				
+                if (sizeof($_FILES) && !$_FILES['image-file']['error'] && $_FILES['image-file']['size'] < 1024 * 2 * 1024) {
+                    $upload_info = $_FILES['image-file'];
+                    $upload_dir_name = $_SERVER['DOCUMENT_ROOT'] . '/upload/product/';
                     $file_name = $upload_dir_name.$id;
 
                     switch ($upload_info['type']) {
@@ -34,15 +34,6 @@ class EditDocument extends Command {
                             break;
                         case 'image/png':
                             $file_name .= '.png';
-                            break;
-                        case 'application/msword':
-                            $file_name .= '.doc';
-                            break;
-                        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                            $file_name .= '.docx';
-                            break;
-                        case 'application/pdf':
-                            $file_name .= '.pdf';
                             break;
                         default:
                             exit;
@@ -55,9 +46,10 @@ class EditDocument extends Command {
                     if (!move_uploaded_file($upload_info['tmp_name'], $file_name)) {
                         $request->setProperty('error', 'Не удалось осуществить сохранение файла');
                     }
-                    $document->document_file = $file_name;
-                    $documentMapper->update($document);
+
+                    $product->image_file_name = $file_name;
                 }
+                $productMapper->update($product);
 
 				return self::statuses('CMD_OK');
 			}

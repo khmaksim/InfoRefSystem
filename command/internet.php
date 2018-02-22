@@ -6,7 +6,14 @@ class Internet extends Command {
     	$internetMapper = \base\RequestRegistry::getInternetMapper();
     	$departmentMapper = \base\RequestRegistry::getDepartmentMapper();
 
-    	$collection = $internetMapper->findAll();
+    	$id_department_list = $request->getProperty('deparment');
+    	if (!is_null($id_department_list)) {
+    		echo "asdasdsad";
+    		$collection = $internetMapper->findByDepartment($id_department_list);	
+    	}
+    	else
+    		$collection = $internetMapper->findAll();
+
     	$request->setProperty('internet_list', $collection->getGenerator());
 
     	$collection1 = $departmentMapper->getTree();

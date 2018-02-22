@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <p class="text-right">
-                                    <a href="/departments.php" type="button" class="btn btn-app"><i class="glyphicon glyphicon-edit"></i> Редактировать</a>
+                                    <a href="/?cmd=Department" type="button" class="btn btn-app"><i class="glyphicon glyphicon-edit"></i> Редактировать</a>
                                     <a href="javascript:void(0);" onclick="document.View.submit();" type="button" class="btn btn-app"><i class="fa fa-print"></i> Печать</a>
                                     <!--<a href="javascript:void(0);" onclick="document.View.submit();" type="button" class="btn btn-app"><i class="fa fa-print"></i> Справочник</a>-->
                                 </p>
@@ -48,7 +48,7 @@
                                         <li class="header">Оргштатная структура</li>
                                         <!-- Optionally, you can add icons to the links -->
                                         <?php
-                                            showDepartmentsNavTree();
+                                            include_once $_SERVER['DOCUMENT_ROOT'] . '/structure_department.inc.php';
                                         ?>
                                       </ul><!-- /.sidebar-menu -->
                                     </section>
@@ -65,9 +65,7 @@
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
         </div><!-- ./wrapper -->
-
         <!-- REQUIRED JS SCRIPTS -->
-
         <!-- jQuery 2.1.4 -->
         <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
@@ -80,7 +78,6 @@
              fixed layout. -->
         <!-- iCheck -->
         <script src="/plugins/iCheck/icheck.min.js"></script>
-
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
             $(document).ready(function(){
