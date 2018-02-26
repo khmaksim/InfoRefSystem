@@ -1,11 +1,11 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    if (isset($_GET['id_departments']))
-        $arDepartment = getDepartmentsById($_GET['id_departments']);
-    else
-        $arDepartment = array();
-    $page = 'person';
+    require_once ("view/ViewHelper.php");
+    $request = \view\ViewHelper::getRequest();
+    $edit_person = $request->getProperty('person');
+    $department = $request->getProperty('department');
+    $action = $request->getProperty('cmd');
+    $action_name = ($action == 'Add{Person}') ? 'Добавление' : 'Редактирование';
 ?>
   <!--
   BODY TAG OPTIONS:
@@ -32,7 +32,6 @@
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -42,197 +41,172 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
-                        <li><a href="/structure.php">Cтруктура ЧНП ВКС</a></li>
-                        <li><a href="/person.php?id=<?= $arDepartment['id']; ?>">Личный состав - <?= $arDepartment['fullname']; ?></a></li>
-                        <li class="active"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
+                        <li><a href="/?cmd=Structure">Cтруктура ЧНП ВКС</a></li>
+                        <li><a href="/?cmd=Person&id_department=<?= $department->id; ?>">Личный состав - <?= $department->fullname; ?></a></li>
+                        <li class="active"><?php echo $action_name; ?></li>
                     </ol>
                 </section>
-
                 <!-- Main content -->
                 <section class="content">
-
-                <?php
-                    if ($_GET['act'] == 'edit') {
-                        $arPerson = getPersonById($_GET['id']);
-                    }
-                ?>
                 <!-- Your Page Content Here -->
-                <?php
-                    if ($_GET['act'] == 'edit') {
-                ?>
                     <div class="row">
                             <div class="col-xs-12">
                                 <p class="text-right">
-                                    <a href="/person_view.php?id=<?= $_GET['id']; ?>&id_departments=<?= $_GET['id_departments']; ?>" target="_blank" type="button" class="btn btn-app"><i class="fa fa-print"></i> Печать</a>
+                                    <a href="/person_view.php?id=<?= $edit_person->id; ?>&id_departments=<?= $department->id; ?>" target="_blank" type="button" class="btn btn-app"><i class="fa fa-print"></i> Печать</a>
                                 </p>
                             </div><!-- /.col -->
                         </div>
-
-                <?php
-                    }
-                ?>
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></h3>
+                                    <h3 class="box-title"><?php echo $action_name; ?></h3>
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
-                                <form name="editform" role="form" action="/save.php" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="act" value="<?= $_GET['act']; ?>Person" />
+                                <form name="editform" role="form" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
                                     <input type="hidden" name="id_departments" value="<?= (isset($_GET['id_departments'])) ? $_GET['id_departments'] : ''; ?>" />
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <?= ($_GET['act'] == 'edit' && $arPerson['img_ext'] != '') ? '<img src="/user/' . $arPerson['id'] . '_thumb.' . $arPerson['img_ext'] . '" border="0" alt="" class="img-thumbnail" /><br />' : ''; ?>
+                                            <?= ($action == 'EditPerson' && $edit_person->img_ext != '') ? '<img src="./upload/user/' . $edit_person->id . '_thumb.' . $edit_person->img_ext . '" border="0" alt="" class="img-thumbnail" /><br />' : ''; ?>
                                             <label for="exampleInputFile">Фото</label>
                                             <input type="file" name="face" id="exampleInputFile">
                                             <p class="help-block">Размер файла не более 2 Мб.</p>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Личный номер</label>
-                                            <input type="text" name="personalnumber" class="form-control" id="exampleInputEmail1" placeholder="Личный номер"<?= ($_GET['act'] == 'edit') ? ' value="' . $arPerson['personalnumber'] . '"' : ''; ?> required>
+                                            <label for="inputPersonalnumber">Личный номер</label>
+                                            <input type="text" name="personalnumber" class="form-control" id="inputPersonalnumber" placeholder="Личный номер"<?= ($action == 'EditPerson') ? ' value="' . $edit_person->personalnumber . '"' : ''; ?> required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Фамилия</label>
-                                            <input type="text" name="lastname" class="form-control" id="exampleInputEmail1" placeholder="Фамилия"<?= ($_GET['act'] == 'edit') ? ' value="' . $arPerson['lastname'] . '"' : ''; ?> required>
+                                            <label for="inputLastname">Фамилия</label>
+                                            <input type="text" name="lastname" class="form-control" id="inputLastname" placeholder="Фамилия"<?= ($action == 'EditPerson') ? ' value="' . $edit_person->lastname . '"' : ''; ?> required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Имя</label>
-                                            <input type="text" name="firstname" class="form-control" id="exampleInputEmail1" placeholder="Имя"<?= ($_GET['act'] == 'edit') ? ' value="' . $arPerson['firstname'] . '"' : ''; ?> required>
+                                            <label for="inputFirstname">Имя</label>
+                                            <input type="text" name="firstname" class="form-control" id="inputFirstname" placeholder="Имя"<?= ($action == 'EditPerson') ? ' value="' . $edit_person->firstname . '"' : ''; ?> required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Отчество</label>
-                                            <input type="text" name="patronymic" class="form-control" id="exampleInputEmail1" placeholder="Отчество"<?= ($_GET['act'] == 'edit') ? ' value="' . $arPerson['patronymic'] . '"' : ''; ?> required>
+                                            <label for="inputPatronymic">Отчество</label>
+                                            <input type="text" name="patronymic" class="form-control" id="inputPatronymic" placeholder="Отчество"<?= ($action == 'EditPerson') ? ' value="' . $edit_person->patronymic . '"' : ''; ?> required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Должность</label>
+                                            <label for="inputUnit">Должность</label>
                                             <select class="form-control" name="id_tunit">
-                                                <option value="0"<?= ($_GET['act'] == 'edit' && $arPerson['id_tunit'] == $row['id']) ? ' selected="selected"' : ''; ?>>За штатом</option>
+                                                <option value="0"<?= ($action == 'EditPerson' && $edit_person->id_unit == '') ? ' selected="selected"' : ''; ?>>За штатом</option>
                                                 <?php
-                                                    $sql = "SELECT * FROM public.tunit WHERE id_departments = '" . $_GET['id_departments'] . "' AND vacant = 'true' AND dateorderend = '1970-01-01' ORDER BY id";
-                                                    foreach ($dbconn->query($sql) as $row) {
-                                                ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arPerson['id_tunit'] == $row['id']) ? ' selected="selected"' : ''; ?>><? $t1 = getMilitaryPositionById($row['id_militaryposition']); print $t1['name']; ?></option>
-                                                <?php
+                                                    $unit_list = $request->getProperty('unit_list');
+                                                    foreach ($unit_list as $unit) {
+                                                        if ($action == 'EditPerson' && $edit_person->id_unit == $unit->id)
+                                                            echo '<option value="' . $unit->id . '" selected="selected">' . $unit->position . '</option>';
+                                                        else
+                                                            echo '<option value="' . $unit->id . '">' . $unit->position . '</option>';
                                                     }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Звание</label>
+                                            <label for="inputMilitaryRank">Звание</label>
                                             <select class="form-control" name="id_militaryrank">
                                                 <option value="0">Нет</option>
                                                 <?php
-                                                    $sql = "SELECT * FROM public.tmilitaryrank ORDER BY name";
-                                                    foreach ($dbconn->query($sql) as $row) {
-                                                ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arPerson['id_militaryrank'] == $row['id']) ? ' selected="selected"' : ''; ?>><? $t1 = getMilitaryRankById($row['id']); print $t1['name']; ?></option>
-                                                <?php
+                                                    $military_rank_list = $request->getProperty('military_rank_list');
+                                                    foreach ($military_rank_list as $military_rank) {
+                                                        if ($action == 'EditPerson' && $edit_person->id_military_rank == $military_rank->id)
+                                                            echo '<option value="' . $military_rank->id . '" selected="selected">' . $military_rank->name . '</option>';
+                                                        else
+                                                            echo '<option value="' . $military_rank->id . '">' . $military_rank->name . '</option>';
                                                     }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Форма допуска</label>
-                                            <select class="form-control" name="id_accesslevel">
+                                            <label for="inputAccessType">Форма допуска</label>
+                                            <select class="form-control" name="id_accesstype">
                                                 <?php
-                                                    $sql = "SELECT * FROM public.taccesstype ORDER BY id";
-                                                    foreach ($dbconn->query($sql) as $row) {
-                                                ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arPerson['id_accesslevel'] == $row['id']) ? ' selected="selected"' : ''; ?>><?= $row['name']; ?></option>
-                                                <?php
+                                                    $access_type_list = $request->getProperty('access_type_list');
+                                                    foreach ($access_type_list as $access_type) {
+                                                        if ($action == 'EditPerson' && $edit_person->id_access_type == $access_type->id)
+                                                            echo '<option value="' . $access_type->id . '" selected="selected">' . $access_type->name . '</option>';
+                                                        else
+                                                            echo '<option value="' . $access_type->id . '">' . $access_type->name . '</option>';
                                                     }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Военный</label><br />
-                                            <input type="checkbox" name="military" value="1"<?= ($_GET['act'] == 'edit' && $arPerson['military'] != 'true') ? '' : ' checked="checked"'; ?>>
+                                            <label for="inputMilitary">Военный</label><br />
+                                            <input type="checkbox" name="military" value="1"<?= ($action == 'EditPerson' && $edit_person->military != 'true') ? '' : ' checked="checked"'; ?>>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1">Дата рождения</label>
+                                            <label for="inputBirthday">Дата рождения</label>
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" name="birthday" placeholder="Дата рождения (формат 01-01-1979)" class="form-control"<?= ($_GET['act'] == 'edit') ? ' value="' . DateFromENtoRU(mb_substr($arPerson['birthday'], 0, 10), '-') . '"' : ''; ?>>
+                                                <input type="text" name="birthday" placeholder="Дата рождения (формат 01-01-1979)" class="form-control"<?= ($action == 'EditPerson')? ' value="' . DateFromENtoRU(mb_substr($edit_person->birthday, 0, 10), '-') . '"' : ''; ?>>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Телефон</label>
+                                            <label for="inputTelephone">Телефон</label>
                                         </div>
                                         <?php
-                                            if ($_GET['act'] == 'edit') {
-                                                $sql = "SELECT * FROM public.tphone WHERE id_person = '" . $arPerson['id'] . "' ORDER BY id";
-                                                foreach ($dbconn->query($sql) as $row) {
-                                        ?>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="person-phone[]" value="<?= $row['name']; ?>" required="required">
-                                        </div>
-                                        <?php
-                                                }
-                                            } else {
-                                        ?>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="person-phone[]" value="" required="required">
-                                        </div>
-                                        <?php
+                                            if ($action == 'EditPerson') {
+                                                $collection = $edit_person->phone_number_collection;
+                                                $phone_number_list = $collection->getGenerator();
+                                                foreach ($phone_number_list as $phone_number)
+                                                    echo '<div class="form-inline">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" name="person-phone[]" value="'. $phone_number->number .'" required="required">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" name="person-phone[]" value="'. $phone_number->number .'" required="required">
+                                                            </div>
+                                                        </div>';
+                                            }
+                                            else {
+                                                echo '<div class="form-group">
+                                                        <div class="form-inline">
+                                                             <div class="form-group">
+                                                                <select class="form-control" name="id_accesstype">
+                                                                    <option selected="selected">access_type->name</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" name="person-phone[]" value="" required="required">
+                                                            </div>
+                                                        </div>
+                                                    </div>';
                                             }
                                         ?>
                                         <div class="form-group" style="overflow: hidden;">
                                             <a href="javascript:void(0);" onclick="addPersonPhone($(this));" type="button" class="btn btn-default pull-right btn-flat add-person-phone">Добавить телефон</a>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Email</label>
-                                        </div>
-                                        <?php
-                                            if ($_GET['act'] == 'edit') {
-                                                $sql = "SELECT * FROM public.temail WHERE id_person = '" . $arPerson['id'] . "' ORDER BY id";
-                                                foreach ($dbconn->query($sql) as $row) {
-                                        ?>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="person-email[]" value="<?= $row['name']; ?>" required="required">
-                                        </div>
-                                        <?php
-                                                }
-                                            } else {
-                                        ?>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="person-email[]" value="" required="required">
-                                        </div>
-                                        <?php
-                                            }
-                                        ?>
-                                        <div class="form-group" style="overflow: hidden;">
-                                            <a href="javascript:void(0);" onclick="addPersonEmail($(this));" type="button" class="btn btn-default pull-right btn-flat add-person-email">Добавить email</a>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="exampleInputFile">Город</label>
                                             <select class="form-control" name="id_city">
                                                 <option value="0">Не определён</option>
                                                 <?php
-                                                    $sql = "SELECT * FROM public.tcity ORDER BY id";
-                                                    foreach ($dbconn->query($sql) as $row) {
-                                                ?>
-                                                <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arPerson['id_city'] == $row['id']) ? ' selected="selected"' : ''; ?>><?= $row['name']; ?></option>
-                                                <?php
+                                                    $city_list = $request->getProperty('city_list');
+                                                    foreach ($city_list as $city) {
+                                                        if ($action == 'EditPerson' && $edit_person->id_city == $city->id)
+                                                            echo '<option value="'. $city->id .'" selected="selected">'. $city->name .'</option>';
+                                                        else 
+                                                            echo '<option value="'. $city->id .'>'. $city->name .'</option>';
                                                     }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Адрес</label>
-                                            <textarea name="address" class="form-control" rows="3" placeholder="Адрес..."><?= ($_GET['act'] == 'edit') ? $arPerson['address'] : ''; ?></textarea>
+                                            <textarea name="address" class="form-control" rows="3"><?= ($action == 'EditPerson') ? ' value="' . $edit_person->address . '"' : ''; ?></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Комментарий</label>
-                                            <textarea name="comment" class="form-control" rows="3" placeholder="Текст..."><?= ($_GET['act'] == 'edit') ? $arPerson['comment'] : ''; ?></textarea>
+                                            <textarea name="note" class="form-control" rows="3"><?= ($action == 'EditPerson') ? ' value="' . $edit_person->note . '"' : ''; ?></textarea>
                                         </div>
                                     </div><!-- /.box-body -->
-
                                     <div class="box-footer">
-                                        <a href="/person.php?id=<?= $_GET['id_departments']?>" type="submit" class="btn btn-default">Отмена</a> <a onclick="javascript:checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                        <a href="/?cmd=Person&id_department=<?= $department->id; ?>" type="submit" class="btn btn-default">Отмена</a> <a onclick="javascript:checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                     </div>
                                 </form>
                             </div>
@@ -245,9 +219,7 @@
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
         </div><!-- ./wrapper -->
-
         <!-- REQUIRED JS SCRIPTS -->
-
         <!-- jQuery 2.1.4 -->
         <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
@@ -305,7 +277,13 @@
             }
 
             function addPersonPhone(el) {
-                $('<div class="form-group"><div class="input-group"><input type="text" class="form-control" name="person-phone[]" value=""><div class="input-group-btn"><button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove();">Удалить</button></div><!-- /btn-group --></div></div>').fadeIn('slow').insertBefore($(el).parent());
+                $clone = $(el).parent().prev().clone();
+                if ($clone.children().first().children().last().children().last().attr('type') != 'button') {
+                    $clone.children().first().children().last().append('<button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove();">Удалить</button>');
+                }
+                $clone.fadeIn('slow').insertBefore($(el).parent());
+                // fadeIn('slow').insertBefore($(el).parent());
+                // $('<div class="form-inline"><div class="form-group"><select class="form-control" name="id_accesstype"><option selected="selected">access_type->name</option></select></div><div class="form-group"><input type="text" class="form-control" name="person-phone[]" value="" required="required"></div><button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove();">Удалить</button></div>').fadeIn('slow').insertBefore($(el).parent());
             }
 
             function addPersonEmail(el) {

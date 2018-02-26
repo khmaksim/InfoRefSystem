@@ -75,34 +75,6 @@ class ObjectKiiMapper extends Mapper implements \domain\UserFinder {
 	// 	}
 	// }
 
-	public function display($id=NULL)
-	{
-		if (empty($id) || $id == NULL)
-			$objectkii = new ObjectKii();
-		else {	
-			$id = preg_replace('/[^0-9]/', '', $id);
-			$objectkii = $this->_loadObjectKiiById($id);
-		}
-		
-		return '
-			<div class="form-group">
-				<label for="exampleInputNameKVITO">Наименование КВИТО</label>
-				<input type="text" name="name_kvito" class="form-control" id="exampleInputNameKVITO" placeholder="Наименование КВИТО" value="' . $objectkii->name_kvito . '" required autofocus>
-			</div>
-			<div class="form-group">
-				<label for="exampleInputRegNumber">Регистрационный номер</label>
-				<input type="text" name="reg_number" class="form-control" id="exampleInputRegNumber" placeholder="Регистрационный номер" value="' . $objectkii->reg_number . '">
-			</div>
-			<div class="form-group">
-				<label for="exampleInputAttestat">Аттестат</label>
-				<input type="text" name="certificate" class="form-control" id="exampleInputAttestat" placeholder="Аттестат" value="' . $objectkii->certificate . '">
-			</div>
-			<div class="form-group">
-				<label for="exampleInputOrder">Приказ</label>
-				<input type="text" name="order" class="form-control" id="exampleInputOrder" placeholder="Приказ" value="' . $objectkii->order . '">
-			</div>
-		';
-	}
 }
 
 ?>

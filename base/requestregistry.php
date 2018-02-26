@@ -139,20 +139,20 @@ class RequestRegistry extends Registry {
 		return $inst->get("EmailTypeMapper");
 	}
 
-	static function getPhoneTypeMapper() {
+	static function getPhoneNumberMapper() {
 		$inst = self::instance();
-		if (is_null($inst->get("PhoneTypeMapper"))) {
-			$inst->set('PhoneTypeMapper', new \mapper\PhoneTypeMapper());
+		if (is_null($inst->get("PhoneNumberMapper"))) {
+			$inst->set('PhoneNumberMapper', new \mapper\PhoneNumberMapper());
 		}
-		return $inst->get("PhoneTypeMapper");
+		return $inst->get("PhoneNumberMapper");
 	}
 
-	static function getPhonenumberTypeMapper() {
+	static function getPhoneNumberTypeMapper() {
 		$inst = self::instance();
-		if (is_null($inst->get("PhonenumberTypeMapper"))) {
-			$inst->set('PhonenumberTypeMapper', new \mapper\PhonenumberTypeMapper());
+		if (is_null($inst->get("PhoneNumberTypeMapper"))) {
+			$inst->set('PhoneNumberTypeMapper', new \mapper\PhoneNumberTypeMapper());
 		}
-		return $inst->get("PhonenumberTypeMapper");
+		return $inst->get("PhoneNumberTypeMapper");
 	}
 
 	static function getScientificWorkMapper() {

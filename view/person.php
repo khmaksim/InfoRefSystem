@@ -54,7 +54,7 @@
                                             foreach ($person_list as $person) {
                                                 $img = 'Нет';
                                                 if (file_exists('./upload/user/' . $person->id . '_thumb.' . $person->img_ext))
-                                                    $img = '<img src="/upload/user/'. $person->id .'_thumb.'. $person->img_ext .'" border="0" alt="" class="img-circle" />';
+                                                    $img = '<img src="./upload/user/'. $person->id .'_thumb.'. $person->img_ext .'" border="0" alt="" class="img-circle" />';
 
                                                 echo '<tr><td>'. ++$count .'</td>
                                                         <td>'. $img .'</td>

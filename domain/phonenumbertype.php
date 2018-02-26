@@ -1,7 +1,7 @@
 <?php
 namespace domain;
 
-class PhonenumberType extends DomainObject {
+class PhoneNumberType extends DomainObject {
 	public $id;	
 	public $name;	
 

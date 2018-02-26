@@ -7,6 +7,7 @@ class UnitMapper extends Mapper implements \domain\UserFinder {
 		$this->selectAllStmt = self::$PDO->prepare("SELECT u.id, u.id_department, d.fullname AS department, u.id_position, p.name AS position, u.tariff_category, u.id_military_rank, mr.name AS military_rank, u.id_access_type, at.name AS access_type, u.order_number, u.order_owner, u.dateorderstart, u.dateorderend, u.vacant FROM unit u LEFT OUTER JOIN department d ON u.id_department = d.id LEFT OUTER JOIN position p ON u.id_position = p.id LEFT OUTER JOIN military_rank mr ON u.id_military_rank = mr.id LEFT OUTER JOIN access_type at ON u.id_access_type = at.id WHERE u.deleted IS NULL");
 		// $this->selectTreeStmt = self::$PDO->prepare("WITH recursive r AS (SELECT id, fullname, shortname, dep_index, server_addr, note, parent, active, deleted FROM department WHERE parent = 0 UNION SELECT t1.id, t1.fullname, t1.shortname, t1.dep_index, t1.server_addr, t1.note, t1.parent, t1.active, t1.deleted FROM department AS t1 JOIN r ON t1.parent = r.id) SELECT id, fullname, shortname, dep_index, server_addr, note, parent, active FROM r WHERE deleted IS NULL ORDER BY id, parent");
 		$this->selectStmt = self::$PDO->prepare("SELECT u.id, u.id_department, d.fullname AS department, u.id_position, p.name AS position, u.tariff_category, u.id_military_rank, mr.name AS military_rank, u.id_access_type, at.name AS access_type, u.order_number, u.order_owner, u.dateorderstart, u.dateorderend, u.vacant FROM unit u LEFT OUTER JOIN department d ON u.id_department = d.id LEFT OUTER JOIN position p ON u.id_position = p.id LEFT OUTER JOIN military_rank mr ON u.id_military_rank = mr.id LEFT OUTER JOIN access_type at ON u.id_access_type = at.id WHERE u.id = ? AND u.deleted IS NULL");
+		$this->selectByDepartmentStmt = self::$PDO->prepare("SELECT u.id, u.id_department, d.fullname AS department, u.id_position, p.name AS position, u.tariff_category, u.id_military_rank, mr.name AS military_rank, u.id_access_type, at.name AS access_type, u.order_number, u.order_owner, u.dateorderstart, u.dateorderend, u.vacant FROM unit u LEFT OUTER JOIN department d ON u.id_department = d.id LEFT OUTER JOIN position p ON u.id_position = p.id LEFT OUTER JOIN military_rank mr ON u.id_military_rank = mr.id LEFT OUTER JOIN access_type at ON u.id_access_type = at.id WHERE u.id_department = ? AND u.vacant = 'true' AND u.deleted IS NULL");
 		// $this->updateStmt = self::$PDO->prepare("UPDATE unit SET fullname=?, shortname=?, dep_index=?, server_addr=?, note=?, parent=?, active=? WHERE id=?");
 		$this->insertStmt = self::$PDO->prepare("INSERT INTO unit (id_department, id_position, tariff_category, id_military_rank, id_access_type, order_number, order_owner, dateorderstart, dateorderend, vacant) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		$this->deleteStmt = self::$PDO->prepare("UPDATE unit SET deleted=now() WHERE id=?");
@@ -59,6 +60,15 @@ class UnitMapper extends Mapper implements \domain\UserFinder {
         return $this->selectAllStmt;
     }
 
+    function selectByDepartmentStmt() {
+        return $this->selectByDepartmentStmt;
+    }
+
+    function findByDepartment($id_departmant) {
+    	$values = array($id_departmant);
+        $this->selectByDepartmentStmt->execute($values);
+        return $this->getCollection($this->selectByDepartmentStmt()->fetchAll(\PDO::FETCH_ASSOC));
+    }
     // function selectTreeStmt() {
     //     return $this->selectTreeStmt;
     // }

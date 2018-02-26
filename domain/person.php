@@ -16,10 +16,10 @@ class Person extends DomainObject {
 	public $address;
 	public $id_city;
 	public $note;
-	public $deleted;
+	public $phone_number_collection;	
 
 	function __construct($id=null, $firstname=null, $lastname=null, $patronymic=null, $military=null, $personal_number=null, $birthday=null, $id_access_type=null, $id_unit=null, $id_military_rank=null, $img_ext=null, $address=null, $id_city=null, $note=null) {
-		$this->$id = $id;	
+		$this->id = $id;
 		$this->firstname = $firstname;	
 		$this->lastname = $lastname;
 		$this->patronymic = $patronymic;

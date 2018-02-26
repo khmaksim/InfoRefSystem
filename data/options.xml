@@ -456,46 +456,6 @@
 			</status>
 		</command>
 
-		<command name="PhoneType">
-			<view>login</view>
-			<status value="CMD_OK">
-				<view>phonetype</view>
-			</status>
-			<status value="CMD_ERROR">
-				<view>login</view>
-			</status>
-		</command>
-
-		<command name="AddPhoneType">
-			<view>phonetype_edit</view>
-			<status value="CMD_OK">
-				<forward>PhoneType</forward>
-			</status>
-			<status value="CMD_ERROR">
-				<view>phonetype_edit</view>
-			</status>
-		</command>
-
-		<command name="EditPhoneType">
-			<view>phonetype_edit</view>
-			<status value="CMD_OK">
-				<forward>PhoneType</forward>
-			</status>
-			<status value="CMD_ERROR">
-				<view>phonetype_edit</view>
-			</status>
-		</command>
-
-		<command name="DeletePhoneType">
-			<view>phonetype</view>
-			<status value="CMD_OK">
-				<forward>PhoneType</forward>
-			</status>
-			<status value="CMD_ERROR">
-				<view>phonetype</view>
-			</status>
-		</command>
-
 		<command name="PhonenumberType">
 			<view>login</view>
 			<status value="CMD_OK">

@@ -29,6 +29,8 @@ class PersonMapper extends Mapper implements \domain\UserFinder {
 		$obj->address = $array['address'];
 		$obj->id_city = $array['id_city'];
 		$obj->note = $array['note'];
+		$phoneNumberMapper = \base\RequestRegistry::getPhoneNumberMapper();
+		$obj->phone_number_collection = $phoneNumberMapper->findByPerson($array['id']);
 		return $obj;
 	}
 
