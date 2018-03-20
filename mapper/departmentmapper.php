@@ -6,7 +6,7 @@ class DepartmentMapper extends Mapper implements \domain\UserFinder {
 		parent::__construct();
 		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM department WHERE deleted IS NULL");
 		$this->selectTreeStmt = self::$PDO->prepare("WITH recursive r AS (SELECT id, fullname, shortname, dep_index, server_addr, note, parent, active, deleted FROM department WHERE parent = 0 UNION SELECT t1.id, t1.fullname, t1.shortname, t1.dep_index, t1.server_addr, t1.note, t1.parent, t1.active, t1.deleted FROM department AS t1 JOIN r ON t1.parent = r.id) SELECT id, fullname, shortname, dep_index, server_addr, note, parent, active FROM r WHERE deleted IS NULL ORDER BY id, parent");
-		$this->selectStmt = self::$PDO->prepare("SELECT  * FROM department WHERE id = ? AND deleted IS NULL");
+		$this->selectStmt = self::$PDO->prepare("SELECT  * FROM department WHERE id=? AND deleted IS NULL");
 		$this->updateStmt = self::$PDO->prepare("UPDATE department SET fullname=?, shortname=?, dep_index=?, server_addr=?, note=?, parent=?, active=? WHERE id=?");
 		$this->insertStmt = self::$PDO->prepare("INSERT INTO department (fullname, shortname, dep_index, server_addr, note, parent, active) VALUES(?, ?, ?, ?, ?, ?, ?)");
 		$this->deleteStmt = self::$PDO->prepare("UPDATE department SET deleted=now() WHERE id=?");

@@ -40,91 +40,8 @@
                             break;
 
 
-        case 'addPerson':
-            if (!isset($military)) $military = 'false';
-            $sql = "INSERT INTO public.tperson (
-                                                    id_departments,
-                                                    personalnumber,
-                                                    lastname,
-                                                    firstname,
-                                                    patronymic,
-                                                    id_tunit,
-                                                    id_accesslevel,
-                                                    id_militaryrank,
-                                                    military,
-                                                    birthday,
-                                                    id_city,
-                                                    address,
-                                                    comment
-                                                )
-                                                VALUES (
-                                                    '" . $id_departments . "',
-                                                    '" . $personalnumber . "',
-                                                    '" . $lastname . "',
-                                                    '" . $firstname . "',
-                                                    '" . $patronymic . "',
-                                                    '" . $id_tunit . "',
-                                                    '" . $id_accesslevel . "',
-                                                    '" . $id_militaryrank . "',
-                                                    '" . $military . "',
-                                                    '" . DateFromRUtoEN($birthday) . "',
-                                                    '" . $id_city . "',
-                                                    '" . $address . "',
-                                                    '" . $comment . "'
-                                                ) RETURNING id";
-                            break;
-
-        case 'editPerson':
-            if (!isset($military)) $military = 'false';
-            $sql = "UPDATE public.tperson SET  id_departments = '" . $id_departments . "',
-                                                    personalnumber = '" . $personalnumber . "',
-                                                    lastname = '" . $lastname . "',
-                                                    firstname = '" . $firstname . "',
-                                                    patronymic = '" . $patronymic . "',
-                                                    id_tunit = '" . $id_tunit . "',
-                                                    id_accesslevel = '" . $id_accesslevel . "',
-                                                    id_militaryrank = '" . $id_militaryrank . "',
-                                                    military = '" . $military . "',
-                                                    birthday = '" . DateFromRUtoEN($birthday) . "',
-                                                    id_city = '" . $id_city . "',
-                                                    address = '" . $address . "',
-                                                    comment = '" . $comment . "'
-                                                                WHERE
-                                                                    id = '" . $id . "'";
-                            break;
-
-        case 'delPerson':  $sql = "DELETE FROM public.tperson WHERE id = '" . $id . "'";
-                            break;
-
-
-        case 'addInfo':
-            if (!isset($active)) $active = 'false'; 
-            $sql = "INSERT INTO public.info (
-                                                    active,
-                                                    title,
-                                                    idate,
-                                                    user_id
-                                                )
-                                                VALUES (
-                                                    '" . $active . "',
-                                                    '" . $title . "',
-                                                    '" . DateFromRUtoEN($idate) . " 00:00:00 Europe/Moscow',
-                                                    '" . $_SESSION['user_id'] . "'
-                                                ) RETURNING id";
-                            break;
-
-        case 'editInfo':
-          if (!isset($active)) $active = 'false';
-          $sql = "UPDATE public.info SET active = '" . $active . "',
-          title = '" . $title . "',
-          idate = '" . $idate . " 00:00:00 Europe/Moscow'
-                                                                WHERE
-                                                                    id = '" . $id . "'";
-                            break;
-
-        case 'delInfo':  $sql = "DELETE FROM public.info WHERE id = '" . $id . "'";
-                            break;
-        case 'addIncoming':
+       
+           case 'addIncoming':
             if ($date_in == '') $date_in = '01-01-1970';
             if ($out_date == '') $out_date = '01-01-1970';
             $sql = "INSERT INTO public.incomings (
@@ -245,60 +162,9 @@
 
                                                             $dbconn->query("UPDATE public.tperson SET img_ext = '" . $file_ext . "' WHERE id = " . $person_id);
                                                         }
-                                                        /**
-                                                         *  Очищаем таблицы телефонов и email
-                                                         */
-                                                        $dbconn->query("DELETE FROM public.tphone WHERE id_person = " . $person_id);
-                                                        $dbconn->query("DELETE FROM public.temail WHERE id_person = " . $person_id);
-
-                                                        foreach ($_POST['person-phone'] as $key => $val) {
-                                                            $dbconn->query("INSERT INTO public.tphone(id_person, name) VALUES('" . $person_id . "', '" . $val . "')");
-                                                        }
-
-                                                        foreach ($_POST['person-email'] as $key => $val) {
-                                                            $dbconn->query("INSERT INTO public.temail(id_person, name) VALUES('" . $person_id . "', '" . $val . "')");
-                                                        }
 
                                                     break;
-                // Удалем картинку если она есть
-                case 'delPerson':        if (file_exists('/user/' . $id . '.' . $photo['file_ext']))
-                                                    unlink('../user/' . $id . '.' . $photo['file_ext']);
-                                                if (file_exists('../user/' . $id . '_thumb.' . $photo['file_ext']))
-                                                    unlink('../user/' . $id . '_thumb.' . $photo['file_ext']);
 
-                                                    /**
-                                                         *  Очищаем таблицы телефонов и email
-                                                         */
-                                                        $dbconn->query("DELETE FROM public.tphone WHERE id_person = " . $person_id);
-                                                        $dbconn->query("DELETE FROM public.temail WHERE id_person = " . $person_id);
-
-                                            break;
-
-                // Загружаем картинку если она есть
-                case 'addInfo': case 'editInfo':  if (isset($id) && $id != '') {
-                                                                        $info_id = $id;
-                                                                    } else {
-                                                                        $res = $res->fetch();
-                                                                        $info_id = $res['id'];
-                                                                    }
-
-                                                                    if (sizeof($_FILES) && !$_FILES['info']['error']) {
-                                                                        // если есть старые картинки то удаляем их
-                                                                        $file_ext = mb_strtolower(mb_substr($_FILES['info']['name'], mb_strpos($_FILES['info']['name'], '.', (mb_strlen($_FILES['info']['name'], 'utf-8') - 4), 'utf-8') + 1, (mb_strlen($_FILES['info']['name'], 'utf-8') - mb_strpos($_FILES['info']['name'], '.', 0, 'utf-8')), 'utf-8'), 'utf-8');
-                                                                        copy($_FILES['info']['tmp_name'], "./info/" . $info_id . "." . $file_ext);
-                                                                        resizeImage('info', 100, 100, $info_id, $file_ext, $info_id . '_thumb');
-
-                                                                        $dbconn->query("UPDATE public.info SET img_ext = '" . $file_ext . "' WHERE id = " . $info_id);
-                                                                    }
-                                                    break;
-                // Удалем картинку если она есть
-                case 'delInfo':        if (file_exists('/info/' . $id . '.' . $photo['file_ext']))
-                                                    unlink('../info/' . $id . '.' . $photo['file_ext']);
-                                                if (file_exists('../info/' . $id . '_thumb.' . $photo['file_ext']))
-                                                    unlink('../info/' . $id . '_thumb.' . $photo['file_ext']);
-
-                                            break;
-            }
         }
     // }                                                 
 

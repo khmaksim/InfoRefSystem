@@ -32,16 +32,16 @@
                                     <h3 class="box-title">Личный состав подразделения</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
-                                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                    <table id="example" class="table table-bordered" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th class="col-xs-1">№</th>
                                                 <th class="col-xs-1">Фото</th>
                                                 <th class="col-xs-1">Личный номер</th>
-                                                <th class="col-xs-1">Фамилия Имя Отчество</th>
+                                                <th class="col-xs-3">Фамилия Имя Отчество</th>
                                                 <th class="col-xs-1">Форма допуска</th>
                                                 <th class="col-xs-1">Дата рождения</th>
-                                                <th class="col-xs-1">Должность</th>
+                                                <th class="col-xs-3">Должность</th>
                                                 <th class="col-xs-1 text-center">Печать</th>
                                                 <th class="col-xs-1 text-center">Редактировать</th>
                                                 <th class="col-xs-1 text-center">Удалить</th>
@@ -57,15 +57,15 @@
                                                     $img = '<img src="./upload/user/'. $person->id .'_thumb.'. $person->img_ext .'" border="0" alt="" class="img-circle" />';
 
                                                 echo '<tr><td>'. ++$count .'</td>
-                                                        <td>'. $img .'</td>
+                                                        <td class="text-center">'. $img .'</td>
                                                         <td>'. $person->personal_number .'</td>
                                                         <td>'. $person->getFullName() .'</td>
                                                         <td></td>
-                                                        <td>'. $person->birthday .'</td>
+                                                        <td class="text-center">'. $person->birthday .'</td>
                                                         <td></td>
                                                         <td class="col-xs-1 text-center"><a href="/?cmd=ViewPerson&id='. $person->id .'&id_department='. $department->id .'" target="_blank" class="button btn-warning btn-sm"><span class="glyphicon glyphicon-print"></span></a></td>
                                                         <td class="col-xs-1 text-center"><a href="/?cmd=EditPerson&id='. $person->id .'&id_department='. $department->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                                                        <td class="col-md-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $person->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td></tr>';
+                                                        <td class="col-md-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $person->id .', '. $department->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td></tr>';
                                             }
                                         ?>
                                         </tbody>
@@ -98,11 +98,12 @@
              fixed layout. -->
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
-            function ConfirmDelete(id)
+            function ConfirmDelete(id, id_departemnt)
             {
                 var ObjectId = id;
+                var DepartmentId = id_departemnt;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./?cmd=DeletePerson?id="+ObjectId;
+                    document.location = "./?cmd=DeletePerson&id="+ObjectId+"&id_department="+DepartmentId;
                 }
             }
         /*]]>*/

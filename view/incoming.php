@@ -1,14 +1,13 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
+    require_once ("view/ViewHelper.php") ;
+    $request = \view\ViewHelper::getRequest();
 ?>
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
-
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -17,14 +16,12 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="./"><i class="fa fa-dashboard"></i> Главная</a></li>
-                        <li class="active">Учёт входящих</li>
+                        <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
+                        <li class="active">Документооборот</li>
                     </ol>
                 </section>
-
                 <!-- Main content -->
                 <section class="content">
-
                 <!-- Your Page Content Here -->
                     <div class="row">
                         <div class="col-xs-12">
@@ -36,7 +33,7 @@
                                     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-1">Номер</th>
+                                                <th class="col-xs-1">Номер</th>
                                                 <th>Дата регистрации</th>
                                                 <th>№ контрольный</th>
                                                 <th>Содержание</th>
@@ -44,34 +41,47 @@
                                                 <th>Куда отправлен</th>
                                                 <th>Дата отправки</th>
                                                 <th>Сведения об отправке</th>
-                                                <th class="col-md-1">Редактировать</th>
-                                                <!--<th class="col-md-1">Удалить</th>-->
+                                                <th class="col-xs-1 text-center">Редактировать</th>
+                                                <th class="col-xs-1 text-center">Удалить</th>
                                             </tr>
                                         </thead>
-
-                                        <tbody id="items"></tbody>
+                                        <tbody id="items">
+                                         <?php
+                                            $incoming_document_list = $request->getProperty('incoming_document_list');
+                                            foreach ($incoming_document_list as $incoming_document) {
+                                               echo '<tr>
+                                                                <td>'. $incoming_document->number .'</td>
+                                                                <td>'. $incoming_document->date_in .'</td>
+                                                                <td>'. $incoming_document->control .'</td>
+                                                                <td>'. $incoming_document->subject .'</td>
+                                                                <td>'. $incoming_document->senders_numbers .'</td>
+                                                                <td>'. $incoming_document->out_where .'</td>
+                                                                <td>'. $incoming_document->out_date .'</td>
+                                                                <td>'. $incoming_document->out_details .'</td>
+                                                                <td class="col-md-1 text-center"><a href="/?cmd=EditIncomingDocument&id='. $incoming_document->id .'" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                                                <td class="col-md-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete('. $incoming_document->id .');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                                                </tr>';
+                                            }
+                                        ?>
+                                        </tbody>
                                     </table>
 
                                  </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div><!-- /.col -->
                     </div>
-
                     <div class="row">
                         <div class="col-xs-12">
-                            <p class="text-right"><a href="/incoming_add.php?act=add" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
+                            <p class="text-right"><a href="/?cmd=AddIncomingDocument" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Добавить</a></p>
                         </div><!-- /.col -->
                     </div>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
         ?>
         </div><!-- ./wrapper -->
-
         <!-- REQUIRED JS SCRIPTS -->
-
         <!-- jQuery 2.1.4 -->
         <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
@@ -84,11 +94,6 @@
              fixed layout. -->
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
-            $(document).ready(function(){
-      		    $("#items").load("/incoming.func.php");
-                setInterval(function() {$("#items").load("/incoming.func.php");}, 5000);
-            });
-
             function ConfirmDelete(id)
             {
                 var ObjectId = id;

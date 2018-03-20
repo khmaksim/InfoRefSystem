@@ -6,8 +6,9 @@ class PersonMapper extends Mapper implements \domain\UserFinder {
 		parent::__construct();
 		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM person WHERE deleted IS NULL");
 		$this->selectStmt = self::$PDO->prepare("SELECT * FROM person WHERE id=? AND deleted IS NULL");
-		$this->updateStmt = self::$PDO->prepare("UPDATE person SET firstname=?, lastname=?, patronymic=?, military=?, personal_number=?, birthday=?, id_access_type=?, id_unit=?, id_military_rank=?, img_ext=?, address=?, id_city=? WHERE id=?");
-		$this->insertStmt = self::$PDO->prepare("INSERT INTO person (firstname, lastname, patronymic, military, personal_number, birthday, id_access_type, id_unit, id_military_rank, img_ext, address, id_city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$this->updateStmt = self::$PDO->prepare("UPDATE person SET firstname=?, lastname=?, patronymic=?, military=?, personal_number=?, birthday=?, id_access_type=?, id_unit=?, id_military_rank=?, img_ext=?, address=?, id_city=?, note=? WHERE id=?");
+		$this->insertStmt = self::$PDO->prepare("INSERT INTO person (firstname, lastname, patronymic, personal_number, military, birthday, id_access_type, id_unit, id_military_rank, address, id_city, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$this->deleteStmt = self::$PDO->prepare("UPDATE person SET deleted=now() WHERE id=?");
 	}
 
 	function getCollection(array $raw) {
@@ -22,9 +23,9 @@ class PersonMapper extends Mapper implements \domain\UserFinder {
 		$obj->military = $array['military'];
 		$obj->personal_number = $array['personal_number'];
 		$obj->birthday = $array['birthday'];
-		$obj->id_accesslevel = $array['id_access_type'];
+		$obj->id_access_type = $array['id_access_type'];
 		$obj->id_unit = $array['id_unit'];
-		$obj->id_militaryrank = $array['id_military_rank'];
+		$obj->id_military_rank = $array['id_military_rank'];
 		$obj->img_ext = $array['img_ext'];
 		$obj->address = $array['address'];
 		$obj->id_city = $array['id_city'];
@@ -39,7 +40,7 @@ class PersonMapper extends Mapper implements \domain\UserFinder {
 			throw new Exception("Error argument", 1);
 		}
 			
-		$values = array($object->firstname, $object->lastname, $object->patronymic, $object->military, $object->personal_number, $object->birthday, $object->id_access_type, $object->id_unit, $object->id_military_rank, $object->img_ext, $object->address, $object->id_city, $object->note);
+		$values = array($object->firstname, $object->lastname, $object->patronymic, $object->personal_number, $object->military, $object->birthday, $object->id_access_type, $object->id_unit, $object->id_military_rank, $object->address, $object->id_city, $object->note);
 		$this->insertStmt->execute($values);
 		$id = self::$PDO->lastInsertId();
 		$object->id = $id;
@@ -56,6 +57,11 @@ class PersonMapper extends Mapper implements \domain\UserFinder {
 
 	function selectAllStmt() {
         return $this->selectAllStmt;
+    }
+
+    function delete(\domain\DomainObject $object) {
+    	$values = array($object->id);
+		$this->deleteStmt->execute($values);
     }
 }
 

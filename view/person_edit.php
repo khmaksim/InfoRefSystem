@@ -5,7 +5,7 @@
     $edit_person = $request->getProperty('person');
     $department = $request->getProperty('department');
     $action = $request->getProperty('cmd');
-    $action_name = ($action == 'Add{Person}') ? 'Добавление' : 'Редактирование';
+    $action_name = ($action == 'AddPerson') ? 'Добавление' : 'Редактирование';
 ?>
   <!--
   BODY TAG OPTIONS:
@@ -52,7 +52,7 @@
                     <div class="row">
                             <div class="col-xs-12">
                                 <p class="text-right">
-                                    <a href="/person_view.php?id=<?= $edit_person->id; ?>&id_departments=<?= $department->id; ?>" target="_blank" type="button" class="btn btn-app"><i class="fa fa-print"></i> Печать</a>
+                                    <a href="/?cmd=ViewPerson&id=<?= $edit_person->id; ?>&id_departments=<?= $department->id; ?>" target="_blank" type="button" class="btn btn-app"><i class="fa fa-print"></i> Печать</a>
                                 </p>
                             </div><!-- /.col -->
                         </div>
@@ -69,13 +69,13 @@
                                     <div class="box-body">
                                         <div class="form-group">
                                             <?= ($action == 'EditPerson' && $edit_person->img_ext != '') ? '<img src="./upload/user/' . $edit_person->id . '_thumb.' . $edit_person->img_ext . '" border="0" alt="" class="img-thumbnail" /><br />' : ''; ?>
-                                            <label for="exampleInputFile">Фото</label>
-                                            <input type="file" name="face" id="exampleInputFile">
+                                            <label for="inputFile">Фото</label>
+                                            <input type="file" name="face" id="inputFile">
                                             <p class="help-block">Размер файла не более 2 Мб.</p>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputPersonalnumber">Личный номер</label>
-                                            <input type="text" name="personalnumber" class="form-control" id="inputPersonalnumber" placeholder="Личный номер"<?= ($action == 'EditPerson') ? ' value="' . $edit_person->personalnumber . '"' : ''; ?> required>
+                                            <input type="text" name="personal_number" class="form-control" id="inputPersonalnumber" placeholder="Личный номер"<?= ($action == 'EditPerson') ? ' value="' . $edit_person->personal_number . '"' : ''; ?> required>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputLastname">Фамилия</label>
@@ -91,8 +91,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="inputUnit">Должность</label>
-                                            <select class="form-control" name="id_tunit">
-                                                <option value="0"<?= ($action == 'EditPerson' && $edit_person->id_unit == '') ? ' selected="selected"' : ''; ?>>За штатом</option>
+                                            <select class="form-control" name="id_unit">
+                                                <option value=""<?= ($action == 'EditPerson' && $edit_person->id_unit == '') ? ' selected="selected"' : ''; ?>>За штатом</option>
                                                 <?php
                                                     $unit_list = $request->getProperty('unit_list');
                                                     foreach ($unit_list as $unit) {
@@ -106,13 +106,16 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="inputMilitaryRank">Звание</label>
-                                            <select class="form-control" name="id_militaryrank">
-                                                <option value="0">Нет</option>
+                                            <select class="form-control" name="id_military_rank">
+                                                <option value="">Нет</option>
                                                 <?php
                                                     $military_rank_list = $request->getProperty('military_rank_list');
                                                     foreach ($military_rank_list as $military_rank) {
-                                                        if ($action == 'EditPerson' && $edit_person->id_military_rank == $military_rank->id)
+                                                        echo $edit_person->id_military_rank;
+                                                        echo $military_rank->id;
+                                                        if ($action == 'EditPerson' && $edit_person->id_military_rank == $military_rank->id) {
                                                             echo '<option value="' . $military_rank->id . '" selected="selected">' . $military_rank->name . '</option>';
+                                                        }
                                                         else
                                                             echo '<option value="' . $military_rank->id . '">' . $military_rank->name . '</option>';
                                                     }
@@ -121,7 +124,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="inputAccessType">Форма допуска</label>
-                                            <select class="form-control" name="id_accesstype">
+                                            <select class="form-control" name="id_access_type">
                                                 <?php
                                                     $access_type_list = $request->getProperty('access_type_list');
                                                     foreach ($access_type_list as $access_type) {
@@ -143,44 +146,43 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" name="birthday" placeholder="Дата рождения (формат 01-01-1979)" class="form-control"<?= ($action == 'EditPerson')? ' value="' . DateFromENtoRU(mb_substr($edit_person->birthday, 0, 10), '-') . '"' : ''; ?>>
+                                                <input type="text" name="birthday" placeholder="Дата рождения (формат 01-01-1979)" class="form-control"<?= ($action == 'EditPerson' && !is_null($edit_person->birthday))? ' value="' . \DateTime::createFromFormat('Y-m-d', $edit_person->birthday)->format('m-d-Y') . '"' : ''; ?>>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputTelephone">Телефон</label>
                                         </div>
                                         <?php
-                                            if ($action == 'EditPerson') {
-                                                $collection = $edit_person->phone_number_collection;
-                                                $phone_number_list = $collection->getGenerator();
-                                                foreach ($phone_number_list as $phone_number)
-                                                    echo '<div class="form-inline">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" name="person-phone[]" value="'. $phone_number->number .'" required="required">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" name="person-phone[]" value="'. $phone_number->number .'" required="required">
-                                                            </div>
-                                                        </div>';
-                                            }
-                                            else {
+                                            $phone_number_type_list = $request->getProperty('phone_number_type_list');
+                                            foreach ($phone_number_type_list as $phone_number_type) {
                                                 echo '<div class="form-group">
-                                                        <div class="form-inline">
-                                                             <div class="form-group">
-                                                                <select class="form-control" name="id_accesstype">
-                                                                    <option selected="selected">access_type->name</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" name="person-phone[]" value="" required="required">
-                                                            </div>
-                                                        </div>
-                                                    </div>';
+                                                            <div class="form-inline">
+                                                                <label>'. $phone_number_type->name .'</label><br />';
+                                                
+                                                if ($action == 'EditPerson') {
+                                                    $phone_number_list = $edit_person->phone_number_collection->getGenerator();
+                                                    
+                                                    $is_empty = true;
+
+                                                    foreach ($phone_number_list as $phone_number) {
+                                                        if ($phone_number->id_phone_number_type == $phone_number_type->id) {
+                                                            echo '<input type="hidden" class="form-control" name="phone_number_type[]" value="'. $phone_number_type->id .'">
+                                                                <input type="text" class="form-control" name="phone_number[]" value="'. $phone_number->number .'" required="required">';    
+                                                            $is_empty = false;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if ($is_empty)
+                                                        echo '<input type="hidden" class="form-control" name="phone_number_type[]" value="'. $phone_number_type->id .'">
+                                                                <input type="text" class="form-control" name="phone_number[]" value="" required="required">';
+                                                }
+                                                else 
+                                                    echo '<input type="hidden" class="form-control" name="phone_number_type[]" value="'. $phone_number_type->id .'">
+                                                        <input type="text" class="form-control" name="phone_number[]" value="" required="required">';
+
+                                                echo '</div></div>';
                                             }
                                         ?>
-                                        <div class="form-group" style="overflow: hidden;">
-                                            <a href="javascript:void(0);" onclick="addPersonPhone($(this));" type="button" class="btn btn-default pull-right btn-flat add-person-phone">Добавить телефон</a>
-                                        </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">Город</label>
                                             <select class="form-control" name="id_city">
@@ -191,18 +193,18 @@
                                                         if ($action == 'EditPerson' && $edit_person->id_city == $city->id)
                                                             echo '<option value="'. $city->id .'" selected="selected">'. $city->name .'</option>';
                                                         else 
-                                                            echo '<option value="'. $city->id .'>'. $city->name .'</option>';
+                                                            echo '<option value="'. $city->id .'">'. $city->name .'</option>';
                                                     }
                                                 ?>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Адрес</label>
-                                            <textarea name="address" class="form-control" rows="3"><?= ($action == 'EditPerson') ? ' value="' . $edit_person->address . '"' : ''; ?></textarea>
+                                            <textarea name="address" class="form-control" rows="3"><?= ($action == 'EditPerson') ? '' . $edit_person->address . '' : ''; ?></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Комментарий</label>
-                                            <textarea name="note" class="form-control" rows="3"><?= ($action == 'EditPerson') ? ' value="' . $edit_person->note . '"' : ''; ?></textarea>
+                                            <textarea name="note" class="form-control" rows="3"><?= ($action == 'EditPerson') ? '' . $edit_person->note . '': ''; ?></textarea>
                                         </div>
                                     </div><!-- /.box-body -->
                                     <div class="box-footer">
@@ -237,7 +239,7 @@
         <!-- datepicker -->
         <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
         <script src="/plugins/datepicker/locales/bootstrap-datepicker.ru.js" charset="UTF-8"></script>
-        <script language="JavaScript" type="text/javascript">
+        <script language="javascript" type="text/javascript">
         /*<![CDATA[*/
             $(document).ready(function(){
       		    $('input').iCheck({
@@ -247,7 +249,7 @@
                 });
 
                 $('select').select2();
-
+                
                 $('.input-group.date').datepicker({
                     format: "dd-mm-yyyy",
                     todayBtn: "linked",
@@ -259,7 +261,7 @@
 
             function checkForm()
             {
-                if (document.editform.personalnumber.value == '') {
+                if (document.editform.personal_number.value == '') {
                     alert('Укажите личный номер!');
                     document.editform.personalnumber.focus();
                 } else if (document.editform.lastname.value == '') {
@@ -276,19 +278,25 @@
                 }
             }
 
-            function addPersonPhone(el) {
-                $clone = $(el).parent().prev().clone();
-                if ($clone.children().first().children().last().children().last().attr('type') != 'button') {
-                    $clone.children().first().children().last().append('<button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove();">Удалить</button>');
-                }
-                $clone.fadeIn('slow').insertBefore($(el).parent());
+            // function addPersonPhone(el) {
+            //     $clone = $(el).parent().prev().clone();
+            //     $clone.find('input').val('')        // clear input field
+
+            //     if ($clone.children().first().children().last().children().last().attr('type') != 'button') {
+            //         $clone.children().first().children().last().append('<button type="button" class="btn btn-danger" onclick="removePersonPhone($(this));">Удалить</button>');
+            //     }
+            //     $clone.fadeIn('slow').insertBefore($(el).parent());
                 // fadeIn('slow').insertBefore($(el).parent());
                 // $('<div class="form-inline"><div class="form-group"><select class="form-control" name="id_accesstype"><option selected="selected">access_type->name</option></select></div><div class="form-group"><input type="text" class="form-control" name="person-phone[]" value="" required="required"></div><button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove();">Удалить</button></div>').fadeIn('slow').insertBefore($(el).parent());
-            }
+            // }
 
-            function addPersonEmail(el) {
-                $('<div class="form-group"><div class="input-group"><input type="text" class="form-control" name="person-email[]" value=""><div class="input-group-btn"><button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove();">Удалить</button></div><!-- /btn-group --></div></div>').fadeIn('slow').insertBefore($(el).parent());
-            }
+            // function removePersonPhone(el) {
+            //     $(el).parent().parent().parent().remove();
+            // }
+
+            // function addPersonEmail(el) {
+            //     $('<div class="form-group"><div class="input-group"><input type="text" class="form-control" name="person-email[]" value=""><div class="input-group-btn"><button type="button" class="btn btn-danger" onclick="$(this).parent().parent().parent().remove();">Удалить</button></div><!-- /btn-group --></div></div>').fadeIn('slow').insertBefore($(el).parent());
+            // }
         /*]]>*/
         </script>
     </body>

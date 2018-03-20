@@ -850,6 +850,10 @@
 			</status>
 		</command>
 
+		<command name="ViewPerson">
+			<view>person_view</view>
+		</command>
+
 		<command name="ObjectKii">
 			<view>login</view>
 			<status value="CMD_OK">

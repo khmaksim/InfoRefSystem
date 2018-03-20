@@ -4,11 +4,11 @@ namespace mapper;
 class PhonenumberTypeMapper extends Mapper implements \domain\UserFinder {
 	function __construct() {
 		parent::__construct();
-		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM phonenumber_type WHERE deleted IS NULL");
-		$this->selectStmt = self::$PDO->prepare("SELECT * FROM phonenumber_type WHERE id=? AND deleted IS NULL");
-		$this->updateStmt = self::$PDO->prepare("UPDATE phonenumber_type SET name=? WHERE id=?");
-		$this->insertStmt = self::$PDO->prepare("INSERT INTO phonenumber_type (name) VALUES (?)");
-		$this->deleteStmt = self::$PDO->prepare("UPDATE phonenumber_type SET deleted=now() WHERE id=?");
+		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM phone_number_type WHERE deleted IS NULL");
+		$this->selectStmt = self::$PDO->prepare("SELECT * FROM phone_number_type WHERE id=? AND deleted IS NULL");
+		$this->updateStmt = self::$PDO->prepare("UPDATE phone_number_type SET name=? WHERE id=?");
+		$this->insertStmt = self::$PDO->prepare("INSERT INTO phone_number_type (name) VALUES (?)");
+		$this->deleteStmt = self::$PDO->prepare("UPDATE phone_number_type SET deleted=now() WHERE id=?");
 	}
 
 	function getCollection(array $raw) {

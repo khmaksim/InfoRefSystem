@@ -5,10 +5,11 @@ class PhoneNumberMapper extends Mapper implements \domain\UserFinder {
 	function __construct() {
 		parent::__construct();
 		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM phone_number WHERE deleted IS NULL");
-		$this->selectByPersonStmt = self::$PDO->prepare("SELECT * FROM phone_number WHERE id_person AND deleted IS NULL");
+		$this->selectByPersonStmt = self::$PDO->prepare("SELECT * FROM phone_number WHERE id_person=? AND deleted IS NULL");
 		$this->selectStmt = self::$PDO->prepare("SELECT * FROM phone_number WHERE id=? AND deleted IS NULL");
 		$this->updateStmt = self::$PDO->prepare("UPDATE phone_number SET number=?, id_phone_number_type=? WHERE id=?");
-		$this->insertStmt = self::$PDO->prepare("INSERT INTO phone_number (number, id_phone_number_type, id_person) VALUES (?, ?, ?)");
+		$this->insertStmt = self::$PDO->prepare("INSERT INTO phone_number (number, id_phone_number_type, id_person) VALUES (?, ?, ?) ON CONFLICT (id_phone_number_type, id_person) 
+			DO UPDATE SET number=EXCLUDED.number");
 		$this->deleteStmt = self::$PDO->prepare("UPDATE phone_number SET deleted=now() WHERE id=?");
 	}
 
@@ -17,7 +18,7 @@ class PhoneNumberMapper extends Mapper implements \domain\UserFinder {
     }
 
 	protected function doCreateObject(array $array) {
-		$obj = new \domain\PhoneType($array['id']);
+		$obj = new \domain\PhoneNumber($array['id']);
 		$obj->number = $array['number'];
 		$obj->id_phone_number_type = $array['id_phone_number_type'];
 		$obj->id_person = $array['id_person'];
@@ -28,7 +29,7 @@ class PhoneNumberMapper extends Mapper implements \domain\UserFinder {
 		if (!($object instanceof \domain\PhoneNumber)) {
 			throw new Exception("Error argument", 1);
 		}
-			
+		
 		$values = array($object->number, $object->id_phone_number_type, $object->id_person);
 		$this->insertStmt->execute($values);
 		$id = self::$PDO->lastInsertId();

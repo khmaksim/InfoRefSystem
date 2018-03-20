@@ -1,35 +1,13 @@
 <?php
-    if (!isset($_GET['id'])) {
-        header('Location: /departments.php');
-    }
-
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $page = 'phonelist';
-
-    $arPerson = getPersonById($_GET['id']);
-    $arDepartment = getDepartmentsById($_GET['id_departments']);
+    require_once ("view/ViewHelper.php");
+    $request = \view\ViewHelper::getRequest();
+    $person = $request->getProperty('person');
+    $military_rank = $request->getProperty('military_rank');
+    $unit = $request->getProperty('unit');
+    $department = $request->getProperty('department');
+    $position = $request->getProperty('position');
 ?>
-  <!--
-  BODY TAG OPTIONS:
-  =================
-  Apply one or more of the following classes to get the
-  desired effect
-  |---------------------------------------------------------|
-  | SKINS         | skin-blue                               |
-  |               | skin-black                              |
-  |               | skin-purple                             |
-  |               | skin-yellow                             |
-  |               | skin-red                                |
-  |               | skin-green                              |
-  |---------------------------------------------------------|
-  |LAYOUT OPTIONS | fixed                                   |
-  |               | layout-boxed                            |
-  |               | layout-top-nav                          |
-  |               | sidebar-collapse                        |
-  |               | sidebar-mini                            |
-  |---------------------------------------------------------|
-  -->
     <body onload="window.print();">
         <div class="wrapper">
           <!-- Main content -->
@@ -38,7 +16,7 @@
             <div class="row">
               <div class="col-xs-12">
                 <h2 class="page-header">
-                  <i class="fa fa-user"></i> <? $t1 = getMilitaryRankById($arPerson['id_militaryrank']); print mb_strtolower($t1['name'], 'utf-8') . ' ' . $arPerson['lastname'] . ' ' . $arPerson['firstname'] . ' ' . $arPerson['patronymic'] . ' (' . $arPerson['personalnumber'] . ')'; ?>
+                  <i class="fa fa-user"></i> <?= $military_rank->name .' '. $person->getFullName() .' ('. $person->personal_number .')'; ?>
                   <small class="pull-right">Дата печати: <?= date('d-m-Y'); ?></small>
                 </h2>
               </div>
@@ -48,26 +26,20 @@
             <div class="row invoice-info">
               <div class="col-sm-4 invoice-col">
                 <strong>Фото</strong><br />
-                <?= ($arPerson['img_ext'] != '') ? '<img src="/user/' . $arPerson['id'] . '_thumb.' . $arPerson['img_ext'] . '" border="0" alt="" class="img-thumbnail" /><br /><br />' : ''; ?>
+                <?= ($person->img_ext != '') ? '<img src="./upload/user/'. $person->id .'_thumb.'. $person->img_ext .'" border="0" alt="" class="img-thumbnail" /><br /><br />' : ''; ?>
               </div>
               <!-- /.col -->
               <div class="col-sm-4 invoice-col">
                 <strong>Подразделение</strong>
                 <address>
-                  <?= $arDepartment['fullname']; ?>
+                  <?= $department->fullname; ?>
                 </address>
               </div>
               <!-- /.col -->
               <div class="col-sm-4 invoice-col">
                 <strong>Должность</strong>
                 <address>
-                  <?php
-                    $sql = "SELECT * FROM public.tunit WHERE id = '" . $arPerson['id_tunit'] . "' ORDER BY id";
-                    foreach ($dbconn->query($sql) as $row) {
-						$t1 = getMilitaryPositionById($row['id_militaryposition']);
-                        echo $t1['name'];
-                    }
-                  ?>
+                  <?= $position->name; ?>
                 </address>
               </div>
               <!-- /.col -->
@@ -77,14 +49,14 @@
               <div class="col-sm-4 invoice-col">
                 <strong>Дата рождения</strong>
                 <address>
-                  <?= DateFromENtoRU(mb_substr($arPerson['birthday'], 0, 10), '-'); ?>
+                  <?= \DateTime::createFromFormat('Y-m-d', $person->birthday)->format('m-d-Y'); ?>
                 </address>
               </div>
               <!-- /.col -->
               <div class="col-sm-4 invoice-col">
                 <strong>Форма допуска</strong>
                 <address>
-                  <? $t1 = getAccessTypeById($arPerson['id_accesslevel']); print $t1['name']; ?>
+                  <?= $request->getProperty('access_type')->name; ?>
                 </address>
               </div>
               <!-- /.col -->
@@ -96,7 +68,7 @@
               <div class="col-sm-4 invoice-col">
                 <strong>Адрес</strong>
                 <address>
-                  <? $t1 = getCityById($arPerson['id_city']); print $t1['name'] . ', ' . $arPerson['address']; ?>
+                  <?= $request->getProperty('city')->name; ?>
                 </address>
               </div>
               <!-- /.col -->
@@ -104,25 +76,26 @@
                 <strong>Телефоны</strong>
                 <address>
                   <?php
-                    $sql = "SELECT * FROM tphone WHERE id_person = '" . $arPerson['id'] . "' ORDER BY id";
-                    foreach ($dbconn->query($sql) as $row) {
-                        echo $row['name'] . '<br>';
+                    $phone_number_list = $request->getProperty('phone_number_list');
+                    $phone_number_type_list = $request->getProperty('phone_number_type_list');
+                    foreach ($phone_number_list as $phone_number) {
+                        foreach ($phone_number_type_list as $phone_number_type) {
+                            if ($phone_number_type->id == $phone_number->id_phone_number_type) {
+                                echo $phone_number_type->name .' - '. $phone_number->number . '<br>';
+                                break;
+                            }
+                        }
                     }
                   ?>
                 </address>
               </div>
               <!-- /.col -->
-              <div class="col-sm-4 invoice-col">
+             <!--  <div class="col-sm-4 invoice-col">
                 <strong>E-Mail</strong>
                 <address>
-                  <?php
-                    $sql = "SELECT * FROM temail WHERE id_person = '" . $arPerson['id'] . "' ORDER BY id";
-                    foreach ($dbconn->query($sql) as $row) {
-                        echo $row['name'] . '<br>';
-                    }
-                  ?>
+                 //
                 </address>
-              </div>
+              </div> -->
               <!-- /.col -->
             </div>
             <!-- /.row -->
@@ -130,7 +103,7 @@
               <div class="col-sm-12 invoice-col">
                 <strong>Комментарий</strong>
                 <address>
-                  <?= $arPerson['comment']; ?>
+                  <?= $person->note; ?>
                 </address>
               </div>
               <!-- /.col -->
