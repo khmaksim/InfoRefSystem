@@ -1,35 +1,16 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/head.inc.php';
-    $page = 'incoming';
+    require_once ("view/ViewHelper.php") ;
+    $request = \view\ViewHelper::getRequest();
+    $edit_incoming_document = $request->getProperty('incoming_document');
+    $action = $request->getProperty('cmd');
+    $action_name = ($action == 'AddIncomingDocument') ? 'Добавление' : 'Редактирование';
 ?>
-  <!--
-  BODY TAG OPTIONS:
-  =================
-  Apply one or more of the following classes to get the
-  desired effect
-  |---------------------------------------------------------|
-  | SKINS         | skin-blue                               |
-  |               | skin-black                              |
-  |               | skin-purple                             |
-  |               | skin-yellow                             |
-  |               | skin-red                                |
-  |               | skin-green                              |
-  |---------------------------------------------------------|
-  |LAYOUT OPTIONS | fixed                                   |
-  |               | layout-boxed                            |
-  |               | layout-top-nav                          |
-  |               | sidebar-collapse                        |
-  |               | sidebar-mini                            |
-  |---------------------------------------------------------|
-  -->
     <body class="hold-transition skin-blue sidebar-mini fixed">
         <div class="wrapper">
-
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -38,37 +19,29 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="/departments.php"><i class="fa fa-dashboard"></i> Главная</a></li>
-                        <li><a href="/incoming.php">Учёт входящих</a></li>
-                        <li class="active"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></li>
+                        <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
+                        <li><a href="/?cmd=IncomingDocument">Документооборот</a></li>
+                        <li class="active"><?php echo $action_name; ?></li>
                     </ol>
                 </section>
-
                 <!-- Main content -->
                 <section class="content">
-
-                <?php
-                    if ($_GET['act'] == 'edit') {
-                        $arIncoming = getIncomingById($_GET['id']);
-                    }
-                ?>
                 <!-- Your Page Content Here -->
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><?= ($_GET['act'] == 'add') ? 'Добавление' : 'Редактирование'; ?></h3>
+                                    <h3 class="box-title"><?php echo $action_name; ?></h3>
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
-                                <form name="role" id="role" role="form" action="/save.php" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="act" value="<?= $_GET['act']; ?>Incoming" />
+                                <form name="editform" role="form" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="code" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" />
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                    <label for="number_in">Входящий номер</label>
-                                                   <input tabindex="1" type="text" name="number_in" class="form-control" id="number_in" placeholder="Входящий номер"<?= ($_GET['act'] == 'edit') ? ' value="' . $arIncoming['number_in'] . '"' : ''; ?>>
+                                                   <input tabindex="1" type="text" name="number_in" class="form-control" id="number_in" placeholder="Входящий номер"<?= ($action == 'EditIncomingDocument') ? ' value="'. $edit_incoming_document->number_in .'"' : ''; ?> required autofocus>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -78,20 +51,18 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                        <input tabindex="2" type="text" name="date_in" placeholder="Дата регистрации (формат 01-01-1979)" class="form-control"<?= ($_GET['act'] == 'edit') ? ' value="' . DateFromENtoRU(mb_substr($arIncoming['date_in'], 0, 10), '-') . '"' : ''; ?> autofocus>
+                                                        <input tabindex="2" type="text" name="date_in" placeholder="формат 01-01-1979" class="form-control"<?= ($action == 'EditIncomingDocument') ? ' value="'. $edit_incoming_document->date_registration .'"' : ' value="'. (new \DateTime())->format('d-m-Y') .'"' ?> required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label for="grif">Гриф</label>
-                                                    <select tabindex="3" class="form-control" name="grif">
+                                                    <select tabindex="3" class="form-control" name="grif" required>
                                                         <?php
-                                                            $sql = "SELECT * FROM public.taccesstype ORDER BY id";
-                                                            foreach ($dbconn->query($sql) as $row) {
-                                                        ?>
-                                                        <option value="<?= $row['id']; ?>"<?= ($_GET['act'] == 'edit' && $arIncoming['grif'] == $row['id']) ? ' selected="selected"' : ''; ?>><?= $row['name']; ?></option>
-                                                        <?php
+                                                            $access_type_list = $request->getProperty('access_type_list');
+                                                            foreach ($access_type_list as $access_type) {
+                                                                echo '<option value="'. $access_type->id .'" '. (($action == 'EditIncomingDocument' && $edit_incoming_document->security_label == $access_type->id) ? 'selected="selected"' : '') .'>'. $access_type->name .'</option>';
                                                             }
                                                         ?>
                                                     </select>
@@ -101,9 +72,9 @@
                                                 <div class="form-group">
                                                     <label for="control">Контроль</label>
                                                     <select tabindex="4" class="form-control" name="control">
-                                                        <option value="0"<?= ($_GET['act'] == 'edit' && $arIncoming['control'] == 0) ? ' selected="selected"' : ''; ?>>Нет</option>
-                                                        <option value="1"<?= ($_GET['act'] == 'edit' && $arIncoming['control'] == 1) ? ' selected="selected"' : ''; ?>>Предварительный</option>
-                                                        <option value="2"<?= ($_GET['act'] == 'edit' && $arIncoming['control'] == 2) ? ' selected="selected"' : ''; ?>>На контроль</option>
+                                                        <option value="0"<?= ($action == 'EditIncomingDocument' && $edit_incoming_document->control == 0) ? ' selected="selected"' : ''; ?>>Нет</option>
+                                                        <option value="1"<?= ($action == 'EditIncomingDocument' && $edit_incoming_document->control == 1) ? ' selected="selected"' : ''; ?>>Предварительный</option>
+                                                        <option value="2"<?= ($action == 'EditIncomingDocument' && $edit_incoming_document->control == 2) ? ' selected="selected"' : ''; ?>>На контроль</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -112,15 +83,15 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="senders_numbers">Отправители и номера документа</label>
-                                                    <textarea tabindex="5" name="senders_numbers" class="form-control" rows="3" placeholder="Отправители и номера документа"><?= ($_GET['act'] == 'edit') ? $arIncoming['senders_numbers'] : ''; ?></textarea>
+                                                    <textarea tabindex="5" name="senders_numbers" class="form-control" rows="3" placeholder="Отправители и номера документа"><?= ($action == 'EditIncomingDocument') ? $edit_incoming_document->senders_numbers : ''; ?></textarea>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="sheets">Количество листов</label>
-                                                    <input tabindex="6" type="text" name="sheets" class="form-control" id="sheets" placeholder="Количество листов"<?= ($_GET['act'] == 'edit') ? ' value="' . $arIncoming['sheets'] . '"' : ''; ?>>
+                                                    <label for="number_sheets">Количество листов</label>
+                                                    <input tabindex="6" type="text" name="number_sheets" class="form-control" id="number_sheets" placeholder="Количество листов"<?= ($action == 'EditIncomingDocument') ? ' value="' . $edit_incoming_document->number_sheets . '"' : ''; ?>>
                                                 </div>
                                             </div>
                                         </div>
@@ -139,25 +110,25 @@
                                                                 <div class="col-md-3">
                                                                     <div class="form-group">
                                                                         <label for="subject">Содержание</label>
-                                                                        <textarea tabindex="7" name="subject" class="form-control" rows="3" placeholder="Содержание"><?= ($_GET['act'] == 'edit') ? $arIncoming['subject'] : ''; ?></textarea>
+                                                                        <textarea tabindex="7" name="subject" class="form-control" rows="3" placeholder="Содержание"><?= ($action == 'EditIncomingDocument') ? $edit_incoming_document->subject : ''; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-5">
                                                                     <div class="form-group">
                                                                         <label for="orders">Поручения вышестоящего органа</label>
-                                                                        <textarea tabindex="8" name="orders" class="form-control" rows="3" placeholder="Поручения вышестоящего органа"><?= ($_GET['act'] == 'edit') ? $arIncoming['orders'] : ''; ?></textarea>
+                                                                        <textarea tabindex="8" name="orders" class="form-control" rows="3" placeholder="Поручения вышестоящего органа"><?= ($action == 'EditIncomingDocument') ? $edit_incoming_document->order : ''; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label for="instructions">Указания руководства</label>
-                                                                        <textarea tabindex="9" name="instructions" class="form-control" rows="3" placeholder="Указания руководства"><?= ($_GET['act'] == 'edit') ? $arIncoming['instructions'] : ''; ?></textarea>
+                                                                        <textarea tabindex="9" name="instructions" class="form-control" rows="3" placeholder="Указания руководства"><?= ($action == 'EditIncomingDocument') ? $edit_incoming_document->instructions : ''; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div><!-- /.tab-pane -->
                                                         <div class="tab-pane" id="tab_2">
-                                                            <textarea tabindex="10" name="notes" class="form-control" rows="3" placeholder="Комментарии"><?= ($_GET['act'] == 'edit') ? $arIncoming['notes'] : ''; ?></textarea>
+                                                            <textarea tabindex="10" name="notes" class="form-control" rows="3" placeholder="Комментарии"><?= ($action == 'EditIncomingDocument') ? $edit_incoming_document->note : ''; ?></textarea>
                                                         </div><!-- /.tab-pane -->
                                                         <div class="tab-pane" id="tab_3">
                                                             <div class="row">
@@ -173,7 +144,7 @@
                                                                     </table>
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <input type="hidden" name="incoming" value="<?= $_GET['id']; ?>" />
+                                                                    <!-- <input type="hidden" name="incoming" value="" /> -->
                                                                     <div class="form-group">
                                                                         <label for="addFileName">Прикрепление файла</label>
                                                                         <input type="file" name="file" id="addFileName" />
@@ -200,12 +171,7 @@
                                                                     <label for="out_where">Куда</label>
                                                                     <select tabindex="11" class="form-control" name="out_where">
                                                                         <?php
-                                                                            $sql = "SELECT * FROM public.addressees ORDER BY short_name";
-                                                                            foreach ($dbconn->query($sql) as $row) {
-                                                                        ?>
-                                                                        <option value="<?= $row['code']; ?>"<?= ($_GET['act'] == 'edit' && $arIncoming['out_where'] == $row['code']) ? ' selected="selected"' : ''; ?>><?= $row['short_name']; ?></option>
-                                                                        <?php
-                                                                            }
+                                                                            // echo '<option value="'. $row['code'] .'"'. ($action == 'EditIncomingDocument' && $edit_incoming_document->out_where == $row['code']) ? ' selected="selected"' : ''; .'>'. $row['short_name']; .'</option>';
                                                                         ?>
                                                                     </select>
                                                                 </div>
@@ -217,7 +183,7 @@
                                                                         <div class="input-group-addon">
                                                                             <i class="fa fa-calendar"></i>
                                                                         </div>
-                                                                        <input tabindex="12" type="text" name="out_date" placeholder="Дата отправки (формат 01-01-1979)" class="form-control"<?= ($_GET['act'] == 'edit') ? ' value="' . DateFromENtoRU(mb_substr($arIncoming['out_date'], 0, 10), '-') . '"' : ''; ?>>
+                                                                        <input tabindex="12" type="text" name="out_date" placeholder="Дата отправки (формат 01-01-1979)" class="form-control"<?= ($action == 'EditIncomingDocument') ? ' value="' . $edit_incoming_document->out_date . '"' : ''; ?>>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -227,7 +193,7 @@
                                                                 <div class="form-group">
                                                                     <div class="form-group">
                                                                         <label for="out_details">Подробно</label>
-                                                                        <textarea tabindex="13" name="out_details" class="form-control" rows="3" placeholder="Подробно"><?= ($_GET['act'] == 'edit') ? $arIncoming['out_details'] : ''; ?></textarea>
+                                                                        <textarea tabindex="13" name="out_details" class="form-control" rows="3" placeholder="Подробно"><?= ($action == 'EditIncomingDocument') ? $edit_incoming_document->out_details : ''; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -239,7 +205,7 @@
                                     </div><!-- /.box-body -->
 
                                     <div class="box-footer">
-                                        <a href="/incoming.php" type="submit" class="btn btn-default">Отмена</a> <a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
+                                        <a href="/?cmd=IncomingDocument" type="submit" class="btn btn-default">Отмена</a><a onclick="checkForm();" type="submit" class="btn btn-primary">Сохранить</a>
                                     </div>
                                 </form>
                             </div>
@@ -254,9 +220,7 @@
             <!-- Add the sidebar's background. This div must be placed
             immediately after the control sidebar -->
         </div><!-- ./wrapper -->
-
         <!-- REQUIRED JS SCRIPTS -->
-
         <!-- jQuery 2.1.4 -->
         <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
@@ -277,8 +241,8 @@
         <script language="JavaScript" type="text/javascript">
         /*<![CDATA[*/
             $(document).ready(function(){
-      		    $("#items").load("/incoming_file.func.php?id=<?= $_GET['id']; ?>");
-                setInterval(function() {$("#items").load("/incoming_file.func.php?id=<?= $_GET['id']; ?>");}, 5000);
+      		    // $("#items").load("/incoming_file.func.php?id=");
+            //     setInterval(function() {$("#items").load("/incoming_file.func.php?id=");}, 5000);
 
                 $('input').iCheck({
                     checkboxClass: 'icheckbox_square-blue',
@@ -302,48 +266,48 @@
                     saveFile();
                 });
 
-                function saveFile() {
-                    var form = document.forms.role;
-                    var formData = new FormData(form);
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "incoming_file_save.php");
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4) {
-                            if (xhr.status == 200) {
-                                $("#items").load("/incoming_file.func.php?id=<?= $_GET['id']; ?>");
-                                $("#addFileName").val('');
-                                //data = xhr.responseText;
-                                //alert(data);
-                            }
-                        }
-                    };
-                    xhr.send(formData);
-                }
+                // function saveFile() {
+                //     var form = document.forms.role;
+                //     var formData = new FormData(form);
+                //     var xhr = new XMLHttpRequest();
+                //     xhr.open("POST", "incoming_file_save.php");
+                //     xhr.onreadystatechange = function () {
+                //         if (xhr.readyState == 4) {
+                //             if (xhr.status == 200) {
+                //                 $("#items").load("/incoming_file.func.php?id=");
+                //                 $("#addFileName").val('');
+                //                 //data = xhr.responseText;
+                //                 //alert(data);
+                //             }
+                //         }
+                //     };
+                //     xhr.send(formData);
+                // }
             });
 
             function checkForm()
             {
-                if (document.role.title.value != '') {
-                    document.role.submit();
+                if (document.editform.number_in.value != '') {
+                    document.editform.submit();
                 } else {
-                    alert('Укажите название роли безопасности!');
+                    alert('Укажите номер входящего документа!');
                 }
             }
 
-            function ConfirmDelete(code)
-            {
-                var ObjectId = code;
-                if (confirm("Вы действительно хотите удалить запись?")) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/incoming_file_del.php",
-                        data: "code=" + ObjectId,
-                        success: function(msg){
-                            $("#items").load("/incoming_file.func.php?id=<?= $_GET['id']; ?>");
-                        }
-                    });
-                }
-            }
+            // function ConfirmDelete(code)
+            // {
+            //     var ObjectId = code;
+            //     if (confirm("Вы действительно хотите удалить запись?")) {
+            //         $.ajax({
+            //             type: "POST",
+            //             url: "/incoming_file_del.php",
+            //             data: "code=" + ObjectId,
+            //             success: function(msg){
+            //                 $("#items").load("/incoming_file.func.php?id=");
+            //             }
+            //         });
+            //     }
+            // }
         /*]]>*/
         </script>
     </body>

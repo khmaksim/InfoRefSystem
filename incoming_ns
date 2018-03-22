@@ -1,0 +1,22 @@
+ SELECT incoming_document.code,
+    incoming_document.number_in,
+    incoming_document.date_in,
+    incoming_document.number_primary,
+    incoming_document.date_primary,
+    incoming_document.senders_numbers,
+    incoming_document.grif,
+    incoming_document.sheets,
+    incoming_document.copies,
+    incoming_document.copies_numbers,
+    incoming_document.subject,
+    incoming_document.orders,
+    incoming_document.instructions,
+    incoming_document.notes,
+    incoming_document.control,
+    controls.number AS number_ctrl,
+    incoming_document.out_where,
+    incoming_document.out_details,
+    incoming_document.out_date
+   FROM incoming_document
+     LEFT JOIN controls ON controls.incoming = incoming_document.code
+  WHERE incoming_document.grif < 2;

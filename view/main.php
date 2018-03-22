@@ -36,7 +36,7 @@
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <a href="/?cmd=Incoming"><h4 class="text-center">Документооборот</h4></a>
+                                <a href="/?cmd=IncomingDocument"><h4 class="text-center">Документооборот</h4></a>
                             </div>
                         </div>
                     </div>

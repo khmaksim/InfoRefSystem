@@ -1,22 +1,4 @@
 <?php
-/*     $the_file = '';
-    //Если пользователь выбрал файл для отправки
-    if (!empty($_FILES['file']['tmp_name'])) {
-        // Закачиваем файл
-        $path = $_FILES['file']['name'];
-        if (copy($_FILES['file']['tmp_name'], $path)) {
-            $the_file = $path;
-        }
-    }*/
-
-
-    // Функции БД и настройки соединения
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/sys/core/init.inc.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/db.func.php';
-
-    // --------- OPEN CONN ---
-
-       $conn = pg_connect("host='" . $host . "' dbname='" . $dbname . "' user='" . $username . "' password='" . $passwd . "'");
 
     // --------- OPEN FILE ---
 
@@ -38,6 +20,3 @@
 
        pg_exec($conn, "commit");
 
-    // --------- CLOSE CONN ---
-
-       pg_close();

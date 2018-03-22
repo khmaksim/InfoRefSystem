@@ -49,9 +49,9 @@
                                          <?php
                                             $incoming_document_list = $request->getProperty('incoming_document_list');
                                             foreach ($incoming_document_list as $incoming_document) {
-                                               echo '<tr>
-                                                                <td>'. $incoming_document->number .'</td>
-                                                                <td>'. $incoming_document->date_in .'</td>
+                                                echo '<tr>
+                                                                <td>'. $incoming_document->number_in .'</td>
+                                                                <td>'. $incoming_document->date_registration .'</td>
                                                                 <td>'. $incoming_document->control .'</td>
                                                                 <td>'. $incoming_document->subject .'</td>
                                                                 <td>'. $incoming_document->senders_numbers .'</td>
@@ -98,7 +98,7 @@
             {
                 var ObjectId = id;
                 if(confirm("Вы действительно хотите удалить запись?")) {
-                    document.location = "./save.php?id="+ObjectId+"&act=delIncoming";
+                    // document.location = "./save.php?id="+ObjectId+"&act=delIncoming";
                 }
             }
         /*]]>*/

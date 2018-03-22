@@ -536,6 +536,46 @@
 			</status>
 		</command>
 
+		<command name="IncomingDocument">
+			<view>login</view>
+			<status value="CMD_OK">
+				<view>incoming_document</view>
+			</status>
+			<status value="CMD_ERROR">
+				<view>login</view>
+			</status>
+		</command>
+
+		<command name="AddIncomingDocument">
+			<view>incoming_document_edit</view>
+			<status value="CMD_OK">
+				<forward>IncomingDocument</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>incoming_document_edit</view>
+			</status>
+		</command>
+
+		<command name="EditIncomingDocument">
+			<view>incoming_document_edit</view>
+			<status value="CMD_OK">
+				<forward>IncomingDocument</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>incoming_document_edit</view>
+			</status>
+		</command>
+
+		<command name="DeleteIncomingDocument">
+			<view>incoming_document</view>
+			<status value="CMD_OK">
+				<forward>IncomingDocument</forward>
+			</status>
+			<status value="CMD_ERROR">
+				<view>IncomingDocument</view>
+			</status>
+		</command>
+
 		<command name="Product">
 			<view>login</view>
 			<status value="CMD_OK">

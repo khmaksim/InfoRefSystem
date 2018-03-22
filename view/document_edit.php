@@ -43,7 +43,7 @@
                                     <div class="box-body">
                                         <div class="form-group">
                                             <label for="exampleInputDocuments">Наименование документа</label>
-                                            <input type="text" name="name" class="form-control" id="exampleInputDocuments" placeholder="Наименование документа"<?= ($action == 'EditDocument') ? ' value="' . $edit_document->name . '"' : ''; ?> required autofocus>
+                                            <input type="text" name="name" class="form-control" id="exampleInputDocuments" placeholder="Наименование документа"<?= ($action == 'EditIncomingDocument') ? ' value="' . $edit_document->name . '"' : ''; ?> required autofocus>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">Раздел отображения</label>

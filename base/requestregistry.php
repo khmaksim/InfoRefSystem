@@ -203,6 +203,14 @@ class RequestRegistry extends Registry {
 		return $inst->get("PersonMapper");
 	}
 
+	static function getIncomingDocumentMapper() {
+		$inst = self::instance();
+		if (is_null($inst->get("IncomingDocumentMapper"))) {
+			$inst->set('IncomingDocumentMapper', new \mapper\IncomingDocumentMapper());
+		}
+		return $inst->get("IncomingDocumentMapper");
+	}
+
 	static function getAccessManager() {
 		$inst = self::instance();
 		if (is_null($inst->get('AccessManager'))) {

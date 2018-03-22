@@ -35,7 +35,7 @@ abstract class Mapper implements \domain\Finder {
 		if (!isset($array['id'])) {
 			return null;
 		}
-		
+    	
 		$object = $this->createObject($array);
 		return $object;
 	}
