@@ -94,9 +94,7 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/mainfooter.inc.php';
 ?>
 </div><!-- ./wrapper -->
-
 <!-- REQUIRED JS SCRIPTS -->
-
 <!-- jQuery 2.1.4 -->
 <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- Bootstrap 3.3.5 -->

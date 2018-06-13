@@ -18,11 +18,9 @@
                         <li class="active">Cтруктура ЧНП ВКС</li>
                     </ol>
                 </section>
-
                 <!-- Main content -->
                 <section class="content">
                     <!-- <form action="/phone_list.php" method="POST" name="View" target="_blank"> -->
-
                 <!-- Your Page Content Here -->
                         <div class="row">
                             <div class="col-xs-12">

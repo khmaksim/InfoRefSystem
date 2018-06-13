@@ -12,9 +12,6 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>
-                        <small></small>
-                    </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                         <li class="active">Руководящие документы</li>
@@ -22,6 +19,15 @@
                 </section>
                 <!-- Main content -->
                 <section class="content">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputSearch" class="col-xs-1 control-label">Поиск</label>
+                            <div class="col-lg-3">
+                                  <input type="text" class="form-control search" id="inputSearch" placeholder="Введите номер приказа или наименование документа" 
+                                  onkeyup="filterSearch(this.value)">
+                            </div>
+                        </div>
+                    </div>
                     <!-- Your Page Content Here -->
                     <div class="row">
                         <div class="col-xs-12">
@@ -34,8 +40,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="col-xs-1">№</th>
-                                                <th>Наименование</th>
-                                                <th>Раздел отображения</th>
+                                                <th>Приказы и директивы</th>
                                                 <th class="col-xs-1 text-center">Редактировать</th>
                                                 <th class="col-xs-1 text-center">Удалить</th>
                                             </tr>
@@ -49,7 +54,6 @@
                                                     echo '<tr>
                                                         <td>'. $count++ .'</td>
                                                         <td><a href="download.php?file=' . $document->file_name . '" target="_blank">' . $document->name . '</a></td>
-                                                        <td>' . $document->section . '</td>
                                                         <td class="col-xs-1 text-center"><a href="/?cmd=EditDocument&id=' . $document->id . '" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                                         <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete(' . $document->id . ', \'' . basename($document->file_name) . '\');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
                                                         </tr>';
@@ -96,6 +100,26 @@
                     document.location = "./?cmd=DeleteDocument&id="+ObjectId+"&fileName="+FileName;
                 }
             }
+            function filterSearch(text) {
+                    var table = document.getElementById("items");
+                    var rows = table.getElementsByTagName("tr");
+                    var nums = rows.length;
+                    var i = 0;
+                    var n = 1;
+                    while (i < nums) {
+                        var rowIndex = rows[i];
+                        var cols = rowIndex.getElementsByTagName("td");
+                        if (cols[1].innerText.indexOf(text) >= 0) {
+                            rows[i].style.display = "";
+                            cols[0].innerText = n;
+                            n += 1;
+                        }
+                        else {
+                            rows[i].style.display = "none";
+                        }
+                        i += 1;
+                    }
+                }
         /*]]>*/
         </script>
     </body>

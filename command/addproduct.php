@@ -14,7 +14,7 @@ class AddProduct extends Command {
             $product->security_label = $request->getProperty('security-label');
 			
             if (!is_null($productMapper->findByCipher($product->cipher))) {
-                $request->setProperty('error', 'Запись с таким индексом уже существует в базе данных');
+                $request->setProperty('error', 'Запись с таким шифром уже существует в базе данных');
                 $request->setProperty('product', $product);
                 return self::statuses('CMD_ERROR');                
             }
