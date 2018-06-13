@@ -10,7 +10,7 @@ class EditProduct extends Command {
     		if (!is_null($id)) {
     			$product = $productMapper->find($id);
     			if (!is_null($product)) {
-					$request->setProperty('product', $product);    				
+					$request->setProperty('product', $product);
     			}
     		}
     	}
@@ -24,6 +24,12 @@ class EditProduct extends Command {
                 $product->description = $request->getProperty('description');
                 $product->creator = $request->getProperty('creator');
                 $product->security_label = $request->getProperty('security-label');
+
+                 if (!is_null($productMapper->findByCipher($product->cipher))) {
+                    $request->setProperty('error', 'Запись с таким индексом уже существует в базе данных');
+                    $request->setProperty('product', $product);
+                    return self::statuses('CMD_ERROR');                
+                }
 				
                 if (sizeof($_FILES) && !$_FILES['image-file']['error'] && $_FILES['image-file']['size'] < 1024 * 2 * 1024) {
                     $upload_info = $_FILES['image-file'];

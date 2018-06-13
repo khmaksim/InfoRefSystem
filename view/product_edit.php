@@ -15,9 +15,6 @@
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
-                    <small></small>
-                </h1>
                 <ol class="breadcrumb">
                     <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                     <li><a href="/?cmd=ResearchWork">Научно-исследовательская работа</a></li>
@@ -28,7 +25,7 @@
             <!-- Main content -->
             <section class="content">
                 <?php
-                $alertMessage = 'Укажите индекс изделия!';
+                    $alertMessage = 'Укажите индекс изделия!';
                 ?>
                 <!-- Your Page Content Here -->
                 <div class="row">
@@ -37,32 +34,39 @@
                             <div class="box-header with-border">
                                 <h3 class="box-title"><?php echo $action_name; ?></h3>
                             </div><!-- /.box-header -->
+                            <?php 
+                                if (!is_null($request->getProperty('error')))
+                                    echo '<div class="alert alert-warning"><p class="text-left">Внимание:'. $request->getProperty('error') .'</p></div>';
+                            ?>
                             <!-- form start -->
                             <form name="editform" role="form" method="post" enctype="multipart/form-data">
                                 <!-- <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" /> -->
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <div class="form-group">
+                                            <div class="form-group <?= (!is_null($request->getProperty('error'))) ? 'has-warning' : ''?>">
                                                 <label for="inputCipher">Шифр</label>
-                                                <input type="text" name="cipher" class="form-control" id="inputCipher" placeholder="Шифр"<?= ($action == 'EditProduct') ? ' value="' . $edit_product->cipher . '"' : ''; ?>>
+                                                <input type="text" name="cipher" class="form-control" id="inputCipher" placeholder="Шифр"<?= ($action == 'EditProduct' || 
+                                                !is_null($edit_product->cipher)) ? ' value="' . $edit_product->cipher . '"' : ''; ?>>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="inputIndex">Индекс</label>
-                                                <input type="text" name="index" class="form-control" id="inputIndex" placeholder="Индекс"<?= ($action == 'EditProduct') ? ' value="' . $edit_product->index . '"' : ''; ?> required autofocus>
+                                                <input type="text" name="index" class="form-control" id="inputIndex" placeholder="Индекс"<?= ($action == 'EditProduct' || 
+                                                !is_null($edit_product->index)) ? ' value="' . $edit_product->index . '"' : ''; ?> required autofocus>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputDescription">Назначение</label>
-                                        <textarea class="form-control" rows="3" name="description" id="inputDescription" placeholder="Описание"><?= ($action == 'EditProduct') ? '' . 
-                                        $edit_product->description . '' : ''; ?></textarea>
+                                        <textarea class="form-control" rows="3" name="description" id="inputDescription" placeholder="Описание"><?= ($action == 'EditProduct' || 
+                                                !is_null($edit_product->description)) ? '' . $edit_product->description . '' : ''; ?></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputCreator">Разработчик</label>
-                                        <input type="text" name="creator" class="form-control" id="inputCreator" placeholder="Разработчик"<?= ($action == 'EditProduct') ? ' value="' . $edit_product->creator . '"' : ''; ?>>
+                                        <input type="text" name="creator" class="form-control" id="inputCreator" placeholder="Разработчик"<?= ($action == 'EditProduct' || 
+                                                !is_null($edit_product->creator)) ? ' value="' . $edit_product->creator . '"' : ''; ?>>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputSecurityLabel">Гриф обрабатываемой информации</label>

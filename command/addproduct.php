@@ -13,6 +13,12 @@ class AddProduct extends Command {
             $product->creator = $request->getProperty('creator');
             $product->security_label = $request->getProperty('security-label');
 			
+            if (!is_null($productMapper->findByCipher($product->cipher))) {
+                $request->setProperty('error', 'Запись с таким индексом уже существует в базе данных');
+                $request->setProperty('product', $product);
+                return self::statuses('CMD_ERROR');                
+            }
+
 			$productMapper->insert($product);
 			if (!is_null($product->id)) {
                 $id_product = $product->id;

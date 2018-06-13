@@ -5,7 +5,8 @@ class ProductMapper extends Mapper implements \domain\UserFinder {
 	function __construct() {
 		parent::__construct();
 		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM product WHERE deleted IS NULL");
-		$this->selectStmt = self::$PDO->prepare("SELECT * FROM product WHERE id = ? AND deleted IS NULL");
+		$this->selectStmt = self::$PDO->prepare("SELECT * FROM product WHERE id=? AND deleted IS NULL");
+		$this->selectByCipherStmt = self::$PDO->prepare("SELECT * FROM product WHERE cipher=? AND deleted IS NULL");
 		$this->updateStmt = self::$PDO->prepare("UPDATE product SET index=?, cipher=?, description=?, creator=?, security_label=?, image_file_name=? WHERE id=?");
 		$this->insertStmt = self::$PDO->prepare("INSERT INTO product (index, cipher, description, creator, security_label, image_file_name) VALUES (?, ?, ?, ?, ?, ?)");
 		$this->deleteStmt = self::$PDO->prepare("UPDATE product SET deleted=now() WHERE id=?");
@@ -31,7 +32,7 @@ class ProductMapper extends Mapper implements \domain\UserFinder {
 			throw new Exception("Error argument", 1);
 		}
 			
-		$values = array($object->year);
+		$values = array($object->index, $object->cipher, $object->description, $object->creator, $object->security_label, $object->image_file_name);
 		$this->insertStmt->execute($values);
 		$id = self::$PDO->lastInsertId();
 		$object->id = $id;
@@ -53,6 +54,23 @@ class ProductMapper extends Mapper implements \domain\UserFinder {
     function delete(\domain\DomainObject $object) {
 		$values = array($object->id);
 		$this->deleteStmt->execute($values);
+	}
+
+	function findByCipher($cipher) {
+		$this->selectByCipherStmt->execute(array($cipher));
+		$array = $this->selectByCipherStmt->fetch();
+		$this->selectByCipherStmt->closeCursor();
+		
+		if (!is_array($array)) { 
+			return null;
+		}
+		
+		if (!isset($array['id'])) {
+			return null;
+		}
+    	
+		$object = $this->createObject($array);
+		return $object;
 	}
 }
 
