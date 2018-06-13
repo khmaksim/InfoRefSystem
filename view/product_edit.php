@@ -21,7 +21,7 @@
                 <ol class="breadcrumb">
                     <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                     <li><a href="/?cmd=ResearchWork">Научно-исследовательская работа</a></li>
-                    <li><a href="/?cmd=Product">Индексы изделий</a></li>
+                    <li><a href="/?cmd=Product">Шифр</a></li>
                     <li class="active"><?php echo $action_name; ?></li>
                 </ol>
             </section>
@@ -42,23 +42,36 @@
                                 <!-- <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" /> -->
                                 <div class="box-body">
                                     <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="inputIndex">Индекс</label>
-                                            <input type="text" name="index" class="form-control" id="inputIndex" placeholder="Индекс"<?= ($action == 'EditProduct') ? ' value="' . $edit_product->index . '"' : ''; ?> required autofocus>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="inputCipher">Шифр</label>
+                                                <input type="text" name="cipher" class="form-control" id="inputCipher" placeholder="Шифр"<?= ($action == 'EditProduct') ? ' value="' . $edit_product->cipher . '"' : ''; ?>>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="inputCipher">Шифр</label>
-                                            <input type="text" name="cipher" class="form-control" id="inputCipher" placeholder="Шифр"<?= ($action == 'EditProduct') ? ' value="' . $edit_product->cipher . '"' : ''; ?>>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="inputIndex">Индекс</label>
+                                                <input type="text" name="index" class="form-control" id="inputIndex" placeholder="Индекс"<?= ($action == 'EditProduct') ? ' value="' . $edit_product->index . '"' : ''; ?> required autofocus>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputDescription">Описание</label>
+                                        <label for="inputDescription">Назначение</label>
                                         <textarea class="form-control" rows="3" name="description" id="inputDescription" placeholder="Описание"><?= ($action == 'EditProduct') ? '' . 
                                         $edit_product->description . '' : ''; ?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputCreator">Разработчик</label>
+                                        <input type="text" name="creator" class="form-control" id="inputCreator" placeholder="Разработчик"<?= ($action == 'EditProduct') ? ' value="' . $edit_product->creator . '"' : ''; ?>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputSecurityLabel">Гриф обрабатываемой информации</label>
+                                        <select class="form-control" name="security-label" id="inputSecurityLabel">
+                                            <option <?= ($action == 'EditProduct' && $edit_product->security_label == 'ДСП') ? 'selected="selected"' : '' ?>>ДСП</option>
+                                            <option <?= ($action == 'EditProduct' && $edit_product->security_label == 'С') ? 'selected="selected"' : '' ?>>С</option>
+                                            <option <?= ($action == 'EditProduct' && $edit_product->security_label == 'СС') ? 'selected="selected"' : '' ?>>СС</option>
+                                            <option <?= ($action == 'EditProduct' && $edit_product->security_label == 'ОВ') ? 'selected="selected"' : '' ?>>ОВ</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputImageFile">Изображение</label>

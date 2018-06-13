@@ -22,6 +22,8 @@ class EditProduct extends Command {
 	  			$product->index = $request->getProperty('index');
                 $product->cipher = $request->getProperty('cipher');
                 $product->description = $request->getProperty('description');
+                $product->creator = $request->getProperty('creator');
+                $product->security_label = $request->getProperty('security-label');
 				
                 if (sizeof($_FILES) && !$_FILES['image-file']['error'] && $_FILES['image-file']['size'] < 1024 * 2 * 1024) {
                     $upload_info = $_FILES['image-file'];

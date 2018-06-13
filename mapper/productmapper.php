@@ -6,8 +6,8 @@ class ProductMapper extends Mapper implements \domain\UserFinder {
 		parent::__construct();
 		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM product WHERE deleted IS NULL");
 		$this->selectStmt = self::$PDO->prepare("SELECT * FROM product WHERE id = ? AND deleted IS NULL");
-		$this->updateStmt = self::$PDO->prepare("UPDATE product SET index=?, cipher=?, description=?, image_file_name=? WHERE id=?");
-		$this->insertStmt = self::$PDO->prepare("INSERT INTO product (index, cipher, description, image_file_name) VALUES (?, ?, ?, ?)");
+		$this->updateStmt = self::$PDO->prepare("UPDATE product SET index=?, cipher=?, description=?, creator=?, security_label=?, image_file_name=? WHERE id=?");
+		$this->insertStmt = self::$PDO->prepare("INSERT INTO product (index, cipher, description, creator, security_label, image_file_name) VALUES (?, ?, ?, ?, ?, ?)");
 		$this->deleteStmt = self::$PDO->prepare("UPDATE product SET deleted=now() WHERE id=?");
 	}
 
@@ -20,6 +20,8 @@ class ProductMapper extends Mapper implements \domain\UserFinder {
 		$obj->index = $array['index'];
 		$obj->cipher = $array['cipher'];
 		$obj->description = $array['description'];
+		$obj->creator = $array['creator'];
+		$obj->security_label = $array['security_label'];
 		$obj->image_file_name = $array['image_file_name'];
 		return $obj;
 	}
@@ -36,7 +38,7 @@ class ProductMapper extends Mapper implements \domain\UserFinder {
 	}
 
 	function update(\domain\DomainObject $object) {
-		$values = array($object->index, $object->cipher, $object->description, $object->image_file_name, $object->id);
+		$values = array($object->index, $object->cipher, $object->description, $object->creator, $object->security_label, $object->image_file_name, $object->id);
 		$this->updateStmt->execute($values);
 	}
 

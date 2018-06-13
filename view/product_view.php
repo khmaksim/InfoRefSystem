@@ -25,7 +25,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-md-12 col-lg-12"><?= $product->description ?></div>
+                        <div class="col-xs-12 col-md-12 col-lg-12"><b>Назначение: </b><?= $product->description ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12"><b>Разработчик: </b><?= $product->creator ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12"><b>Гриф обрабатываемой информации: </b><?= $product->security_label ?></div>
                     </div>
                     <div class="row">
                         <div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10">

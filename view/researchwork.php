@@ -31,7 +31,7 @@
                                 <div class="box-body">
                                     <div class="col-xs-2">
                                         <ul class="nav nav-pills nav-stacked">
-                                            <li><a href="/?cmd=Product">Индексы изделий</a></li>
+                                            <li><a href="/?cmd=Product">Шифр</a></li>
                                             <li><a href="/?cmd=ScientificWork">Перечень</a></li>
                                             <li><a href="/?cmd=ControlScientificResearchDesignWork">Контроль документов по НИОКР</a></li>
                                             <li><a href="/?cmd=Enterprise">Предприятия</a></li>
