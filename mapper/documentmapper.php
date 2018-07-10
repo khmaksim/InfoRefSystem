@@ -6,7 +6,7 @@ class DocumentMapper extends Mapper implements \domain\UserFinder {
 		parent::__construct();
 		$this->selectAllStmt = self::$PDO->prepare("SELECT * FROM document WHERE deleted IS NULL");
 		$this->selectStmt = self::$PDO->prepare("SELECT * FROM document WHERE id = ? AND deleted IS NULL");
-		$this->selectBySectionStmt = self::$PDO->prepare("SELECT * FROM document WHERE section = ? AND deleted IS NULL");
+		$this->selectBySectionStmt = self::$PDO->prepare("SELECT * FROM document WHERE section LIKE ? AND deleted IS NULL");
 		$this->updateStmt = self::$PDO->prepare("UPDATE document SET name=?, section=?, file_name=? WHERE id=?");
 		$this->insertStmt = self::$PDO->prepare("INSERT INTO document (name, section, file_name) VALUES (?, ?, ?)");
 		$this->deleteStmt = self::$PDO->prepare("UPDATE document SET deleted=now() WHERE id=?");
@@ -49,6 +49,7 @@ class DocumentMapper extends Mapper implements \domain\UserFinder {
     }
 
     function findBySection($section) {
+    	$section = '%'. $section .'%';
     	$this->selectBySectionStmt->execute(array($section));
         return $this->getCollection($this->selectBySectionStmt->fetchAll(\PDO::FETCH_ASSOC));
     }

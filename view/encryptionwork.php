@@ -42,7 +42,7 @@
                         </div><!-- /.col -->
                     </div>
                     <?php
-                        include_once $_SERVER['DOCUMENT_ROOT'] . '/documents.inc.php';
+                        include_once $_SERVER['DOCUMENT_ROOT'] . '/document.inc.php';
                     ?>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
