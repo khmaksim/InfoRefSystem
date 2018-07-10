@@ -8,7 +8,7 @@ class AddDocument extends Command {
 			
 			$document = new \domain\Document();  			
   			$document->name = $request->getProperty('name');
-			$document->section = $request->getProperty('section');
+			$document->section = implode("|", $request->getProperty('section'));
 			
 			$documentMapper->insert($document);
 			if (!is_null($document->id)) {
@@ -46,7 +46,8 @@ class AddDocument extends Command {
                     if (!move_uploaded_file($upload_info['tmp_name'], $file_name)) {
                         $request->setProperty('error', 'Не удалось осуществить сохранение файла');
                     }
-                    $document->document_file = $file_name;
+                    echo $file_name;
+                    $document->file_name = $file_name;
                     $documentMapper->update($document);
 				}
 

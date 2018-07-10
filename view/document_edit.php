@@ -42,12 +42,13 @@
                                     <!-- <input type="hidden" name="id" value="<?= (isset($_GET['id'])) ? $_GET['id'] : ''; ?>" /> -->
                                     <div class="box-body">
                                         <div class="form-group">
-                                            <label for="exampleInputDocuments">Наименование документа</label>
-                                            <input type="text" name="name" class="form-control" id="exampleInputDocuments" placeholder="Наименование документа"<?= ($action == 'EditIncomingDocument') ? ' value="' . $edit_document->name . '"' : ''; ?> required autofocus>
+                                            <label for="nameDocument">Наименование документа</label>
+                                            <input type="text" name="name" class="form-control" id="nameDocument" placeholder="Наименование документа"<?= ($action == 
+                                            'EditDocument') ? ' value="' . $edit_document->name . '"' : ''; ?> required autofocus>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputFile">Раздел отображения</label>
-                                            <select class="form-control" name="section">
+                                            <select class="form-control" name="section[]" multiple="multiple">
                                                 <option value="0">-</option>
                                                 <?php
                                                     $arSection = [
@@ -65,7 +66,7 @@
                                                     'Шифровальная работа'];
                                                     foreach ($arSection as $row) {
                                                 ?>
-                                                <option value="<?= $row; ?>" <?= ($action == 'EditDocument' && $edit_document->section == $row) ? ' selected="selected"' : ''; ?>><?= $row; ?></option>
+                                                <option value="<?= $row; ?>" <?= ($action == 'EditDocument' && strpos($edit_document->section, $row) !== false) ? ' selected="selected"' : ''; ?>><?= $row; ?></option>
                                                 <?php
                                                     }
                                                 ?>

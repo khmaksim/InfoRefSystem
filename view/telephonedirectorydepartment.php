@@ -8,25 +8,19 @@
         <?php
             include_once $_SERVER['DOCUMENT_ROOT'] . '/mainheader.inc.php';
         ?>
-
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>
-                        <small></small>
-                    </h1>
                     <ol class="breadcrumb">
                         <li><a href="./"><i class="glyphicon glyphicon-home"></i> Главная</a></li>
                         <li><a href="/?cmd=TelephoneDirectory">Телефонный справочник</a></li>
                         <li class="active"><?php echo $department->fullname ?></li>
                     </ol>
                 </section>
-
                 <!-- Main content -->
                 <section class="content">
                     <form action="/person_view_list.php" method="POST" name="View" target="_blank">
-
                 <!-- Your Page Content Here -->
                         <div class="row">
                             <div class="col-xs-12">
@@ -35,7 +29,6 @@
                                 </p>
                             </div><!-- /.col -->
                         </div>
-
                         <div class="row">
                         <div class="col-xs-12">
                             <div class="box">

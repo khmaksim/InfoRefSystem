@@ -52,9 +52,12 @@
                                             if (!is_null($document_list)) {
                                                 foreach ($document_list as $document) {
                                                     echo '<tr>
-                                                        <td>'. $count++ .'</td>
-                                                        <td><a href="download.php?file=' . $document->file_name . '" target="_blank">' . $document->name . '</a></td>
-                                                        <td class="col-xs-1 text-center"><a href="/?cmd=EditDocument&id=' . $document->id . '" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                                        <td>'. $count++ .'</td>';
+                                                    if (file_exists($document->file_name))
+                                                        echo '<td><a href="/?cmd=Download&file=' . $document->file_name . '" target="_blank">' . $document->name . '</a></td>';
+                                                    else
+                                                        echo '<td>' . $document->name . '</td>';
+                                                    echo '<td class="col-xs-1 text-center"><a href="/?cmd=EditDocument&id=' . $document->id . '" class="button btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                                         <td class="col-xs-1 text-center"><a href="javascript:void(0);" onclick="ConfirmDelete(' . $document->id . ', \'' . basename($document->file_name) . '\');" class="button btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
                                                         </tr>';
                                                 }

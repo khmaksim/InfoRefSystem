@@ -20,7 +20,7 @@ class EditDocument extends Command {
     			$document = $documentMapper->find($id);
 
 	  			$document->name = $request->getProperty('name');
-				$document->section = $request->getProperty('section');
+				$document->section = implode("|", $request->getProperty('section'));
 				$document->document_file = $section = $request->getProperty('document_file');
 
                 if (sizeof($_FILES) && !$_FILES['document_file']['error'] && $_FILES['document_file']['size'] < 1024 * 2 * 1024) {
@@ -55,7 +55,8 @@ class EditDocument extends Command {
                     if (!move_uploaded_file($upload_info['tmp_name'], $file_name)) {
                         $request->setProperty('error', 'Не удалось осуществить сохранение файла');
                     }
-                    $document->document_file = $file_name;
+                    $document->file_name = $file_name;
+
                     $documentMapper->update($document);
                 }
 
