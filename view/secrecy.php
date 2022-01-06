@@ -31,14 +31,14 @@
                                 <div class="box-body">
                                     <div class="col-xs-2">
                                         <ul class="nav nav-pills nav-stacked">
-                                            <li><a href="#">Выезд за границу</a></li>
-                                            <li><a href="#">Лицензирование</a></li>
-                                            <li><a href="#">Разбирательства</a></li>
-                                            <li><a href="#">Оценка степени секретности</a></li>
-                                            <li><a href="#">Проверки РС И ЗИ НСД</a></li>
-                                            <li><a href="#">Передача НССГТ</a></li>
-                                            <li><a href="#">Допуск в воинские части ВКС</a></li>
-                                            <li><a href="#">Допуск к государственной тайне</a></li>
+                                            <li class="disabled"><a href="#">Выезд за границу</a></li>
+                                            <li class="disabled"><a href="#">Лицензирование</a></li>
+                                            <li class="disabled"><a href="#">Разбирательства</a></li>
+                                            <li class="disabled"><a href="#">Оценка степени секретности</a></li>
+                                            <li class="disabled"><a href="#">Проверки РС И ЗИ НСД</a></li>
+                                            <li class="disabled"><a href="#">Передача НССГТ</a></li>
+                                            <li class="disabled"><a href="#">Допуск в воинские части ВКС</a></li>
+                                            <li class="disabled"><a href="#">Допуск к государственной тайне</a></li>
                                         </ul>
                                     </div>
                                 </div><!-- /.box-body -->

@@ -13,6 +13,7 @@ class AccessManager {
         $gen = $collection->getGenerator();
 
         foreach ($gen as $user) {
+            echo $user->name;
             if ($user && $user->name == $username) {
                 if ($user->passwd == md5($passwd)) {                
                     $user->success_login = true;

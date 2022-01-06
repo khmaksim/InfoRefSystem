@@ -31,10 +31,10 @@
                                 <div class="box-body">
                                     <div class="col-xs-2">
                                         <ul class="nav nav-pills nav-stacked">
-                                            <li><a href="#">ТСС</a></li>
-                                            <li><a href="#">Ключевка</a></li>
-                                            <li><a href="#">Документы БГ</a></li>
-                                            <li><a href="#">Планы</a></li>
+                                            <li class="disabled"><a href="#">ТСС</a></li>
+                                            <li class="disabled"><a href="#">Ключевка</a></li>
+                                            <li class="disabled"><a href="#">Документы БГ</a></li>
+                                            <li class="disabled"><a href="#">Планы</a></li>
                                         </ul>
                                     </div>
                                 </div><!-- /.box-body -->

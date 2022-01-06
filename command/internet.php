@@ -8,7 +8,6 @@ class Internet extends Command {
 
     	$id_department_list = $request->getProperty('deparment');
     	if (!is_null($id_department_list)) {
-    		echo "asdasdsad";
     		$collection = $internetMapper->findByDepartment($id_department_list);	
     	}
     	else

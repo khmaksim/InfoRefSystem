@@ -6,14 +6,14 @@ class UserMapper extends Mapper implements \domain\UserFinder {
 		parent::__construct();
 		$this->selectAllStmt = self::$PDO->prepare("SELECT u.id, u.name, u.active, u.title, u.bdate, u.adate, u.img_ext, u.passwd, a.col, a.unban, r.id AS id_role, r.title AS role_title 
 			FROM public.user u 
-			LEFT OUTER JOIN antibrutforce a ON u.id = a.id_user 
+			LEFT OUTER JOIN antibrutforce a ON u.id = a.id_user AND a.deleted IS NULL 
 			LEFT OUTER JOIN role r ON u.role_id = r.id 
-			WHERE a.deleted IS NULL AND u.deleted IS NULL ORDER BY u.name");
+			WHERE u.deleted IS NULL ORDER BY u.name");
 		$this->selectStmt = self::$PDO->prepare("SELECT  u.id, u.name, u.active, u.title, u.bdate, u.adate, u.img_ext, u.passwd, a.col, a.unban, r.id AS id_role, r.title AS role_title  
 			FROM public.user u 
-			LEFT OUTER JOIN antibrutforce a ON u.id = a.id_user 
+			LEFT OUTER JOIN antibrutforce a ON u.id = a.id_user AND a.deleted IS NULL 
 			LEFT OUTER JOIN role r ON u.role_id = r.id 
-			WHERE a.deleted IS NULL AND u.deleted IS NULL AND u.id = ?");
+			WHERE u.deleted IS NULL AND u.id = ?");
 		$this->updateStmt = self::$PDO->prepare("UPDATE public.user SET name=?, active=?, title=?, bdate=?, adate=?, img_ext=?, passwd=? WHERE id=?");
 		$this->updateAntibrutforceStmt = self::$PDO->prepare("UPDATE antibrutforce SET col=?, unban=? WHERE id_user=? AND deleted IS NULL");
 		$this->insertAntibrutforceStmt = self::$PDO->prepare("INSERT INTO antibrutforce (col, id_user) VALUES (?, ?)");

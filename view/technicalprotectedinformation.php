@@ -31,9 +31,9 @@
                                 <div class="box-body">
                                     <div class="col-xs-2">
                                         <ul class="nav nav-pills nav-stacked">
-                                            <li><a href="#">Органы ТЗИ служб ЗГТ ВКС</a></li>
-                                            <li><a href="#">Техника органов ТЗИ</a></li>
-                                            <li><a href="#">Лаборатория СП и СИ</a></li>
+                                            <li class="disabled"><a href="#">Органы ТЗИ служб ЗГТ ВКС</a></li>
+                                            <li class="disabled"><a href="#">Техника органов ТЗИ</a></li>
+                                            <li class="disabled"><a href="#">Лаборатория СП и СИ</a></li>
                                         </ul>
                                     </div>
                                 </div><!-- /.box-body -->

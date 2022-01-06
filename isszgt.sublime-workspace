@@ -231,7 +231,7 @@
 			"file": "mapper/usermapper.php",
 			"settings":
 			{
-				"buffer_size": 1508,
+				"buffer_size": 0,
 				"encoding": "UTF-8",
 				"line_ending": "Windows",
 				"name": "<?php"
@@ -241,7 +241,7 @@
 			"file": "mapper/mapper.php",
 			"settings":
 			{
-				"buffer_size": 1212,
+				"buffer_size": 1536,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -250,7 +250,7 @@
 			"file": "mapper/usercollection.php",
 			"settings":
 			{
-				"buffer_size": 134,
+				"buffer_size": 125,
 				"encoding": "UTF-8",
 				"line_ending": "Windows",
 				"name": "<?php"
@@ -260,7 +260,7 @@
 			"file": "mapper/collection.php",
 			"settings":
 			{
-				"buffer_size": 1464,
+				"buffer_size": 1165,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -269,26 +269,16 @@
 			"file": "domain/user.php",
 			"settings":
 			{
-				"buffer_size": 1460,
+				"buffer_size": 780,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "lib/login.php",
+			"file": "controller/controller.php",
 			"settings":
 			{
-				"buffer_size": 5977,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "login.php",
-			"settings":
-			{
-				"buffer_size": 3250,
-				"encoding": "UTF-8",
+				"buffer_size": 910,
 				"line_ending": "Windows"
 			}
 		}
@@ -343,19 +333,13 @@
 	},
 	"expanded_folders":
 	[
-		"/C/xampp/htdocs/isszgt",
-		"/C/xampp/htdocs/isszgt/assets/inc",
-		"/C/xampp/htdocs/isszgt/base",
-		"/C/xampp/htdocs/isszgt/domain",
-		"/C/xampp/htdocs/isszgt/lib",
-		"/C/xampp/htdocs/isszgt/mapper",
-		"/C/xampp/htdocs/isszgt/sys",
-		"/C/xampp/htdocs/isszgt/sys/config",
-		"/C/xampp/htdocs/isszgt/sys/core",
-		"/C/xampp/htdocs/isszgt/view"
+		"/C/Apache24/htdocs/isszgt",
+		"/C/Apache24/htdocs/isszgt/controller"
 	],
 	"file_history":
 	[
+		"/C/Apache24/htdocs/isszgt/login.php",
+		"/C/Apache24/htdocs/isszgt/lib/login.php",
 		"//PC001/Users/�������/AppData/Local/Adobe/AcroCef/DC/Acrobat/Cookie/Cookies-journal",
 		"//PC001/Users/�������/AppData/Local/Adobe/AcroCef/DC/Acrobat/Cookie/Cookies",
 		"/C/xampp/htdocs/isszgt/user.php",
@@ -481,9 +465,7 @@
 		"/C/xampp/htdocs/isszgt/person_view.php",
 		"/D/db_full_2017-10-22.sql",
 		"/C/xampp/htdocs/isszgt/assert/inc/process.inc.php",
-		"/C/xampp/htdocs/isszgt/accesstype_edit.php",
-		"/C/xampp/htdocs/isszgt/city_edit.php",
-		"/C/xampp/htdocs/isszgt/public/assert/inc/process.inc.php"
+		"/C/xampp/htdocs/isszgt/accesstype_edit.php"
 	],
 	"find":
 	{
@@ -681,15 +663,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1508,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								497,
-								511
+								0,
+								0
 							]
 						],
 						"settings":
@@ -710,15 +692,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1212,
+						"buffer_size": 1536,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								841,
-								855
+								0,
+								0
 							]
 						],
 						"settings":
@@ -739,15 +721,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 134,
+						"buffer_size": 125,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								17,
-								17
+								0,
+								0
 							]
 						],
 						"settings":
@@ -768,15 +750,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1464,
+						"buffer_size": 1165,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1004,
-								1010
+								0,
+								0
 							]
 						],
 						"settings":
@@ -797,15 +779,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1460,
+						"buffer_size": 780,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1028,
-								1028
+								0,
+								0
 							]
 						],
 						"settings":
@@ -817,67 +799,36 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 5,
-					"file": "lib/login.php",
-					"semi_transient": false,
+					"file": "controller/controller.php",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 5977,
+						"buffer_size": 910,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								956,
-								956
+								608,
+								623
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "login.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3250,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1619,
-								1619
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
 					"type": "text"
 				}
 			]
